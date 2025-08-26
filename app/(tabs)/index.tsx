@@ -1,75 +1,57 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-
-export default function HomeScreen() {
+const Track = () => {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View className="flex-1 bg-white">
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="px-5">
+        <View className="flex-1 pt-2">
+          <EmptyState
+            title="No Tasks Yet"
+            description="Sync your FocusTracker tasks to start tracking your time and managing your sprint efficiently."
+            icon={<FontAwesome5 name="tasks" size={48} color="#9CA3AF" />}
+          />
+          <TouchableOpacity className="bg-black mt-5 w-80 items-center justify-center self-center py-4 rounded-xl mb-4 flex-row items-center justify-center">
+            <MaterialCommunityIcons name="sync" size={20} color="white" />
+            <Text className="text-white text-base font-semibold ml-2">
+              Sync FocusTracker Tasks
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity className="border border-gray-300 w-full py-4 rounded-xl mb-4 flex-row items-center justify-center">
+            <AntDesign name="plus" size={20} color="black" />
+            <Text className="text-black text-base font-semibold ml-2">
+              Create Manual Task
+            </Text>
+          </TouchableOpacity>
+          <Text className="text-gray-400 text-center text-base mb-8">
+            Import from CSV
+          </Text>
+          <View className="bg-gray-50 rounded-xl p-4 flex-row items-start w-full">
+            <AntDesign
+              name="infocirlce"
+              size={18}
+              color="#6B7280"
+              style={{ marginRight: 10 }}
+            />
+            <View className="flex-1">
+              <Text className="font-semibold text-gray-900 mb-1">
+                Connect FocusTracker
+              </Text>
+              <Text className="text-gray-500 text-sm">
+                Link your FocusTracker account to automatically sync sprint
+                tasks and track time seamlessly across both platforms.
+              </Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+export default Track;
+
+import React from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+
+import EmptyState from "@/components/EmptyState";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";

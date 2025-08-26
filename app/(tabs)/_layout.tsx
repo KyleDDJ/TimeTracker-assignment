@@ -1,45 +1,96 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
-
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
+      initialRouteName="track"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+        tabBarActiveTintColor: "black",
+        tabBarInactiveTintColor: "gray",
+        tabBarStyle: {
+          backgroundColor: "white",
+          height: 70,
+          position: "absolute",
+        },
+        tabBarItemStyle: {
+          paddingTop: 8,
+        },
+        tabBarLabelStyle: {
+          marginTop: 5,
+          fontSize: 12,
+        },
+        headerTitle: "TimeTracker",
+        headerTitleStyle: {
+          fontSize: 18,
+          fontWeight: "bold",
+        },
+        headerRight: () => (
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginRight: 15,
+            }}
+          >
+            <TouchableOpacity style={{ marginRight: 15 }}>
+              <AntDesign name="bells" size={24} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => router.push("/(auth)/login")}>
+              <Image
+                source={require("@/assets/images/joji.jpg")}
+                style={{ width: 32, height: 32, borderRadius: 16 }}
+              />
+            </TouchableOpacity>
+          </View>
+        ),
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="track"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: "Track",
+          headerShown: true,
+          tabBarIcon: ({ focused, color }) => (
+            <AntDesign
+              name="caretright"
+              size={focused ? 28 : 24}
+              color={color}
+            />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="index"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: "Task",
+          headerShown: true,
+          tabBarIcon: ({ focused, color }) => (
+            <MaterialCommunityIcons
+              name="format-list-bulleted"
+              size={focused ? 28 : 24}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="analytics"
+        options={{
+          title: "Analytics",
+          headerShown: true,
+          tabBarIcon: ({ focused, color }) => (
+            <MaterialCommunityIcons
+              name="google-analytics"
+              size={focused ? 28 : 24}
+              color={color}
+            />
+          ),
         }}
       />
     </Tabs>
   );
 }
+import AntDesign from "@expo/vector-icons/AntDesign";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { router, Tabs } from "expo-router";
+import React from "react";
+import { Image, TouchableOpacity, View } from "react-native";

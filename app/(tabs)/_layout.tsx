@@ -1,7 +1,7 @@
 export default function TabLayout() {
   return (
     <Tabs
-      initialRouteName="track"
+      initialRouteName="analytics"
       screenOptions={{
         tabBarActiveTintColor: "black",
         tabBarInactiveTintColor: "gray",
@@ -31,10 +31,10 @@ export default function TabLayout() {
             }}
           >
             <TouchableOpacity style={{ marginRight: 15 }}>
-              <AntDesign name="bells" size={24} color="black" />
+              <Ionicons name="notifications-outline" size={24} color="black" />
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => router.push("/(auth)/login")}>
+            <TouchableOpacity>
               <Image
                 source={require("@/assets/images/joji.jpg")}
                 style={{ width: 32, height: 32, borderRadius: 16 }}
@@ -50,11 +50,7 @@ export default function TabLayout() {
           title: "Track",
           headerShown: true,
           tabBarIcon: ({ focused, color }) => (
-            <AntDesign
-              name="caretright"
-              size={focused ? 28 : 24}
-              color={color}
-            />
+            <Ionicons name="play" size={focused ? 28 : 24} color={color} />
           ),
         }}
       />
@@ -78,8 +74,8 @@ export default function TabLayout() {
           title: "Analytics",
           headerShown: true,
           tabBarIcon: ({ focused, color }) => (
-            <MaterialCommunityIcons
-              name="google-analytics"
+            <FontAwesome6
+              name="bar-chart"
               size={focused ? 28 : 24}
               color={color}
             />
@@ -89,8 +85,10 @@ export default function TabLayout() {
     </Tabs>
   );
 }
-import AntDesign from "@expo/vector-icons/AntDesign";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { router, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import React from "react";
 import { Image, TouchableOpacity, View } from "react-native";
+
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";

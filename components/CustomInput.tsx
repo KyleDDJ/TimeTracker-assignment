@@ -15,15 +15,15 @@ const CustomInput: React.FC<CustomInputProps> = ({
   secureTextEntry = false,
   keyboardType = "default",
 }) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [showPassword, setShowPassword] = useState(secureTextEntry);
+  const [is_focused, setIsFocused] = useState(false);
+  const [show_password, setShowPassword] = useState(secureTextEntry);
 
   return (
     <View className="mb-4 w-full">
       {label && <Text className="text-gray-600 mb-1">{label}</Text>}
       <View
         className={`flex-row items-center border rounded-xl px-4 ${
-          isFocused ? "border-black" : "border-gray-300"
+          is_focused ? "border-black" : "border-gray-300"
         }`}
       >
         <TextInput
@@ -32,15 +32,15 @@ const CustomInput: React.FC<CustomInputProps> = ({
           value={value}
           onChangeText={onChangeText}
           keyboardType={keyboardType}
-          secureTextEntry={showPassword}
+          secureTextEntry={show_password}
           autoCapitalize="none"
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
         />
         {secureTextEntry && (
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+          <TouchableOpacity onPress={() => setShowPassword(!show_password)}>
             <AntDesign
-              name={showPassword ? "eyeo" : "eye"}
+              name={show_password ? "eyeo" : "eye"}
               size={20}
               color="gray"
             />

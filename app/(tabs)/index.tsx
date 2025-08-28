@@ -40,7 +40,7 @@ const Track = () => {
               </TouchableOpacity>
             </View>
 
-            <Text className="text-gray-800 text-center text-base mb-8">
+            <Text className="text-gray-500 text-center text-base mb-8">
               Import from CSV
             </Text>
             <View className="px-4">

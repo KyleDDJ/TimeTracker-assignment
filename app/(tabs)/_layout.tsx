@@ -34,7 +34,7 @@ export default function TabLayout() {
               <Ionicons name="notifications-outline" size={24} color="black" />
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => router.push("/(auth)/login")}>
               <Image
                 source={require("@/assets/images/joji.jpg")}
                 style={{ width: 32, height: 32, borderRadius: 16 }}
@@ -72,6 +72,7 @@ export default function TabLayout() {
         name="analytics"
         options={{
           title: "Analytics",
+          headerTitle: "Analytics",
           headerShown: true,
           tabBarIcon: ({ focused, color }) => (
             <FontAwesome6
@@ -85,7 +86,7 @@ export default function TabLayout() {
     </Tabs>
   );
 }
-import { Tabs } from "expo-router";
+import { router, Tabs } from "expo-router";
 import React from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 

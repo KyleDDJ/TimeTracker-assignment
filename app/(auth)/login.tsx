@@ -1,7 +1,25 @@
+import Checkbox from "@/components/CheckBox";
+import CustomButton from "@/components/CustomButton";
+import CustomInput from "@/components/CustomInput";
+import Divider from "@/components/Divider";
+import FooterLink from "@/components/FooterLink";
+import LogoHeader from "@/components/LogoHeader";
+import ScreenHeader from "@/components/ScreenHeader";
+import SocialButton from "@/components/SocialButton";
+import { router } from "expo-router";
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [remember_me, setRememberMe] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -9,37 +27,25 @@ const Login = () => {
         contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
         className="px-6 py-8"
       >
-        <View className="items-center pt-10 mb-6">
-          <View className="w-20 h-20 bg-black rounded-2xl items-center justify-center mb-4">
-            <AntDesign name="clockcircle" size={28} color="white" />
-          </View>
-          <Text className="text-2xl font-bold text-gray-900">TimeTracker</Text>
-          <Text className="text-gray-500 mt-1 text-center">
-            Track your sprint tasks efficiently
-          </Text>
-        </View>
+        <LogoHeader
+          iconName="clockcircle"
+          title="TimeTracker"
+          subtitle="Track your sprint tasks efficiently"
+        />
 
-        <View className="items-center pt-5 mb-6">
-          <Text className="text-2xl font-bold text-gray-900">Welcome back</Text>
-          <Text className="text-l text-gray-500 mt-1 text-center">
-            Sign in to continue tracking your task
-          </Text>
-        </View>
+        <ScreenHeader
+          title="Welcome back"
+          subtitle="Sign in to continue tracking your task"
+        />
 
-        <TouchableOpacity className="border border-gray-300 rounded-xl py-3 px-4 mb-4">
-          <View className="flex-row items-center gap-5 justify-center space-x-2">
-            <AntDesign name="google" size={24} color="black" />
-            <Text className="text-gray-700 font-bold text-base">
-              Continue with Google
-            </Text>
-          </View>
-        </TouchableOpacity>
+        <SocialButton
+          iconName="google"
+          text="Continue with Google"
+          onPress={() => console.log("Google login")}
+        />
 
-        <View className="flex-row items-center mb-4">
-          <View className="flex-1 h-px bg-gray-300" />
-          <Text className="mx-2 text-gray-400">or</Text>
-          <View className="flex-1 h-px bg-gray-300" />
-        </View>
+        <Divider text="or" />
+
         <CustomInput
           label="Email"
           placeholder="Enter your email"
@@ -56,56 +62,26 @@ const Login = () => {
         />
 
         <View className="flex-row items-center justify-between mt-3 mb-5">
-          <TouchableOpacity
-            className="flex-row items-center"
-            onPress={() => setRememberMe(!remember_me)}
-          >
-            <View
-              className={`w-5 h-5 rounded border ${
-                remember_me ? "bg-black border-black" : "border-gray-400"
-              } items-center justify-center mr-2`}
-            >
-              {remember_me && (
-                <AntDesign name="check" size={14} color="white" />
-              )}
-            </View>
-            <Text className="text-gray-600">Remember me</Text>
-          </TouchableOpacity>
-
+          <Checkbox
+            label="Remember me"
+            checked={rememberMe}
+            onToggle={() => setRememberMe(!rememberMe)}
+          />
           <TouchableOpacity>
-            <Text className="text-black-500 font-semibold">
-              Forgot password?
-            </Text>
+            <Text className="text-black font-semibold">Forgot password?</Text>
           </TouchableOpacity>
         </View>
 
-        <CustomButton
-          title="Sign In"
-          onPress={() => console.log("Sign in Pressed")}
+        <CustomButton title="Sign In" onPress={() => router.push("/")} />
+
+        <FooterLink
+          text="Don’t have an account?"
+          linkText="Sign up"
+          onPress={() => console.log("Navigate to Sign Up")}
         />
-
-        <View className="flex-row justify-center mt-5">
-          <Text className="text-gray-500">Don’t have an account? </Text>
-          <TouchableOpacity>
-            <Text className="text-black font-semibold">Sign up</Text>
-          </TouchableOpacity>
-        </View>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 export default Login;
-
-import CustomButton from "@/components/CustomButton";
-import CustomInput from "@/components/CustomInput";
-import AntDesign from "@expo/vector-icons/AntDesign";
-
-import React, { useState } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";

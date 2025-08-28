@@ -25,14 +25,16 @@ const StatusTabs: React.FC<StatusTabsProps> = ({
               activeTab === tab.name ? "bg-white" : "bg-gray-100"
             }`}
           >
-            {tab.icon && <View className="mb-1">{tab.icon}</View>}
-            <Text
-              className={`font-semibold ${
-                activeTab === tab.name ? "text-black" : "text-gray-600"
-              }`}
-            >
-              {tab.name}
-            </Text>
+            <View className="flex-row items-center justify-center gap-2">
+              {tab.icon && <View>{tab.icon}</View>}
+              <Text
+                className={`font-semibold ${
+                  activeTab === tab.name ? "text-black" : "text-gray-600"
+                }`}
+              >
+                {tab.name}
+              </Text>
+            </View>
           </TouchableOpacity>
         ))}
       </View>

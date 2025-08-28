@@ -24,11 +24,11 @@ const SprintSummaryCard: React.FC<SprintSummaryCardProps> = ({
 
       <View className="w-full mb-3">
         <View className="flex-row  justify-between w-full">
-          <Text className="text-gray-800 font-semibold">{tasksAssigned} </Text>
+          <Text className="text-gray-800 font-semibold">{tasksAssigned}</Text>
           <Text>•</Text>
-          <Text className="text-gray-800 font-semibold">{tasksCompleted} </Text>
+          <Text className="text-gray-800 font-semibold">{tasksCompleted}</Text>
           <Text>•</Text>
-          <Text className="text-gray-800 font-semibold">{hoursLogged} </Text>
+          <Text className="text-gray-800 font-semibold">{hoursLogged}</Text>
         </View>
         <View className="flex-row justify-between w-full mb-1">
           <Text className="text-gray-700 text-sm">tasks assigned</Text>
@@ -36,7 +36,7 @@ const SprintSummaryCard: React.FC<SprintSummaryCardProps> = ({
           <Text className="text-gray-700 text-sm">logged</Text>
         </View>
 
-        <ProgressBar progress={0.8} width={335} color="black" />
+        <ProgressBar progress={0.6} width={335} color="black" />
       </View>
     </View>
   );

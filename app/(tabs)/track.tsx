@@ -1,7 +1,10 @@
 const Track = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="px-6 py-8">
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}
+        className="px-6 py-8"
+      >
         <View className="px-1">
           <View className="bg-gray-50 rounded-2xl px-5 py-5 items-center justify-center">
             <View className="bg-gray-300 rounded-xl px-10 py-10 mt-3 mb-4">
@@ -66,7 +69,7 @@ const Track = () => {
                 <MaterialIcons name="phone-iphone" size={22} color="white" />
               }
               rightIcon={
-                <Ionicons name="play-circle-sharp" size={28} color="black" />
+                <Ionicons name="play-circle-sharp" size={35} color="black" />
               }
             />
             <MiniTaskCard
@@ -75,7 +78,7 @@ const Track = () => {
               estimated="2h estimated"
               leftIcon={<Octicons name="graph" size={22} color="white" />}
               rightIcon={
-                <Ionicons name="play-circle-outline" size={28} color="gray" />
+                <Ionicons name="play-circle-outline" size={35} color="gray" />
               }
             />
             <MiniTaskCard
@@ -84,7 +87,7 @@ const Track = () => {
               estimated="4h estimated"
               leftIcon={<FontAwesome6 name="users" size={20} color="white" />}
               rightIcon={
-                <Ionicons name="play-circle-outline" size={28} color="gray" />
+                <Ionicons name="play-circle-outline" size={35} color="gray" />
               }
             />
             <MiniTaskCard
@@ -93,7 +96,7 @@ const Track = () => {
               estimated="6h estimated"
               leftIcon={<Octicons name="graph" size={22} color="white" />}
               rightIcon={
-                <Ionicons name="play-circle-outline" size={28} color="gray" />
+                <Ionicons name="play-circle-outline" size={35} color="gray" />
               }
             />
             <MiniTaskCard
@@ -102,7 +105,7 @@ const Track = () => {
               estimated="4h estimated"
               leftIcon={<Octicons name="graph" size={22} color="white" />}
               rightIcon={
-                <Ionicons name="play-circle-outline" size={28} color="gray" />
+                <Ionicons name="play-circle-outline" size={35} color="gray" />
               }
             />
           </View>

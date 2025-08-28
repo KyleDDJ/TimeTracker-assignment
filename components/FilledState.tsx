@@ -159,6 +159,14 @@ const FilledState = () => {
       estimated: "4h estimated",
       icon: <FontAwesome6 name="users" size={20} color="white" />,
     },
+    {
+      progress: "COMPLETED",
+      remaining: "3.5h logged",
+      title: "User Authentication",
+      subtitle: "Backend",
+      estimated: "4h estimated",
+      icon: <FontAwesome6 name="users" size={20} color="white" />,
+    },
   ];
 
   return (

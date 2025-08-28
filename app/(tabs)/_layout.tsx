@@ -1,7 +1,7 @@
 export default function TabLayout() {
   return (
     <Tabs
-      initialRouteName="analytics"
+      initialRouteName="index"
       screenOptions={{
         tabBarActiveTintColor: "black",
         tabBarInactiveTintColor: "gray",

@@ -1,25 +1,7 @@
-import Checkbox from "@/components/CheckBox";
-import CustomButton from "@/components/CustomButton";
-import CustomInput from "@/components/CustomInput";
-import Divider from "@/components/Divider";
-import FooterLink from "@/components/FooterLink";
-import LogoHeader from "@/components/LogoHeader";
-import ScreenHeader from "@/components/ScreenHeader";
-import SocialButton from "@/components/SocialButton";
-import { router } from "expo-router";
-import React, { useState } from "react";
-import {
-  SafeAreaView,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [remember_me, setRememberMe] = useState(false);
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -64,8 +46,8 @@ const Login = () => {
         <View className="flex-row items-center justify-between mt-3 mb-5">
           <Checkbox
             label="Remember me"
-            checked={rememberMe}
-            onToggle={() => setRememberMe(!rememberMe)}
+            checked={remember_me}
+            onToggle={() => setRememberMe(!remember_me)}
           />
           <TouchableOpacity>
             <Text className="text-black font-semibold">Forgot password?</Text>
@@ -85,3 +67,20 @@ const Login = () => {
 };
 
 export default Login;
+import Checkbox from "@/components/CheckBox";
+import CustomButton from "@/components/CustomButton";
+import CustomInput from "@/components/CustomInput";
+import Divider from "@/components/Divider";
+import FooterLink from "@/components/FooterLink";
+import LogoHeader from "@/components/LogoHeader";
+import ScreenHeader from "@/components/ScreenHeader";
+import SocialButton from "@/components/SocialButton";
+import { router } from "expo-router";
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";

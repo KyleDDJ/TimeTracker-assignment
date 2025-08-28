@@ -1,0 +1,21 @@
+export const colors = {
+
+  black: "#000000",
+  charcoal: "#111111",
+  jet: "#1A1A1A",
+  onyx: "#2C2C2C",
+
+  gray50: "#F9FAFB",
+  gray100: "#F3F4F6",
+  gray200: "#E5E7EB",
+  gray300: "#D1D5DB",
+  gray400: "#9CA3AF",
+  gray500: "#6B7280",
+  gray600: "#4B5563",
+  gray700: "#374151",
+  gray800: "#1F2937",
+  gray900: "#111827",
+
+  textLight: "#FFFFFF",
+  textDark: "#000000",
+};

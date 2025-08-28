@@ -1,16 +1,22 @@
-const ProgressBar = ({
+interface ProgressBarProps {
+  progress?: number;
+  width?: number;
+  color?: string;
+  unfilledColor?: string;
+  style?: ViewStyle;
+}
+
+const ProgressBar: React.FC<ProgressBarProps> = ({
   progress = 0,
   width = 300,
   color = "black",
   unfilledColor = "#e6e7e9ff",
-  borderColor = "#e6e7e9ff",
-  borderWidth = 1,
   style = {},
 }) => {
   return (
     <View
       style={[
-        { backgroundColor: "#f3f3f3", borderRadius: 16, padding: 8 },
+        { borderRadius: 16, padding: 8, backgroundColor: "#f3f3f3" },
         style,
       ]}
     >
@@ -19,8 +25,7 @@ const ProgressBar = ({
         width={width}
         color={color}
         unfilledColor={unfilledColor}
-        borderColor={borderColor}
-        borderWidth={borderWidth}
+        borderWidth={0}
       />
     </View>
   );
@@ -28,5 +33,5 @@ const ProgressBar = ({
 
 export default ProgressBar;
 import React from "react";
-import { View } from "react-native";
+import { View, ViewStyle } from "react-native";
 import * as Progress from "react-native-progress";

@@ -6,30 +6,21 @@ const Track = () => {
         className="px-6 py-8"
       >
         <View className="px-1">
-          <View className="bg-gray-50 rounded-2xl px-5 py-5 items-center justify-center">
-            <View className="bg-gray-300 rounded-xl px-10 py-10 mt-3 mb-4">
-              <Entypo name="code" size={50} color="white" />
-            </View>
+          <View className="bg-gray-100 rounded rounded-2xl px-5 py-5 items-center justify-center">
+            <TaskInfoHeader
+              title="API Integration Setup"
+              sprint="Sprint 2025-01"
+              subtitle="Frontend Development"
+            />
 
-            <View className="justify-center items-center mb-5">
-              <Text className="font-bold text-xl mb-3">
-                API Integration Setup
-              </Text>
-              <View className="flex-row gap-2">
-                <Text className="text-gray-600">Sprint 2025-01</Text>
-                <Text className="font-semibold">•</Text>
-                <Text className="text-gray-600">Frontend Development</Text>
-              </View>
-            </View>
-            <Progress.Bar
-              progress={0.7}
+            <ProgressBar
+              progress={0.3}
               width={300}
               color="black"
-              unfilledColor="#e6e7e9ff"
-              borderColor="#e6e7e9ff"
-              borderWidth={1}
+              unfilledColor="lightgrey"
             />
-            <View className="justify-center mt-4 items-center">
+
+            <View className="justify-center mt-4 items-cente1r">
               <Text className="font-bold text-3xl">02:34:15</Text>
             </View>
             <View className="flex-row justify-center items-center gap-8 mt-5 mb-3">
@@ -116,9 +107,10 @@ const Track = () => {
 };
 
 export default Track;
-import * as Progress from "react-native-progress";
 
 import MiniTaskCard from "@/components/MiniTask";
+import ProgressBar from "@/components/Progress";
+import TaskInfoHeader from "@/components/TaskInfoHeader";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";

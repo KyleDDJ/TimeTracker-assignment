@@ -13,7 +13,7 @@ const Track = () => {
     <View className="flex-1 bg-white">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="py-8">
         {!is_filled ? (
-          <EmptyState
+          <NoTaskView
             title="No Tasks Yet"
             description="Sync your FocusTracker tasks to start tracking your time and managing your sprint efficiently."
             icon={<FontAwesome5 name="tasks" size={43} color="#9CA3AF" />}
@@ -62,9 +62,9 @@ const Track = () => {
                 </View>
               </View>
             </View>
-          </EmptyState>
+          </NoTaskView>
         ) : (
-          <FilledState />
+          <TaskDashboard />
         )}
       </ScrollView>
     </View>
@@ -74,8 +74,8 @@ export default Track;
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-import EmptyState from "@/components/EmptyState";
-import FilledState from "@/components/FilledState";
+import NoTaskView from "@/components/NoTaskView";
+import TaskDashboard from "@/components/TasksDashboard";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";

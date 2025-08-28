@@ -27,7 +27,6 @@ const MiniTaskCard: React.FC<MiniTaskCardProps> = ({
       onPress={onPress}
       className="flex-row items-center justify-between bg-white rounded-2xl p-4 mb-4 border border-gray-200"
     >
-      {/* Left Icon */}
       {leftIcon &&
         (showIconBackground ? (
           <View className="p-3 rounded bg-gray-300 mr-3">{leftIcon}</View>
@@ -35,7 +34,6 @@ const MiniTaskCard: React.FC<MiniTaskCardProps> = ({
           <View className="mr-3">{leftIcon}</View>
         ))}
 
-      {/* Title + Subtitle */}
       <View className="flex-1">
         <View className="flex-row justify-between items-center">
           <Text className="text-lg font-bold text-black">{title}</Text>
@@ -58,7 +56,6 @@ const MiniTaskCard: React.FC<MiniTaskCardProps> = ({
         </View>
       </View>
 
-      {/* Optional right-side icon */}
       {rightIcon && <View className="ml-3">{rightIcon}</View>}
     </TouchableOpacity>
   );

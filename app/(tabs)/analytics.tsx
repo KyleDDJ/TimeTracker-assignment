@@ -82,7 +82,7 @@ const Analytics: React.FC = () => {
             </View>
           </View>
 
-          <View className="mt-3">
+          <View className="mt-5">
             <MiniTaskCard
               title="API Integration Setup"
               subtitle="Frontend Development"

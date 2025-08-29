@@ -20,7 +20,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
 
   return (
     <View className="mb-4 w-full">
-      {label && <Text className="text-gray-600 mb-1">{label}</Text>}
+      {label && <Text className="text-gray-700 mb-1">{label}</Text>}
       <View
         className={`flex-row items-center border rounded-xl px-4 ${
           is_focused ? "border-black" : "border-gray-300"

@@ -49,7 +49,7 @@ const EventCard: React.FC<EventCardProps> = ({ style = {}, item }) => {
     return isBreak
       ? {
           borderWidth: 2,
-          borderColor: COLORS.gray500,
+          borderColor: COLORS.gray400,
           borderRadius: 8,
           borderStyle: "dashed",
         }
@@ -61,7 +61,7 @@ const EventCard: React.FC<EventCardProps> = ({ style = {}, item }) => {
         };
   };
 
-  const textColor = isBreak ? "black" : "white";
+  const textColor = isBreak ? COLORS.black : COLORS.white;
 
   return (
     <View

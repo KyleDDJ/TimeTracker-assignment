@@ -131,7 +131,7 @@ const FilledState = () => {
       title: "API Integration Setup",
       subtitle: "Frontend Development",
       estimated: "6h estimated",
-      icon: <Entypo name="code" size={24} color="white" />,
+      icon: <Entypo name="code" size={24} color={COLORS.white} />,
       isActive: true,
       onPress: () => router.push("/(tabs)/track"),
     },
@@ -141,7 +141,9 @@ const FilledState = () => {
       title: "Mobile UI Testing",
       subtitle: "QA",
       estimated: "2h estimated",
-      icon: <MaterialIcons name="phone-iphone" size={24} color="white" />,
+      icon: (
+        <MaterialIcons name="phone-iphone" size={24} color={COLORS.white} />
+      ),
     },
     {
       progress: "TO DO",
@@ -149,7 +151,7 @@ const FilledState = () => {
       title: "Analytics Dashboard",
       subtitle: "Frontend",
       estimated: "6h estimated",
-      icon: <Octicons name="graph" size={24} color="white" />,
+      icon: <Octicons name="graph" size={24} color={COLORS.white} />,
     },
     {
       progress: "COMPLETED",
@@ -157,7 +159,7 @@ const FilledState = () => {
       title: "User Authentication",
       subtitle: "Backend",
       estimated: "4h estimated",
-      icon: <FontAwesome6 name="users" size={20} color="white" />,
+      icon: <FontAwesome6 name="users" size={20} color={COLORS.white} />,
     },
     {
       progress: "COMPLETED",
@@ -165,7 +167,7 @@ const FilledState = () => {
       title: "User Authentication",
       subtitle: "Backend",
       estimated: "4h estimated",
-      icon: <FontAwesome6 name="users" size={20} color="white" />,
+      icon: <FontAwesome6 name="users" size={20} color={COLORS.white} />,
     },
   ];
 
@@ -207,5 +209,6 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Octicons from "@expo/vector-icons/Octicons";
 
+import { colors as COLORS } from "@/constants/colors";
 import SprintSummaryCard from "./SprintSummaryCard";
 import StatusTabs from "./StatusTabs";

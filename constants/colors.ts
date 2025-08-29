@@ -1,9 +1,10 @@
 export const colors = {
 
   black: "#000000",
+  white: "#ffffffff",
   charcoal: "#111111",
   jet: "#1A1A1A",
-  onyx: "#2C2C2C",
+  neutral: "#e5e5e5",
 
   gray50: "#F9FAFB",
   gray100: "#F3F4F6",

@@ -6,20 +6,21 @@ type SocialButtonProps = {
 
 const SocialButton = ({ iconName, text, onPress }: SocialButtonProps) => {
   return (
-    <TouchableOpacity
+    <TouchableHighlight
       onPress={onPress}
+      underlayColor={COLORS.neutral}
       className="border border-gray-300 rounded-xl py-3 px-4 mb-4"
-      activeOpacity={0.8}
     >
       <View className="flex-row gap-3 items-center justify-center space-x-2">
         <AntDesign name={iconName as any} size={24} color="black" />
         <Text className="text-gray-700 font-bold text-base">{text}</Text>
       </View>
-    </TouchableOpacity>
+    </TouchableHighlight>
   );
 };
 
 export default SocialButton;
+import { colors as COLORS } from "@/constants/colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableHighlight, View } from "react-native";

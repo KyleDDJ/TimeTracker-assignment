@@ -38,7 +38,7 @@ const TrackingHeader: React.FC<TrackingHeaderProps> = ({
         </View>
         <View className="flex-row justify-between w-full">
           <Text className="text-gray-600">Total Tracked</Text>
-          <Text className="text-gray-600">Task Worked</Text>
+          <Text className="text-gray-600">Tasks Worked</Text>
           <Text className="text-gray-600">Efficiency</Text>
         </View>
       </View>

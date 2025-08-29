@@ -50,7 +50,9 @@ const Login = () => {
             onToggle={() => setRememberMe(!remember_me)}
           />
           <TouchableOpacity>
-            <Text className="text-black font-semibold">Forgot password?</Text>
+            <Text className="text-gray-500 font-semibold">
+              Forgot password?
+            </Text>
           </TouchableOpacity>
         </View>
 

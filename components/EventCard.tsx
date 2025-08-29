@@ -25,19 +25,19 @@ const EventCard: React.FC<EventCardProps> = ({ style = {}, item }) => {
   const hours = Math.floor(durationMinutes / 60);
   const minutes = durationMinutes % 60;
 
-  const isBreak = item.title?.toLowerCase().includes("break");
+  const is_break = item.title?.toLowerCase().includes("break");
 
   const formatDuration = () => {
-    return isBreak
+    return is_break
       ? `${durationMinutes}m`
       : `${hours > 0 ? `${hours}h ` : ""}${minutes}m`;
   };
 
-  const hourHeight = 60;
-  const blockHeight = (durationMinutes / 60) * hourHeight;
+  const HOUR_PIXEL_HEIGHT = 60;
+  const blockHeight = (durationMinutes / 60) * HOUR_PIXEL_HEIGHT;
 
   const getBackgroundColor = (title: string) => {
-    if (isBreak) return "lightgrey";
+    if (is_break) return "lightgrey";
     switch (title?.toLowerCase()) {
       case "api integration":
         return COLORS.black;
@@ -50,23 +50,16 @@ const EventCard: React.FC<EventCardProps> = ({ style = {}, item }) => {
     }
   };
 
-  const getBorderStyle = (): ViewStyle => {
-    return isBreak
-      ? {
-          borderWidth: 2,
-          borderColor: COLORS.gray400,
-          borderRadius: 8,
-          borderStyle: "dashed",
-        }
-      : {
-          borderWidth: 1,
-          borderColor: COLORS.gray500,
-          borderRadius: 8,
-          borderStyle: "solid",
-        };
+  const getBorderStyle = (isBreak: boolean): ViewStyle => {
+    return {
+      borderRadius: 8,
+      borderWidth: isBreak ? 2 : 1,
+      borderColor: isBreak ? COLORS.gray400 : COLORS.gray500,
+      borderStyle: isBreak ? "dashed" : "solid",
+    };
   };
 
-  const textColor = isBreak ? COLORS.black : COLORS.white;
+  const textColor = is_break ? COLORS.black : COLORS.white;
 
   return (
     <View
@@ -77,13 +70,13 @@ const EventCard: React.FC<EventCardProps> = ({ style = {}, item }) => {
         height: blockHeight,
         justifyContent: "flex-start",
         alignItems: "flex-start",
-        ...getBorderStyle(),
+        ...getBorderStyle(is_break), // 👈 pass param
       }}
     >
       <Text style={{ color: textColor, fontWeight: "bold", fontSize: 12 }}>
         {item.title}
       </Text>
-      {!isBreak && (
+      {!is_break && (
         <Text style={{ color: textColor, fontSize: 10 }}>
           {moment(item.startDate).format("h:mm A")} -{" "}
           {moment(item.endDate).format("h:mm A")}

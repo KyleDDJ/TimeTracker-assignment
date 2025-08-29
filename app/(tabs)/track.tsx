@@ -1,42 +1,15 @@
-import ProgressBar from "@/components/Progress";
+import MiniTaskCard from "@/components/MiniTaskCard";
+import ProgressBarTask from "@/components/ProgressBarTrack";
 import TaskInfoHeader from "@/components/TaskInfoHeader";
-import MiniTaskCard from "@/screens/MiniTaskCard";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import Octicons from "@expo/vector-icons/Octicons";
 import React from "react";
-import { Dimensions, SafeAreaView, ScrollView, Text, View } from "react-native";
+import { SafeAreaView, ScrollView, Text, View } from "react-native";
+
+import { TRACK_TASKS } from "@/constants/TrackTask";
 
 const Track: React.FC = () => {
-  const screenWidth = Dimensions.get("window").width;
-
-  const tasks = [
-    {
-      title: "Mobile UI Testing",
-      subtitle: "QA",
-      estimated: "4h estimated",
-      leftIcon: <MaterialIcons name="phone-iphone" size={22} color="white" />,
-      rightIcon: <Ionicons name="play-circle-sharp" size={35} color="black" />,
-    },
-    {
-      title: "Analytics Dashboard",
-      subtitle: "Frontend",
-      estimated: "2h estimated",
-      leftIcon: <Octicons name="graph" size={22} color="white" />,
-      rightIcon: <Ionicons name="play-circle-outline" size={35} color="gray" />,
-    },
-    {
-      title: "User Authentication",
-      subtitle: "Backend",
-      estimated: "4h estimated",
-      leftIcon: <FontAwesome6 name="users" size={20} color="white" />,
-      rightIcon: <Ionicons name="play-circle-outline" size={35} color="gray" />,
-    },
-  ];
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <ScrollView
@@ -62,12 +35,7 @@ const Track: React.FC = () => {
             subtitle="Frontend Development"
           />
 
-          <ProgressBar
-            progress={0.3}
-            width={screenWidth * 0.8}
-            color="black"
-            unfilledColor="lightgrey"
-          />
+          <ProgressBarTask progress={0.3} />
 
           <View style={{ marginTop: 16, alignItems: "center" }}>
             <Text style={{ fontWeight: "bold", fontSize: 28 }}>02:34:15</Text>
@@ -143,7 +111,7 @@ const Track: React.FC = () => {
         </View>
 
         <View style={{ marginTop: 8 }}>
-          {tasks.map((task, index) => (
+          {TRACK_TASKS.map((task, index) => (
             <MiniTaskCard key={index} {...task} />
           ))}
         </View>

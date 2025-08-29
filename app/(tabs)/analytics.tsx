@@ -1,52 +1,20 @@
-import moment from "moment";
 import React, { useState } from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
 
-import EventCard, { EventItem } from "@/components/EventCard";
+import EventCard from "@/components/EventCard";
+import MiniTaskCard from "@/components/MiniTaskCard";
 import StatusTabs from "@/components/StatusTabs";
 import TimelineChart from "@/components/TimelineChart";
-import MiniTaskCard from "@/screens/MiniTaskCard";
-
 import TrackingHeader from "@/components/TrackingHeader";
+
 import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+
+import { ANALYTICS_ITEMS } from "@/constants/AnalyticsItems";
 
 const Analytics: React.FC = () => {
   const [active_tab, setActiveTab] = useState("Timeline");
   const [date] = useState(new Date());
-
-  const [items] = useState<EventItem[]>([
-    {
-      id: 1,
-      title: "API Integration",
-      startDate: moment().set({ hour: 9, minute: 0 }).toDate(),
-      endDate: moment().set({ hour: 11, minute: 15 }).toDate(),
-    },
-    {
-      id: 2,
-      title: "Break",
-      startDate: moment().set({ hour: 11, minute: 16 }).toDate(),
-      endDate: moment().set({ hour: 12, minute: 0 }).toDate(),
-    },
-    {
-      id: 3,
-      title: "Database Migration",
-      startDate: moment().set({ hour: 12, minute: 30 }).toDate(),
-      endDate: moment().set({ hour: 16, minute: 0 }).toDate(),
-    },
-    {
-      id: 4,
-      title: "Break",
-      startDate: moment().set({ hour: 16, minute: 1 }).toDate(),
-      endDate: moment().set({ hour: 16, minute: 30 }).toDate(),
-    },
-    {
-      id: 5,
-      title: "Mobile Testing",
-      startDate: moment().set({ hour: 16, minute: 31 }).toDate(),
-      endDate: moment().set({ hour: 18, minute: 0 }).toDate(),
-    },
-  ]);
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -86,7 +54,11 @@ const Analytics: React.FC = () => {
           </View>
 
           <View className="mt-4">
-            <TimelineChart items={items} EventCard={EventCard} date={date} />
+            <TimelineChart
+              items={ANALYTICS_ITEMS}
+              EventCard={EventCard}
+              date={date}
+            />
           </View>
 
           <View className="mt-4">

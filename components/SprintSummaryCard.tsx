@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, View } from "react-native";
-import ProgressBar from "./Progress";
+import ProgressBarSprint from "./ProgressBarSprint";
 
 type SprintSummaryCardProps = {
   sprintName: string;
@@ -40,7 +40,7 @@ const SprintSummaryCard: React.FC<SprintSummaryCardProps> = ({
           <Text className="text-gray-700 text-sm">logged</Text>
         </View>
 
-        <ProgressBar progress={0.6} width={335} color="black" />
+        <ProgressBarSprint progress={0.6} />
       </View>
     </View>
   );

@@ -1,3 +1,4 @@
+import { colors as COLORS } from "@/constants/colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -20,7 +21,7 @@ const Checkbox = ({ label, checked, onToggle }: CheckboxProps) => {
           checked ? "bg-black border-black" : "border-gray-400"
         } items-center justify-center mr-2`}
       >
-        {checked && <AntDesign name="check" size={14} color="white" />}
+        {checked && <AntDesign name="check" size={14} color={COLORS.white} />}
       </View>
       <Text className="text-gray-600">{label}</Text>
     </TouchableOpacity>

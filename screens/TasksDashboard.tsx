@@ -1,13 +1,18 @@
-type TaskCardProps = {
-  title: string;
-  progress: "TO DO" | "TRACKING NOW" | "COMPLETED";
-  subtitle: string;
-  estimated: string;
-  remaining: string;
-  icon: React.ReactNode;
-  onPress?: () => void;
-  isActive?: boolean;
-};
+import { router } from "expo-router";
+import React, { useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+
+import AntDesign from "@expo/vector-icons/AntDesign";
+import Entypo from "@expo/vector-icons/Entypo";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import Octicons from "@expo/vector-icons/Octicons";
+
+import SprintSummaryCard from "@/components/SprintSummaryCard";
+import StatusTabs from "@/components/StatusTabs";
+import { colors as COLORS } from "@/constants/colors";
+import { TaskCardProps } from "@/entities/task.entities";
 
 const STATUS_CONFIG = {
   "TRACKING NOW": {
@@ -218,18 +223,3 @@ const FilledState = () => {
 };
 
 export default FilledState;
-
-import { router } from "expo-router";
-import React, { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-
-import AntDesign from "@expo/vector-icons/AntDesign";
-import Entypo from "@expo/vector-icons/Entypo";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import Octicons from "@expo/vector-icons/Octicons";
-
-import SprintSummaryCard from "@/components/SprintSummaryCard";
-import StatusTabs from "@/components/StatusTabs";
-import { colors as COLORS } from "@/constants/colors";

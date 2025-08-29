@@ -1,23 +1,7 @@
+import { colors as COLORS } from "@/constants/colors";
+import { MiniTaskCardProps } from "@/entities/task.entities";
 import React from "react";
-import {
-  GestureResponderEvent,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-
-type MiniTaskCardProps = {
-  title?: string;
-  subtitle?: string;
-  estimated?: string;
-  leftIcon?: React.ReactNode;
-  rightIcon?: React.ReactNode;
-  showIconBackground?: boolean;
-  rightEstimate?: string;
-  percentage?: string;
-  onPress?: (event: GestureResponderEvent) => void;
-};
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const MiniTaskCard: React.FC<MiniTaskCardProps> = ({
   title,
@@ -69,12 +53,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.white,
     borderRadius: 20,
     padding: 16,
     marginBottom: 16,
     borderWidth: 1,
-    borderColor: "#E5E7EB",
+    borderColor: COLORS.gray300,
   },
   leftIconContainer: {
     marginRight: 12,
@@ -101,22 +85,22 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#000",
+    color: COLORS.black,
   },
   rightEstimate: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#374151",
+    color: COLORS.gray700,
   },
   subtitle: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#6B7280",
+    color: COLORS.gray700,
   },
   percentage: {
     fontSize: 14,
     fontWeight: "600",
-    color: "#6B7280",
+    color: COLORS.gray700,
   },
   rightIcon: {
     marginLeft: 12,

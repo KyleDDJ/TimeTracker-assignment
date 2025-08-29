@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, View } from "react-native";
+
 const Divider = ({ text = "or" }: { text?: string }) => {
   return (
     <View className="flex-row items-center my-4">

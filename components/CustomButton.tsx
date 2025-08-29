@@ -1,3 +1,4 @@
+import { colors as COLORS } from "@/constants/colors";
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 
@@ -16,9 +17,8 @@ const CustomButton: React.FC<PrimaryButtonProps> = ({
     <TouchableOpacity
       onPress={onPress}
       disabled={disabled}
-      className={`rounded-xl py-3 mt-1 ${
-        disabled ? "bg-gray-400" : "bg-black"
-      }`}
+      className="rounded-xl py-3 mt-1"
+      style={{ backgroundColor: disabled ? COLORS.gray400 : COLORS.black }}
     >
       <Text className="text-white text-center font-semibold text-base">
         {title}

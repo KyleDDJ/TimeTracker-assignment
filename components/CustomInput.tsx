@@ -1,3 +1,4 @@
+import { colors as COLORS } from "@/constants/colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React, { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
@@ -46,7 +47,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
             <AntDesign
               name={show_password ? "eyeo" : "eye"}
               size={20}
-              color="gray"
+              color={COLORS.gray}
             />
           </TouchableOpacity>
         )}

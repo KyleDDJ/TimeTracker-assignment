@@ -1,3 +1,6 @@
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+
 type Tab = {
   name: string;
   icon?: React.ReactNode;
@@ -43,5 +46,3 @@ const StatusTabs: React.FC<StatusTabsProps> = ({
 };
 
 export default StatusTabs;
-import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";

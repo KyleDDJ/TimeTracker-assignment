@@ -44,11 +44,6 @@ const STATUS_CONFIG = {
   },
 };
 
-const getTextStyle = (isCompleted: boolean, isActive: boolean) => {
-  if (isCompleted) return "text-gray-500 line-through";
-  return isActive ? "text-white" : "text-black";
-};
-
 const TaskCard: React.FC<TaskCardProps> = ({
   title,
   progress,
@@ -66,54 +61,80 @@ const TaskCard: React.FC<TaskCardProps> = ({
     <TouchableOpacity
       activeOpacity={0.8}
       onPress={onPress}
-      className={`rounded-2xl p-4 mb-4 ${
-        isActive ? "bg-black" : "bg-white border border-gray-300"
-      }`}
+      style={{
+        borderRadius: 16,
+        padding: 16,
+        marginBottom: 16,
+        backgroundColor: isActive ? "#000" : "#fff",
+        borderWidth: isActive ? 0 : 1,
+        borderColor: "#D1D5DB",
+      }}
     >
-      <View className="flex-row justify-between items-center mb-3">
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginBottom: 12,
+        }}
+      >
         <Text
-          className={`text-xs font-semibold px-2 py-1 rounded ${
-            isActive ? config.badgeClass : "bg-gray-200 text-black"
-          }`}
+          style={{
+            fontSize: 12,
+            fontWeight: "600",
+            paddingHorizontal: 8,
+            paddingVertical: 4,
+            borderRadius: 8,
+            backgroundColor: isActive ? "#374151" : "#E5E7EB",
+            color: isActive ? "#fff" : "#000",
+          }}
         >
           {progress}
         </Text>
         <Text
-          className={`text-sm font-bold font-mono ${
-            isActive ? "text-white" : "text-gray-500"
-          }`}
+          style={{
+            fontSize: 14,
+            fontWeight: "700",
+            color: isActive ? "#fff" : "#6B7280",
+          }}
         >
           {remaining}
         </Text>
       </View>
 
-      <View className="flex-row justify-between items-center">
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
         <View
-          className={`p-3 rounded-xl mr-3 ${
-            isActive ? "bg-gray-800" : "bg-gray-200"
-          }`}
+          style={{
+            padding: 12,
+            borderRadius: 12,
+            backgroundColor: isActive ? "#1F2937" : "#E5E7EB",
+            marginRight: 12,
+          }}
         >
           {icon}
         </View>
-        <View className="flex-1">
+        <View style={{ flex: 1 }}>
           <Text
-            className={`text-lg font-bold ${getTextStyle(
-              isCompleted,
-              isActive
-            )}`}
+            style={{
+              fontSize: 18,
+              fontWeight: "700",
+              color: isCompleted ? "#9CA3AF" : isActive ? "#fff" : "#111827",
+              textDecorationLine: isCompleted ? "line-through" : "none",
+            }}
           >
             {title}
           </Text>
           <Text
-            className={`text-sm font-bold text-gray-500 ${getTextStyle(
-              isCompleted,
-              isActive
-            )}`}
+            style={{
+              fontSize: 14,
+              fontWeight: "600",
+              color: "#6B7280",
+              textDecorationLine: isCompleted ? "line-through" : "none",
+            }}
           >
             {subtitle} • {estimated}
           </Text>
         </View>
-        <View className="ml-3">{config.icon(isActive)}</View>
+        <View style={{ marginLeft: 12 }}>{config.icon(isActive)}</View>
       </View>
     </TouchableOpacity>
   );
@@ -209,6 +230,6 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Octicons from "@expo/vector-icons/Octicons";
 
+import SprintSummaryCard from "@/components/SprintSummaryCard";
+import StatusTabs from "@/components/StatusTabs";
 import { colors as COLORS } from "@/constants/colors";
-import SprintSummaryCard from "./SprintSummaryCard";
-import StatusTabs from "./StatusTabs";

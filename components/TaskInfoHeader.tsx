@@ -1,3 +1,7 @@
+import Entypo from "@expo/vector-icons/Entypo";
+import React from "react";
+import { Text, View } from "react-native";
+
 type TaskInfoHeaderProps = {
   iconName?: string;
   iconColor?: string;
@@ -34,6 +38,3 @@ const TaskInfoHeader: React.FC<TaskInfoHeaderProps> = ({
 };
 
 export default TaskInfoHeader;
-import Entypo from "@expo/vector-icons/Entypo";
-import React from "react";
-import { Text, View } from "react-native";

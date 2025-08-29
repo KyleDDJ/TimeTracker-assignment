@@ -1,3 +1,7 @@
+import AntDesign from "@expo/vector-icons/AntDesign";
+import React, { useState } from "react";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
+
 interface CustomInputProps {
   label?: string;
   placeholder?: string;
@@ -52,6 +56,3 @@ const CustomInput: React.FC<CustomInputProps> = ({
 };
 
 export default CustomInput;
-import AntDesign from "@expo/vector-icons/AntDesign";
-import React, { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";

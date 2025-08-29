@@ -1,3 +1,7 @@
+import AntDesign from "@expo/vector-icons/AntDesign";
+import React from "react";
+import { Text, View } from "react-native";
+
 type LogoHeaderProps = {
   iconName: string;
   title: string;
@@ -17,6 +21,3 @@ const LogoHeader = ({ iconName, title, subtitle }: LogoHeaderProps) => {
 };
 
 export default LogoHeader;
-import AntDesign from "@expo/vector-icons/AntDesign";
-import React from "react";
-import { Text, View } from "react-native";

@@ -1,3 +1,6 @@
+import React from "react";
+import { Text, View } from "react-native";
+
 type ScreenHeaderProps = {
   title: string;
   subtitle: string;
@@ -13,5 +16,3 @@ const ScreenHeader = ({ title, subtitle }: ScreenHeaderProps) => {
 };
 
 export default ScreenHeader;
-import React from "react";
-import { Text, View } from "react-native";

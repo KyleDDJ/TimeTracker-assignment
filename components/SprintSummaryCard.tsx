@@ -1,3 +1,7 @@
+import React from "react";
+import { Text, View } from "react-native";
+import ProgressBar from "./Progress";
+
 type SprintSummaryCardProps = {
   sprintName: string;
   daysLeft: string;
@@ -43,6 +47,3 @@ const SprintSummaryCard: React.FC<SprintSummaryCardProps> = ({
 };
 
 export default SprintSummaryCard;
-import React from "react";
-import { Text, View } from "react-native";
-import ProgressBar from "./Progress";

@@ -1,3 +1,7 @@
+import React from "react";
+import { View, ViewStyle } from "react-native";
+import * as Progress from "react-native-progress";
+
 interface ProgressBarProps {
   progress?: number;
   width?: number;
@@ -32,6 +36,3 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
 };
 
 export default ProgressBar;
-import React from "react";
-import { View, ViewStyle } from "react-native";
-import * as Progress from "react-native-progress";

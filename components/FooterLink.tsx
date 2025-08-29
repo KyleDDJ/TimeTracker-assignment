@@ -1,3 +1,6 @@
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+
 type FooterLinkProps = {
   text: string;
   linkText: string;
@@ -16,5 +19,3 @@ const FooterLink = ({ text, linkText, onPress }: FooterLinkProps) => {
 };
 
 export default FooterLink;
-import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";

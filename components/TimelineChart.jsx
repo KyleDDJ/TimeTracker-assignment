@@ -1,3 +1,7 @@
+import React from "react";
+import { View } from "react-native";
+import Timetable from "react-native-calendar-timetable";
+
 const TimelineChart = ({ items, EventCard, date }) => {
   const renderEventCard = ({ key, ...rest }) => {
     return <EventCard key={key} {...rest} />;
@@ -20,6 +24,3 @@ const TimelineChart = ({ items, EventCard, date }) => {
 };
 
 export default TimelineChart;
-import React from "react";
-import { View } from "react-native";
-import Timetable from "react-native-calendar-timetable";

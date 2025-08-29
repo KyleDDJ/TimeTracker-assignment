@@ -1,3 +1,8 @@
+import { colors as COLORS } from "@/constants/colors";
+import moment from "moment";
+import React from "react";
+import { Text, View, ViewStyle } from "react-native";
+
 export interface EventItem {
   id: number;
   title: string;
@@ -90,7 +95,3 @@ const EventCard: React.FC<EventCardProps> = ({ style = {}, item }) => {
 };
 
 export default EventCard;
-import { colors as COLORS } from "@/constants/colors";
-import moment from "moment";
-import React from "react";
-import { Text, View, ViewStyle } from "react-native";

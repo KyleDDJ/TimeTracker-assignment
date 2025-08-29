@@ -1,3 +1,6 @@
+import React from "react";
+import { Text, TouchableOpacity } from "react-native";
+
 interface PrimaryButtonProps {
   title: string;
   onPress: () => void;
@@ -25,5 +28,3 @@ const CustomButton: React.FC<PrimaryButtonProps> = ({
 };
 
 export default CustomButton;
-import React from "react";
-import { Text, TouchableOpacity } from "react-native";

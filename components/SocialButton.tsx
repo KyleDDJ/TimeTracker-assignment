@@ -1,3 +1,8 @@
+import { colors as COLORS } from "@/constants/colors";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import React from "react";
+import { Text, TouchableHighlight, View } from "react-native";
+
 type SocialButtonProps = {
   iconName: string;
   text: string;
@@ -20,7 +25,3 @@ const SocialButton = ({ iconName, text, onPress }: SocialButtonProps) => {
 };
 
 export default SocialButton;
-import { colors as COLORS } from "@/constants/colors";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import React from "react";
-import { Text, TouchableHighlight, View } from "react-native";

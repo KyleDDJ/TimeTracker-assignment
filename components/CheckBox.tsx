@@ -1,3 +1,7 @@
+import AntDesign from "@expo/vector-icons/AntDesign";
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+
 type CheckboxProps = {
   label: string;
   checked: boolean;
@@ -24,6 +28,3 @@ const Checkbox = ({ label, checked, onToggle }: CheckboxProps) => {
 };
 
 export default Checkbox;
-import AntDesign from "@expo/vector-icons/AntDesign";
-import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";

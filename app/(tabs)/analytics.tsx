@@ -1,3 +1,16 @@
+import moment from "moment";
+import React, { useState } from "react";
+import { SafeAreaView, ScrollView, Text, View } from "react-native";
+
+import EventCard, { EventItem } from "@/components/EventCard";
+import StatusTabs from "@/components/StatusTabs";
+import TimelineChart from "@/components/TimelineChart";
+import MiniTaskCard from "@/screens/MiniTaskCard";
+
+import TrackingHeader from "@/components/TrackingHeader";
+import Entypo from "@expo/vector-icons/Entypo";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+
 const Analytics: React.FC = () => {
   const [active_tab, setActiveTab] = useState("Timeline");
   const [date] = useState(new Date());
@@ -121,15 +134,3 @@ const Analytics: React.FC = () => {
 };
 
 export default Analytics;
-import moment from "moment";
-import React, { useState } from "react";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
-
-import EventCard, { EventItem } from "@/components/EventCard";
-import MiniTaskCard from "@/components/MiniTask";
-import StatusTabs from "@/components/StatusTabs";
-import TimelineChart from "@/components/TimelineChart";
-
-import TrackingHeader from "@/components/TrackingHeader";
-import Entypo from "@expo/vector-icons/Entypo";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";

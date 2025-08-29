@@ -1,3 +1,6 @@
+import EvilIcons from "@expo/vector-icons/EvilIcons";
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 interface TrackingHeaderProps {
   date: string;
   totalTracked: string;
@@ -47,6 +50,3 @@ const TrackingHeader: React.FC<TrackingHeaderProps> = ({
 };
 
 export default TrackingHeader;
-import EvilIcons from "@expo/vector-icons/EvilIcons";
-import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";

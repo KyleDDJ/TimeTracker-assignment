@@ -1,3 +1,12 @@
+import { useState } from "react";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+
+import NoTaskView from "@/screens/NoTaskView";
+import TaskDashboard from "@/screens/TasksDashboard";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+
 const Track = () => {
   const [is_filled, setIsFilled] = useState(false);
 
@@ -40,7 +49,7 @@ const Track = () => {
               </TouchableOpacity>
             </View>
 
-            <Text className="text-gray-500 text-center text-base mb-8">
+            <Text className="text-gray-500 text-center font-semibold text-base mb-8">
               Import from CSV
             </Text>
             <View className="px-4">
@@ -71,11 +80,3 @@ const Track = () => {
   );
 };
 export default Track;
-import { useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
-
-import NoTaskView from "@/components/NoTaskView";
-import TaskDashboard from "@/components/TasksDashboard";
-import AntDesign from "@expo/vector-icons/AntDesign";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";

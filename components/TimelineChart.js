@@ -1,7 +1,6 @@
 const TimelineChart = ({ items, EventCard, date }) => {
-  const renderEventCard = item => {
-    const { key, ...rest } = item;
-    return <EventCard key={item.id} {...rest} />;
+  const renderEventCard = ({ key, ...rest }) => {
+    return <EventCard key={key} {...rest} />;
   };
 
   return (

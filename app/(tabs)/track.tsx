@@ -20,7 +20,7 @@ const Track = () => {
               unfilledColor="lightgrey"
             />
 
-            <View className="justify-center mt-4 items-cente1r">
+            <View className="justify-center mt-4 items-center">
               <Text className="font-bold text-3xl">02:34:15</Text>
             </View>
             <View className="flex-row justify-center items-center gap-8 mt-5 mb-3">

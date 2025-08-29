@@ -17,7 +17,7 @@ const Login = () => {
 
         <ScreenHeader
           title="Welcome back"
-          subtitle="Sign in to continue tracking your task"
+          subtitle="Sign in to continue tracking your tasks"
         />
 
         <SocialButton
@@ -44,7 +44,7 @@ const Login = () => {
         />
 
         <View className="flex-row items-center justify-between mt-3 mb-5">
-          <Checkbox
+          <CheckBox
             label="Remember me"
             checked={remember_me}
             onToggle={() => setRememberMe(!remember_me)}
@@ -67,7 +67,7 @@ const Login = () => {
 };
 
 export default Login;
-import Checkbox from "@/components/CheckBox";
+import CheckBox from "@/components/CheckBox";
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
 import Divider from "@/components/Divider";

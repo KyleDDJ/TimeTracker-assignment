@@ -11,7 +11,7 @@ const Analytics: React.FC = () => {
     },
     {
       id: 2,
-      title: "Break1",
+      title: "Break",
       startDate: moment().set({ hour: 11, minute: 16 }).toDate(),
       endDate: moment().set({ hour: 12, minute: 0 }).toDate(),
     },
@@ -23,7 +23,7 @@ const Analytics: React.FC = () => {
     },
     {
       id: 4,
-      title: "Break1",
+      title: "Break",
       startDate: moment().set({ hour: 16, minute: 1 }).toDate(),
       endDate: moment().set({ hour: 16, minute: 30 }).toDate(),
     },
@@ -73,10 +73,7 @@ const Analytics: React.FC = () => {
           </View>
 
           <View className="mt-4">
-            {active_tab === "Gantt" && <GanttChart />}
-            {active_tab === "Timeline" && (
-              <TimelineChart items={items} EventCard={EventCard} date={date} />
-            )}
+            <TimelineChart items={items} EventCard={EventCard} date={date} />
           </View>
 
           <View className="mt-4">
@@ -97,7 +94,7 @@ const Analytics: React.FC = () => {
               showIconBackground={false}
             />
             <MiniTaskCard
-              title="Database Migratiom"
+              title="Database Migration"
               subtitle="Backend"
               rightEstimate="3h 30m"
               percentage="45%"
@@ -129,7 +126,6 @@ import React, { useState } from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
 
 import EventCard, { EventItem } from "@/components/EventCard";
-import GanttChart from "@/components/GanttChart";
 import MiniTaskCard from "@/components/MiniTask";
 import StatusTabs from "@/components/StatusTabs";
 import TimelineChart from "@/components/TimelineChart";

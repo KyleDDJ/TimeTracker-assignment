@@ -20,7 +20,7 @@ const EventCard: React.FC<EventCardProps> = ({ style = {}, item }) => {
   const hours = Math.floor(durationMinutes / 60);
   const minutes = durationMinutes % 60;
 
-  const isBreak = item.title?.toLowerCase() === "break";
+  const isBreak = item.title?.toLowerCase().includes("break");
 
   const formatDuration = () => {
     return isBreak
@@ -50,8 +50,8 @@ const EventCard: React.FC<EventCardProps> = ({ style = {}, item }) => {
       ? {
           borderWidth: 2,
           borderColor: COLORS.gray500,
-          borderStyle: "dashed",
           borderRadius: 8,
+          borderStyle: "dashed",
         }
       : {
           borderWidth: 1,

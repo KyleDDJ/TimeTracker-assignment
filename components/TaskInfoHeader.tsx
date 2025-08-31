@@ -1,3 +1,4 @@
+import { COLORS } from "@/constants/colors";
 import Entypo from "@expo/vector-icons/Entypo";
 import React from "react";
 import { Text, View } from "react-native";
@@ -13,7 +14,7 @@ type TaskInfoHeaderProps = {
 
 const TaskInfoHeader: React.FC<TaskInfoHeaderProps> = ({
   iconName = "code",
-  iconColor = "white",
+  iconColor = COLORS.white,
   iconSize = 50,
   title,
   sprint,

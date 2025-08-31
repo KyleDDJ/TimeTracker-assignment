@@ -1,3 +1,4 @@
+import { COLORS } from "@/constants/colors";
 import React from "react";
 import { View, ViewStyle } from "react-native";
 import * as Progress from "react-native-progress";
@@ -13,14 +14,14 @@ interface ProgressBarProps {
 const ProgressBar: React.FC<ProgressBarProps> = ({
   progress = 0,
   width = 300,
-  color = "black",
-  unfilledColor = "#e6e7e9ff",
+  color = COLORS.black,
+  unfilledColor = COLORS.white,
   style = {},
 }) => {
   return (
     <View
       style={[
-        { borderRadius: 16, padding: 8, backgroundColor: "#f3f3f3" },
+        { borderRadius: 16, padding: 8, backgroundColor: COLORS.gray100 },
         style,
       ]}
     >

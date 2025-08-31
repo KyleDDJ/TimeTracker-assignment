@@ -1,4 +1,5 @@
 import ProgressBar from "@/components/Progress";
+import { COLORS } from "@/constants/colors";
 import React from "react";
 
 type ProgressBarSprintProps = {
@@ -10,8 +11,8 @@ const ProgressBarSprint: React.FC<ProgressBarSprintProps> = ({ progress }) => {
     <ProgressBar
       progress={progress}
       width={335}
-      color="black"
-      unfilledColor="#ddd"
+      color={COLORS.black}
+      unfilledColor={COLORS.gray300}
       style={{ marginTop: 8 }}
     />
   );

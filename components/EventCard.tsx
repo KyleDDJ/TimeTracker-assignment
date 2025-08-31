@@ -1,4 +1,4 @@
-import { colors as COLORS } from "@/constants/colors";
+import { COLORS } from "@/constants/colors";
 import moment from "moment";
 import React from "react";
 import { Text, View, ViewStyle } from "react-native";
@@ -37,7 +37,7 @@ const EventCard: React.FC<EventCardProps> = ({ style = {}, item }) => {
   const blockHeight = (durationMinutes / 60) * HOUR_PIXEL_HEIGHT;
 
   const getBackgroundColor = (title: string) => {
-    if (is_break) return "lightgrey";
+    if (is_break) return COLORS.gray300;
     switch (title?.toLowerCase()) {
       case "api integration":
         return COLORS.black;
@@ -70,7 +70,7 @@ const EventCard: React.FC<EventCardProps> = ({ style = {}, item }) => {
         height: blockHeight,
         justifyContent: "flex-start",
         alignItems: "flex-start",
-        ...getBorderStyle(is_break), // 👈 pass param
+        ...getBorderStyle(is_break),
       }}
     >
       <Text style={{ color: textColor, fontWeight: "bold", fontSize: 12 }}>

@@ -1,3 +1,4 @@
+import { COLORS } from "@/constants/colors";
 import React from "react";
 import { Text, View } from "react-native";
 
@@ -22,7 +23,7 @@ const EmptyState = ({
             width: 128,
             height: 128,
             borderRadius: 128 / 2,
-            backgroundColor: "#f3f4f6",
+            backgroundColor: COLORS.gray200,
             alignItems: "center",
             justifyContent: "center",
           }}

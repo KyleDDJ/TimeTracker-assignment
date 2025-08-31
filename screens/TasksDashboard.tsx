@@ -11,7 +11,7 @@ import Octicons from "@expo/vector-icons/Octicons";
 
 import SprintSummaryCard from "@/components/SprintSummaryCard";
 import StatusTabs from "@/components/StatusTabs";
-import { colors as COLORS } from "@/constants/colors";
+import { COLORS } from "@/constants/colors";
 import { TaskCardProps } from "@/entities/task.entities";
 
 const STATUS_CONFIG = {
@@ -20,7 +20,7 @@ const STATUS_CONFIG = {
       <AntDesign
         name="pausecircle"
         size={30}
-        color={isActive ? "white" : "gray"}
+        color={isActive ? COLORS.white : COLORS.gray}
       />
     ),
     badgeClass: "bg-gray-700 text-white",
@@ -35,7 +35,7 @@ const STATUS_CONFIG = {
         <Ionicons
           name="play-circle-sharp"
           size={35}
-          color={isActive ? "white" : "gray"}
+          color={isActive ? COLORS.white : COLORS.gray}
         />
       </View>
     ),
@@ -43,7 +43,11 @@ const STATUS_CONFIG = {
   },
   COMPLETED: {
     icon: (isActive: boolean) => (
-      <AntDesign name="check" size={30} color={isActive ? "white" : "gray"} />
+      <AntDesign
+        name="check"
+        size={30}
+        color={isActive ? COLORS.white : COLORS.gray}
+      />
     ),
     badgeClass: "bg-gray-200 text-black",
   },
@@ -70,9 +74,9 @@ const TaskCard: React.FC<TaskCardProps> = ({
         borderRadius: 16,
         padding: 16,
         marginBottom: 16,
-        backgroundColor: isActive ? "#000" : "#fff",
+        backgroundColor: isActive ? COLORS.black : COLORS.white,
         borderWidth: isActive ? 0 : 1,
-        borderColor: "#D1D5DB",
+        borderColor: COLORS.gray300,
       }}
     >
       <View
@@ -89,8 +93,8 @@ const TaskCard: React.FC<TaskCardProps> = ({
             paddingHorizontal: 8,
             paddingVertical: 4,
             borderRadius: 8,
-            backgroundColor: isActive ? "#374151" : "#E5E7EB",
-            color: isActive ? "#fff" : "#000",
+            backgroundColor: isActive ? COLORS.gray400 : COLORS.white,
+            color: isActive ? COLORS.white : COLORS.black,
           }}
         >
           {progress}
@@ -99,7 +103,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
           style={{
             fontSize: 14,
             fontWeight: "700",
-            color: isActive ? "#fff" : "#6B7280",
+            color: isActive ? COLORS.white : COLORS.gray800,
           }}
         >
           {remaining}
@@ -111,7 +115,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
           style={{
             padding: 12,
             borderRadius: 12,
-            backgroundColor: isActive ? "#1F2937" : "#E5E7EB",
+            backgroundColor: isActive ? COLORS.gray800 : COLORS.gray300,
             marginRight: 12,
           }}
         >
@@ -122,7 +126,11 @@ const TaskCard: React.FC<TaskCardProps> = ({
             style={{
               fontSize: 18,
               fontWeight: "700",
-              color: isCompleted ? "#9CA3AF" : isActive ? "#fff" : "#111827",
+              color: isCompleted
+                ? COLORS.gray500
+                : isActive
+                ? COLORS.white
+                : COLORS.black,
               textDecorationLine: isCompleted ? "line-through" : "none",
             }}
           >
@@ -132,7 +140,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
             style={{
               fontSize: 14,
               fontWeight: "600",
-              color: "#6B7280",
+              color: COLORS.gray400,
               textDecorationLine: isCompleted ? "line-through" : "none",
             }}
           >

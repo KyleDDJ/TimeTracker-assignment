@@ -1,4 +1,5 @@
 import ProgressBar from "@/components/Progress";
+import { COLORS } from "@/constants/colors";
 import React from "react";
 
 type ProgressBarTaskProps = {
@@ -10,8 +11,8 @@ const ProgressBarTask: React.FC<ProgressBarTaskProps> = ({ progress }) => {
     <ProgressBar
       progress={progress}
       width={330} // task bars are smaller
-      color="black"
-      unfilledColor="lightgrey"
+      color={COLORS.black}
+      unfilledColor={COLORS.gray300}
       style={{ marginTop: 12 }}
     />
   );

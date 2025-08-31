@@ -11,6 +11,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 import { ANALYTICS_ITEMS } from "@/constants/AnalyticsItems";
+import { COLORS } from "@/constants/colors";
 
 const AnalyticsScreen: React.FC = () => {
   const [active_tab, setActiveTab] = useState("Timeline");
@@ -76,7 +77,11 @@ const AnalyticsScreen: React.FC = () => {
               rightEstimate="2h 15m"
               percentage="29%"
               leftIcon={
-                <Entypo name="controller-record" size={24} color="black" />
+                <Entypo
+                  name="controller-record"
+                  size={24}
+                  color={COLORS.black}
+                />
               }
               showIconBackground={false}
             />
@@ -86,7 +91,11 @@ const AnalyticsScreen: React.FC = () => {
               rightEstimate="3h 30m"
               percentage="45%"
               leftIcon={
-                <Entypo name="controller-record" size={24} color="grey" />
+                <Entypo
+                  name="controller-record"
+                  size={24}
+                  color={COLORS.gray}
+                />
               }
               showIconBackground={false}
             />
@@ -96,7 +105,11 @@ const AnalyticsScreen: React.FC = () => {
               rightEstimate="1h 30m"
               percentage="19%"
               leftIcon={
-                <Entypo name="controller-record" size={24} color="lightgrey" />
+                <Entypo
+                  name="controller-record"
+                  size={24}
+                  color={COLORS.gray300}
+                />
               }
               showIconBackground={false}
             />

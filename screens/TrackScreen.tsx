@@ -8,10 +8,11 @@ import React from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
 
 import { TRACK_TASKS } from "@/constants/TrackTask";
+import { COLORS } from "@/constants/colors";
 
 const TrackScreen: React.FC = () => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
@@ -22,7 +23,7 @@ const TrackScreen: React.FC = () => {
       >
         <View
           style={{
-            backgroundColor: "#F3F4F6",
+            backgroundColor: COLORS.gray100,
             borderRadius: 20,
             padding: 20,
             alignItems: "center",
@@ -57,12 +58,16 @@ const TrackScreen: React.FC = () => {
                 height: 56,
                 borderRadius: 28,
                 borderWidth: 1,
-                borderColor: "gray",
+                borderColor: COLORS.gray,
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              <Entypo name="controller-fast-backward" size={23} color="gray" />
+              <Entypo
+                name="controller-fast-backward"
+                size={23}
+                color={COLORS.gray}
+              />
             </View>
 
             <View
@@ -70,12 +75,12 @@ const TrackScreen: React.FC = () => {
                 width: 80,
                 height: 80,
                 borderRadius: 40,
-                backgroundColor: "black",
+                backgroundColor: COLORS.black,
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              <AntDesign name="pause" size={35} color="white" />
+              <AntDesign name="pause" size={35} color={COLORS.white} />
             </View>
 
             <View
@@ -84,12 +89,16 @@ const TrackScreen: React.FC = () => {
                 height: 56,
                 borderRadius: 28,
                 borderWidth: 1,
-                borderColor: "gray",
+                borderColor: COLORS.gray,
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
-              <Entypo name="controller-fast-forward" size={23} color="gray" />
+              <Entypo
+                name="controller-fast-forward"
+                size={23}
+                color={COLORS.gray}
+              />
             </View>
           </View>
         </View>
@@ -105,8 +114,10 @@ const TrackScreen: React.FC = () => {
         >
           <Text style={{ fontSize: 18, fontWeight: "bold" }}>Up Next</Text>
           <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-            <Ionicons name="shuffle" size={20} color="grey" />
-            <Text style={{ fontWeight: "bold", color: "gray" }}>Shuffle</Text>
+            <Ionicons name="shuffle" size={20} color={COLORS.gray} />
+            <Text style={{ fontWeight: "bold", color: COLORS.gray }}>
+              Shuffle
+            </Text>
           </View>
         </View>
 

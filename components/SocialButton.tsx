@@ -1,4 +1,4 @@
-import { colors as COLORS } from "@/constants/colors";
+import { COLORS } from "@/constants/colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React from "react";
 import { Text, TouchableHighlight, View } from "react-native";

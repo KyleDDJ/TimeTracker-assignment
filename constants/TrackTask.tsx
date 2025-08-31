@@ -6,6 +6,7 @@ import {
   Octicons,
 } from "@expo/vector-icons";
 import { ReactNode } from "react";
+import { COLORS } from "./colors";
 
 export type TrackTask = {
   title: string;
@@ -20,21 +21,29 @@ export const TRACK_TASKS: TrackTask[] = [
     title: "Mobile UI Testing",
     subtitle: "QA",
     estimated: "4h estimated",
-    leftIcon: <MaterialIcons name="phone-iphone" size={22} color="white" />,
-    rightIcon: <Ionicons name="play-circle-sharp" size={35} color="black" />,
+    leftIcon: (
+      <MaterialIcons name="phone-iphone" size={22} color={COLORS.white} />
+    ),
+    rightIcon: (
+      <Ionicons name="play-circle-sharp" size={35} color={COLORS.black} />
+    ),
   },
   {
     title: "Analytics Dashboard",
     subtitle: "Frontend",
     estimated: "2h estimated",
-    leftIcon: <Octicons name="graph" size={22} color="white" />,
-    rightIcon: <Ionicons name="play-circle-outline" size={35} color="gray" />,
+    leftIcon: <Octicons name="graph" size={22} color={COLORS.white} />,
+    rightIcon: (
+      <Ionicons name="play-circle-outline" size={35} color={COLORS.gray} />
+    ),
   },
   {
     title: "User Authentication",
     subtitle: "Backend",
     estimated: "4h estimated",
-    leftIcon: <FontAwesome6 name="users" size={20} color="white" />,
-    rightIcon: <Ionicons name="play-circle-outline" size={35} color="gray" />,
+    leftIcon: <FontAwesome6 name="users" size={20} color={COLORS.white} />,
+    rightIcon: (
+      <Ionicons name="play-circle-outline" size={35} color={COLORS.gray} />
+    ),
   },
 ];

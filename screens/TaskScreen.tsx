@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
+import { COLORS } from "@/constants/colors";
 import NoTaskView from "@/screens/NoTaskView";
 import TaskDashboard from "@/screens/TasksDashboard";
 import AntDesign from "@expo/vector-icons/AntDesign";
@@ -25,7 +26,7 @@ const TaskScreen = () => {
           <NoTaskView
             title="No Tasks Yet"
             description="Sync your FocusTracker tasks to start tracking your time and managing your sprint efficiently."
-            icon={<FontAwesome5 name="tasks" size={50} color="#6B7280" />}
+            icon={<FontAwesome5 name="tasks" size={50} color={COLORS.gray} />}
           >
             <View className="w-full items-center mt-5 px-6">
               <TouchableOpacity
@@ -33,7 +34,11 @@ const TaskScreen = () => {
                 className="bg-black flex-row items-center justify-center py-5 rounded-2xl mb-4"
                 onPress={handleSyncTasks}
               >
-                <MaterialCommunityIcons name="sync" size={20} color="white" />
+                <MaterialCommunityIcons
+                  name="sync"
+                  size={20}
+                  color={COLORS.white}
+                />
                 <Text className="text-white text-base font-semibold ml-2">
                   Sync FocusTracker Tasks
                 </Text>
@@ -44,7 +49,7 @@ const TaskScreen = () => {
                 className="border border-gray-300 bg-white flex-row items-center justify-center py-5 rounded-2xl mb-4"
                 onPress={handleCreateTask}
               >
-                <AntDesign name="plus" size={20} color="gray" />
+                <AntDesign name="plus" size={20} color={COLORS.gray} />
                 <Text className="text-gray-700 text-base font-semibold ml-2">
                   Create Manual Task
                 </Text>
@@ -59,7 +64,7 @@ const TaskScreen = () => {
                 <AntDesign
                   name="infocirlce"
                   size={18}
-                  color="#6B7280"
+                  color={COLORS.gray}
                   style={{ marginRight: 10 }}
                 />
                 <View className="flex-1">

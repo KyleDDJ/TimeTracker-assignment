@@ -1,3 +1,4 @@
+import { COLORS } from "@/constants/colors";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
@@ -24,11 +25,11 @@ const TrackingHeader: React.FC<TrackingHeaderProps> = ({
         <Text className="font-bold text-xl">Today's Tracking</Text>
         <View className="flex-row items-center">
           <TouchableOpacity onPress={onPrevDate}>
-            <EvilIcons name="chevron-left" size={27} color="black" />
+            <EvilIcons name="chevron-left" size={27} color={COLORS.black} />
           </TouchableOpacity>
           <Text className="mx-2 pt-2">{date}</Text>
           <TouchableOpacity onPress={onNextDate}>
-            <EvilIcons name="chevron-right" size={27} color="black" />
+            <EvilIcons name="chevron-right" size={27} color={COLORS.black} />
           </TouchableOpacity>
         </View>
       </View>

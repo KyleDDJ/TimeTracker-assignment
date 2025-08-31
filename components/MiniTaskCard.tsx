@@ -1,4 +1,4 @@
-import { colors as COLORS } from "@/constants/colors";
+import { COLORS } from "@/constants/colors";
 import { MiniTaskCardProps } from "@/entities/task.entities";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   iconBackground: {
-    backgroundColor: "#D1D5DB",
+    backgroundColor: COLORS.gray300,
   },
   content: {
     flex: 1,

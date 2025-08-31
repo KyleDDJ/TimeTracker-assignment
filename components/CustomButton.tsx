@@ -17,7 +17,7 @@ const CustomButton: React.FC<PrimaryButtonProps> = ({
     <TouchableOpacity
       onPress={onPress}
       disabled={disabled}
-      className="rounded-xl py-3 mt-1"
+      className="rounded-xl py-3 mt-1 mx-6"
       style={{ backgroundColor: disabled ? COLORS.gray400 : COLORS.black }}
     >
       <Text className="text-white text-center font-semibold text-base">

@@ -67,7 +67,7 @@ const AuthScreen = () => {
             secureTextEntry
           />
 
-          <View className="flex-row items-center justify-between mt-4 mb-6">
+          <View className="flex-row items-center justify-between mt-4 mb-6 mx-6">
             <CheckBox
               label="Remember me"
               checked={remember_me}

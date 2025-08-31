@@ -24,8 +24,8 @@ const CustomInput: React.FC<CustomInputProps> = ({
   const [show_password, setShowPassword] = useState(secureTextEntry);
 
   return (
-    <View className="mb-4 w-full">
-      {label && <Text className="text-gray-700 mb-1">{label}</Text>}
+    <View className="mb-5 mx-6">
+      {label && <Text className="text-gray-700 mb-2">{label}</Text>}
       <View
         className={`flex-row items-center border rounded-xl px-4 ${
           is_focused ? "border-black" : "border-gray-300"

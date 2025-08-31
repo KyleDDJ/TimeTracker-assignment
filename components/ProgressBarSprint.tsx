@@ -1,5 +1,5 @@
 import ProgressBar from "@/components/Progress";
-import { COLORS } from "@/constants/colors";
+import { COLORS } from "@/constants/Colors";
 import React from "react";
 
 type ProgressBarSprintProps = {

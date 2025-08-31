@@ -7,8 +7,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
 
+import { COLORS } from "@/constants/Colors";
 import { TRACK_TASKS } from "@/constants/TrackTask";
-import { COLORS } from "@/constants/colors";
 
 const TrackScreen: React.FC = () => {
   return (

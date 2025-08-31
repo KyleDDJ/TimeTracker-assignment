@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
-import { COLORS } from "@/constants/colors";
+import { COLORS } from "@/constants/Colors";
 import NoTaskView from "@/screens/NoTaskView";
 import TaskDashboard from "@/screens/TasksDashboard";
 import AntDesign from "@expo/vector-icons/AntDesign";

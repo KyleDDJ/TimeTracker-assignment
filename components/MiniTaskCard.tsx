@@ -1,4 +1,4 @@
-import { COLORS } from "@/constants/colors";
+import { COLORS } from "@/constants/Colors";
 import { MiniTaskCardProps } from "@/entities/task.entities";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";

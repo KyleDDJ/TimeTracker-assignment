@@ -1,4 +1,4 @@
-import { COLORS } from "@/constants/colors";
+import { COLORS } from "@/constants/Colors";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";

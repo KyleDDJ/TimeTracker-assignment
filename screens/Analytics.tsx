@@ -11,7 +11,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 import { ANALYTICS_ITEMS } from "@/constants/AnalyticsItems";
-import { COLORS } from "@/constants/colors";
+import { COLORS } from "@/constants/Colors";
 
 const AnalyticsScreen: React.FC = () => {
   const [active_tab, setActiveTab] = useState("Timeline");

@@ -11,7 +11,7 @@ import Octicons from "@expo/vector-icons/Octicons";
 
 import SprintSummaryCard from "@/components/SprintSummaryCard";
 import StatusTabs from "@/components/StatusTabs";
-import { COLORS } from "@/constants/colors";
+import { COLORS } from "@/constants/Colors";
 import { TaskCardProps } from "@/entities/task.entities";
 
 const STATUS_CONFIG = {

@@ -1,4 +1,3 @@
-// constants/trackTasks.ts
 import {
   FontAwesome6,
   Ionicons,
@@ -6,8 +5,7 @@ import {
   Octicons,
 } from "@expo/vector-icons";
 import { ReactNode } from "react";
-import { COLORS } from "./colors";
-
+import { COLORS } from "./Colors";
 export type TrackTask = {
   title: string;
   subtitle: string;

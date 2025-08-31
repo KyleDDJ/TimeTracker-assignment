@@ -1,4 +1,4 @@
-import { COLORS } from "@/constants/colors";
+import { COLORS } from "@/constants/Colors";
 import moment from "moment";
 import React from "react";
 import { Text, View, ViewStyle } from "react-native";

@@ -1,4 +1,4 @@
-import { COLORS } from "@/constants/colors";
+import { COLORS } from "@/constants/Colors";
 import Entypo from "@expo/vector-icons/Entypo";
 import React from "react";
 import { Text, View } from "react-native";

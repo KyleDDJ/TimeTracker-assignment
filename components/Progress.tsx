@@ -1,4 +1,4 @@
-import { COLORS } from "@/constants/colors";
+import { COLORS } from "@/constants/Colors";
 import React from "react";
 import { View, ViewStyle } from "react-native";
 import * as Progress from "react-native-progress";

@@ -198,7 +198,10 @@ const FilledState = () => {
   ];
 
   return (
-    <ScrollView contentContainerStyle={{ paddingBottom: 100 }} className="px-4">
+    <ScrollView
+      contentContainerStyle={{ paddingBottom: 100 }}
+      className="px-4 mt-5"
+    >
       <View className="bg-gray-100 items-center justify-center rounded-2xl mb-6">
         <SprintSummaryCard
           sprintName="Sprint 2025-01"

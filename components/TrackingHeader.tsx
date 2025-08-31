@@ -20,7 +20,7 @@ const TrackingHeader: React.FC<TrackingHeaderProps> = ({
 }) => {
   return (
     <View className="px-1">
-      <View className="mb-1 flex-row items-center justify-between p-4">
+      <View className="mb-1 flex-row items-center justify-between p-4 ">
         <Text className="font-bold text-xl">Today's Tracking</Text>
         <View className="flex-row items-center">
           <TouchableOpacity onPress={onPrevDate}>
@@ -33,7 +33,7 @@ const TrackingHeader: React.FC<TrackingHeaderProps> = ({
         </View>
       </View>
 
-      <View className="bg-gray-50 rounded-2xl px-5 py-5 items-center justify-center">
+      <View className="bg-gray-50 rounded-2xl px-5 py-5 items-center justify-center mb-5">
         <View className="flex-row justify-between p-5 w-full mb-2">
           <Text className="font-bold text-3xl">{totalTracked}</Text>
           <Text className="font-bold text-3xl">{tasksWorked}</Text>

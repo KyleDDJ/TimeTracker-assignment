@@ -19,10 +19,14 @@ const AnalyticsScreen: React.FC = () => {
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView
-        contentContainerStyle={{ flexGrow: 1, paddingBottom: 80 }}
-        className="px-6 py-3"
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: 80,
+          paddingHorizontal: 20,
+          paddingTop: 12,
+        }}
       >
-        <View className="px-1">
+        <View className="px-2">
           <TrackingHeader
             date="Jan 15, 2025"
             totalTracked="7h 42m"
@@ -32,7 +36,7 @@ const AnalyticsScreen: React.FC = () => {
             onNextDate={() => console.log("Next date")}
           />
 
-          <View className="mt-5">
+          <View>
             <StatusTabs
               activeTab={active_tab}
               setActiveTab={setActiveTab}
@@ -53,7 +57,7 @@ const AnalyticsScreen: React.FC = () => {
             />
           </View>
 
-          <View className="mt-4">
+          <View className="mt-6">
             <TimelineChart
               items={ANALYTICS_ITEMS}
               EventCard={EventCard}
@@ -61,13 +65,11 @@ const AnalyticsScreen: React.FC = () => {
             />
           </View>
 
-          <View className="mt-4">
-            <View className="flex-row justify-between">
-              <Text className="text-lg font-bold">Task Breakdown</Text>
-            </View>
+          <View className="mt-6 flex-row justify-between">
+            <Text className="text-lg font-bold">Task Breakdown</Text>
           </View>
 
-          <View className="mt-5">
+          <View className="mt-5 space-y-3">
             <MiniTaskCard
               title="API Integration Setup"
               subtitle="Frontend Development"

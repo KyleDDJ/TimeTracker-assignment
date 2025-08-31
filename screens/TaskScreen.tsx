@@ -29,8 +29,8 @@ const TaskScreen = () => {
           >
             <View className="w-full items-center mt-5 px-6">
               <TouchableOpacity
+                style={{ width: "60%" }}
                 className="bg-black flex-row items-center justify-center py-5 rounded-2xl mb-4"
-                style={{ width: "50%" }}
                 onPress={handleSyncTasks}
               >
                 <MaterialCommunityIcons name="sync" size={20} color="white" />
@@ -38,9 +38,10 @@ const TaskScreen = () => {
                   Sync FocusTracker Tasks
                 </Text>
               </TouchableOpacity>
+
               <TouchableOpacity
-                className="border border-gray-300 bg-white flex-row items-center justify-center py-5 rounded-2xl mb-4 self-center"
                 style={{ width: "90%" }}
+                className="border border-gray-300 bg-white flex-row items-center justify-center py-5 rounded-2xl mb-4"
                 onPress={handleCreateTask}
               >
                 <AntDesign name="plus" size={20} color="gray" />

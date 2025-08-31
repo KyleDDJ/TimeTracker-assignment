@@ -1,3 +1,6 @@
+import React from "react";
+import { Text, View } from "react-native";
+
 type EmptyStateProps = {
   icon?: React.ReactNode;
   title: string;
@@ -13,8 +16,19 @@ const EmptyState = ({
 }: EmptyStateProps) => {
   return (
     <View className="w-full flex-1 justify-center">
-      <View className="w-40 h-40 bg-gray-100 rounded-full items-center justify-center self-center mb-5">
-        {icon}
+      <View className="items-center justify-center self-center mb-5">
+        <View
+          style={{
+            width: 128,
+            height: 128,
+            borderRadius: 128 / 2,
+            backgroundColor: "#f3f4f6",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {icon}
+        </View>
       </View>
 
       <Text className="text-3xl text-center font-medium text-gray-900 mb-2">
@@ -31,5 +45,3 @@ const EmptyState = ({
 };
 
 export default EmptyState;
-import React from "react";
-import { Text, View } from "react-native";

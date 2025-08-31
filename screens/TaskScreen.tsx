@@ -19,31 +19,32 @@ const TaskScreen = () => {
   };
 
   return (
-    <View className="flex-1 bg-white">
+    <View className="flex-1 bg-white ">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="py-8">
         {!is_filled ? (
           <NoTaskView
             title="No Tasks Yet"
             description="Sync your FocusTracker tasks to start tracking your time and managing your sprint efficiently."
-            icon={<FontAwesome5 name="tasks" size={43} color="#9CA3AF" />}
+            icon={<FontAwesome5 name="tasks" size={50} color="#6B7280" />}
           >
-            <View className="w-full max-w-md items-center justify-center self-center">
+            <View className="w-full items-center mt-5 px-6">
               <TouchableOpacity
-                className="bg-black mt-5 w-60 flex-row justify-center py-4 rounded-xl mb-4 gap-x-2"
+                className="bg-black flex-row items-center justify-center py-5 rounded-2xl mb-4"
+                style={{ width: "50%" }}
                 onPress={handleSyncTasks}
               >
                 <MaterialCommunityIcons name="sync" size={20} color="white" />
-                <Text className="text-white text-base font-semibold">
+                <Text className="text-white text-base font-semibold ml-2">
                   Sync FocusTracker Tasks
                 </Text>
               </TouchableOpacity>
-
               <TouchableOpacity
-                className="border border-gray-300 w-80 flex-row justify-center py-4 rounded-xl mb-4 gap-x-2"
+                className="border border-gray-300 bg-white flex-row items-center justify-center py-5 rounded-2xl mb-4 self-center"
+                style={{ width: "90%" }}
                 onPress={handleCreateTask}
               >
                 <AntDesign name="plus" size={20} color="gray" />
-                <Text className="text-gray-500 text-base font-semibold">
+                <Text className="text-gray-700 text-base font-semibold ml-2">
                   Create Manual Task
                 </Text>
               </TouchableOpacity>
@@ -79,4 +80,5 @@ const TaskScreen = () => {
     </View>
   );
 };
+
 export default TaskScreen;

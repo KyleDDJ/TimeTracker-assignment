@@ -1,49 +1,46 @@
 import { COLORS } from "@/constants/Colors";
-import { MiniTaskCardProps } from "@/entities/task.entities";
+import { TrackTask } from "@/constants/TrackTask";
+import { getLeftIcon, getRightIcon } from "@/helpers/TrackTaskIcons";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
+export type MiniTaskCardProps = {
+  task: TrackTask;
+  isActive?: boolean;
+  showIconBackground?: boolean;
+  onPress?: () => void;
+};
+
 const MiniTaskCard: React.FC<MiniTaskCardProps> = ({
-  title,
-  subtitle,
-  estimated,
-  leftIcon,
-  rightIcon,
-  onPress,
+  task,
+  isActive = false,
   showIconBackground = true,
-  rightEstimate,
-  percentage,
+  onPress,
 }) => {
   return (
     <TouchableOpacity style={styles.card} activeOpacity={0.8} onPress={onPress}>
-      {leftIcon && (
-        <View
-          style={[
-            styles.leftIconContainer,
-            showIconBackground && styles.iconBackground,
-          ]}
-        >
-          {leftIcon}
-        </View>
-      )}
+      <View
+        style={[
+          styles.leftIconContainer,
+          showIconBackground && styles.iconBackground,
+        ]}
+      >
+        {getLeftIcon(task)}
+      </View>
 
       <View style={styles.content}>
         <View style={styles.topRow}>
-          <Text style={styles.title}>{title}</Text>
-          {rightEstimate && (
-            <Text style={styles.rightEstimate}>{rightEstimate}</Text>
-          )}
+          <Text style={styles.title}>{task.title}</Text>
         </View>
 
         <View style={styles.bottomRow}>
           <Text style={styles.subtitle}>
-            {subtitle} {estimated ? `• ${estimated}` : ""}
+            {task.subtitle} {task.estimated ? `• ${task.estimated}` : ""}
           </Text>
-          {percentage && <Text style={styles.percentage}>{percentage}</Text>}
         </View>
       </View>
 
-      {rightIcon && <View style={styles.rightIcon}>{rightIcon}</View>}
+      <View style={styles.rightIcon}>{getRightIcon(task, isActive)}</View>
     </TouchableOpacity>
   );
 };
@@ -84,23 +81,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "semibold",
     color: COLORS.black,
-  },
-  rightEstimate: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: COLORS.gray700,
   },
   subtitle: {
     fontSize: 14,
     fontWeight: "600",
-    color: COLORS.gray700,
-  },
-  percentage: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: COLORS.gray700,
+    color: COLORS.gray400,
   },
   rightIcon: {
     marginLeft: 12,

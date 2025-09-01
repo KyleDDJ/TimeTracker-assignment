@@ -1,11 +1,3 @@
-import CheckBox from "@/components/CheckBox";
-import CustomButton from "@/components/CustomButton";
-import CustomInput from "@/components/CustomInput";
-import Divider from "@/components/Divider";
-import FooterLink from "@/components/FooterLink";
-import LogoHeader from "@/components/LogoHeader";
-import ScreenHeader from "@/components/ScreenHeader";
-import SocialButton from "@/components/SocialButton";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -17,6 +9,15 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+
+import CheckBox from "@/components/CheckBox";
+import CustomButton from "@/components/CustomButton";
+import CustomInput from "@/components/CustomInput";
+import Divider from "@/components/Divider";
+import FooterLink from "@/components/FooterLink";
+import LogoHeader from "@/components/LogoHeader";
+import ScreenHeader from "@/components/ScreenHeader";
+import SocialButton from "@/components/SocialButton";
 
 const AuthScreen = () => {
   const [email, setEmail] = useState("");

@@ -4,7 +4,7 @@ export const COLORS = {
   white: "#ffffffff",
   gray: "#808080",
   charcoal: "#111111",
-  jet: "#1A1A1A",
+  jet: "#ff0000ff",
   neutral: "#e5e5e5",
 
   gray50: "#F9FAFB",

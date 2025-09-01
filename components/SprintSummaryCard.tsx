@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
-import ProgressBarSprint from "./ProgressBarSprint";
 
+import ProgressBarSprint from "./ProgressBarSprint";
 type SprintSummaryCardProps = {
   sprintName: string;
   daysLeft: string;

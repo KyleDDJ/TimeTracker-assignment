@@ -1,8 +1,8 @@
-import { COLORS } from "@/constants/Colors";
 import Entypo from "@expo/vector-icons/Entypo";
 import React from "react";
 import { Text, View } from "react-native";
 
+import { COLORS } from "@/constants/Colors";
 type TaskInfoHeaderProps = {
   iconName?: string;
   iconColor?: string;
@@ -26,12 +26,12 @@ const TaskInfoHeader: React.FC<TaskInfoHeaderProps> = ({
         <Entypo name={iconName as any} size={iconSize} color={iconColor} />
       </View>
 
-      <View className="justify-center items-center mb-5">
-        <Text className="font-bold text-xl mb-3">{title}</Text>
-        <View className="flex-row gap-2">
-          <Text className="text-gray-600">{sprint}</Text>
-          <Text className="font-semibold">•</Text>
-          <Text className="text-gray-600">{subtitle}</Text>
+      <View className="justify-center items-center">
+        <Text className="font-bold text-2xl mb-3">{title}</Text>
+        <View className="flex-row gap-2 items-center">
+          <Text className="text-gray-600 text-xl">{sprint}</Text>
+          <Text className="font-semibold text-3xl">•</Text>
+          <Text className="text-gray-600 text-xl">{subtitle}</Text>
         </View>
       </View>
     </>

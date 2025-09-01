@@ -1,27 +1,24 @@
 import { useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 
+import NoTaskView from "@/components/NoTaskView";
 import { COLORS } from "@/constants/Colors";
-import NoTaskView from "@/screens/NoTaskView";
 import TaskDashboard from "@/screens/TasksDashboard";
+import { MaterialIcons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { router } from "expo-router";
 
 const TaskScreen = () => {
   const [is_filled, setIsFilled] = useState(false);
 
-  const handleSyncTasks = () => {
-    setIsFilled(true);
-  };
-
-  const handleCreateTask = () => {
-    setIsFilled(true);
-  };
+  const handleSyncTasks = () => setIsFilled(true);
+  const handleCreateTask = () => setIsFilled(true);
 
   return (
-    <View className="flex-1 bg-white ">
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="py-8">
+    <View className="flex-1 bg-white">
+      <ScrollView contentContainerClassName="flex-grow py-8">
         {!is_filled ? (
           <NoTaskView
             title="No Tasks Yet"
@@ -30,8 +27,7 @@ const TaskScreen = () => {
           >
             <View className="w-full items-center mt-5 px-6">
               <TouchableOpacity
-                style={{ width: "60%" }}
-                className="bg-black flex-row items-center justify-center py-5 rounded-2xl mb-4"
+                className="w-3/5 bg-black flex-row items-center justify-center py-5 rounded-2xl mb-4"
                 onPress={handleSyncTasks}
               >
                 <MaterialCommunityIcons
@@ -45,8 +41,7 @@ const TaskScreen = () => {
               </TouchableOpacity>
 
               <TouchableOpacity
-                style={{ width: "90%" }}
-                className="border border-gray-300 bg-white flex-row items-center justify-center py-5 rounded-2xl mb-4"
+                className="w-11/12 border border-gray-300 bg-white flex-row items-center justify-center py-5 rounded-2xl mb-4"
                 onPress={handleCreateTask}
               >
                 <AntDesign name="plus" size={20} color={COLORS.gray} />
@@ -56,16 +51,16 @@ const TaskScreen = () => {
               </TouchableOpacity>
             </View>
 
-            <Text className="text-gray-500 text-center font-semibold text-base mb-8">
+            <Text className="text-gray-500 text-center font-semibold text-base">
               Import from CSV
             </Text>
-            <View className="px-4">
+            <View className="px-4 mt-5">
               <View className="bg-gray-50 rounded-xl px-5 py-5 flex-row items-start">
                 <AntDesign
                   name="infocirlce"
                   size={18}
                   color={COLORS.gray}
-                  style={{ marginRight: 10 }}
+                  className="mr-2"
                 />
                 <View className="flex-1">
                   <Text className="font-semibold text-gray-900 mb-1">
@@ -83,6 +78,24 @@ const TaskScreen = () => {
           <TaskDashboard />
         )}
       </ScrollView>
+
+      {is_filled && (
+        <TouchableOpacity
+          className="absolute bottom-20 right-6 bg-black w-16 h-16 rounded-full items-center justify-center shadow-lg"
+          onPress={() =>
+            router.push({
+              pathname: "/(tabs)/track",
+              params: {
+                title: "Quick Task #001",
+                sprint: "Ad hoc",
+                subtitle: "Unplanned Work",
+              },
+            })
+          }
+        >
+          <MaterialIcons name="bolt" size={34} color={COLORS.white} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

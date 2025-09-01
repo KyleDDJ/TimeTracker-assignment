@@ -1,7 +1,8 @@
-import { COLORS } from "@/constants/Colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React, { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
+
+import { COLORS } from "@/constants/Colors";
 
 interface CustomInputProps {
   label?: string;

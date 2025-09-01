@@ -1,7 +1,8 @@
-import { COLORS } from "@/constants/Colors";
 import EvilIcons from "@expo/vector-icons/EvilIcons";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
+
+import { COLORS } from "@/constants/Colors";
 interface TrackingHeaderProps {
   date: string;
   totalTracked: string;

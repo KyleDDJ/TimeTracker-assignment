@@ -1,7 +1,8 @@
-import { COLORS } from "@/constants/Colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React from "react";
 import { Text, View } from "react-native";
+
+import { COLORS } from "@/constants/Colors";
 
 type LogoHeaderProps = {
   iconName: string;

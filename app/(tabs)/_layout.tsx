@@ -1,3 +1,10 @@
+import { router, Tabs } from "expo-router";
+import React from "react";
+import { Image, TouchableOpacity, View } from "react-native";
+
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 export default function TabLayout() {
   return (
     <Tabs
@@ -86,10 +93,3 @@ export default function TabLayout() {
     </Tabs>
   );
 }
-import { router, Tabs } from "expo-router";
-import React from "react";
-import { Image, TouchableOpacity, View } from "react-native";
-
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";

@@ -1,8 +1,8 @@
-import { COLORS } from "@/constants/Colors";
 import React from "react";
 import { View, ViewStyle } from "react-native";
 import * as Progress from "react-native-progress";
 
+import { COLORS } from "@/constants/Colors";
 interface ProgressBarProps {
   progress?: number;
   width?: number;

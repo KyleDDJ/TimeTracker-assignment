@@ -1,4 +1,3 @@
-import { COLORS } from "@/constants/Colors";
 import React from "react";
 import { Text, View } from "react-native";
 
@@ -18,16 +17,7 @@ const EmptyState = ({
   return (
     <View className="w-full flex-1 justify-center">
       <View className="items-center justify-center self-center mb-5">
-        <View
-          style={{
-            width: 128,
-            height: 128,
-            borderRadius: 128 / 2,
-            backgroundColor: COLORS.gray200,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
+        <View className="w-32 h-32 rounded-full bg-gray-200 items-center justify-center">
           {icon}
         </View>
       </View>

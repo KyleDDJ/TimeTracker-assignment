@@ -14,12 +14,25 @@ export type MiniTaskCardProps = {
 };
 
 export type TaskCardProps = {
+  id: number;
   title: string;
   progress: "TO DO" | "TRACKING NOW" | "COMPLETED";
   subtitle: string;
   estimated: string;
   remaining: string;
-  icon: ReactNode;
+  icon: {
+    library: "Entypo" | "MaterialIcons" | "Octicons" | "FontAwesome6" | "AntDesign";
+    name: string;
+    size: number;
+    color: string;
+  };
   onPress?: () => void;
   isActive?: boolean;
+};
+
+export type EventItem = {
+  id: number;
+  title: string;
+  startDate: Date;
+  endDate: Date;
 };

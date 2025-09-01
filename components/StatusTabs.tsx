@@ -18,7 +18,7 @@ const StatusTabs: React.FC<StatusTabsProps> = ({
   tabs,
 }) => {
   return (
-    <View className="bg-gray-100 rounded-2xl p-1 mb-4">
+    <View className="bg-gray-100 rounded-2xl p-1 mb-5">
       <View className="flex-row w-full">
         {tabs.map(tab => (
           <TouchableOpacity

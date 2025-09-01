@@ -1,7 +1,8 @@
-import { COLORS } from "@/constants/Colors";
 import moment from "moment";
 import React from "react";
 import { Text, View, ViewStyle } from "react-native";
+
+import { COLORS } from "@/constants/Colors";
 
 export interface EventItem {
   id: number;

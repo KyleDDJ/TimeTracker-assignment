@@ -11,6 +11,7 @@ interface CustomInputProps {
   onChangeText: (text: string) => void;
   secureTextEntry?: boolean;
   keyboardType?: "default" | "email-address" | "numeric";
+  error?: string;
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
@@ -20,16 +21,21 @@ const CustomInput: React.FC<CustomInputProps> = ({
   onChangeText,
   secureTextEntry = false,
   keyboardType = "default",
+  error,
 }) => {
   const [is_focused, setIsFocused] = useState(false);
   const [show_password, setShowPassword] = useState(secureTextEntry);
 
   return (
-    <View className="mb-5 mx-6">
+    <View className="mb-4 mx-2">
       {label && <Text className="text-gray-700 mb-2">{label}</Text>}
       <View
         className={`flex-row items-center border rounded-xl px-4 ${
-          is_focused ? "border-black" : "border-gray-300"
+          error
+            ? "border-red-500"
+            : is_focused
+            ? "border-black"
+            : "border-gray-300"
         }`}
       >
         <TextInput
@@ -53,6 +59,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
           </TouchableOpacity>
         )}
       </View>
+      {error && <Text className="text-red-500 mt-1 text-sm">{error}</Text>}
     </View>
   );
 };

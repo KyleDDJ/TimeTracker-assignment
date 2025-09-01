@@ -1,6 +1,7 @@
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
+  Alert,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
@@ -23,6 +24,48 @@ const AuthScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember_me, setRememberMe] = useState(false);
+
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
+  const [loading, setLoading] = useState(false);
+
+  const validate = () => {
+    let valid = true;
+    let newErrors: { email?: string; password?: string } = {};
+
+    if (!email) {
+      newErrors.email = "Email is required";
+      valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Enter a valid email";
+      valid = false;
+    }
+
+    if (!password) {
+      newErrors.password = "Password is required";
+      valid = false;
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const handleLogin = () => {
+    if (!validate()) return;
+
+    setLoading(true);
+    setErrors({});
+
+    setTimeout(() => {
+      setLoading(false);
+      Alert.alert("Login Success", `Welcome ${email}!`);
+      router.push("/");
+    }, 1500);
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -59,6 +102,7 @@ const AuthScreen = () => {
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
+            error={errors.email}
           />
           <CustomInput
             label="Password"
@@ -66,6 +110,7 @@ const AuthScreen = () => {
             value={password}
             onChangeText={setPassword}
             secureTextEntry
+            error={errors.password}
           />
 
           <View className="flex-row items-center justify-between mt-4 mb-6 mx-6">
@@ -81,7 +126,12 @@ const AuthScreen = () => {
             </TouchableOpacity>
           </View>
 
-          <CustomButton title="Sign In" onPress={() => router.push("/")} />
+          <CustomButton
+            title="Sign In"
+            onPress={handleLogin}
+            loading={loading}
+            disabled={loading}
+          />
 
           <FooterLink
             text="Don’t have an account?"

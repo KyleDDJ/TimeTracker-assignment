@@ -1,4 +1,3 @@
-import { Task } from "@/entities/task.entities";
 import { MaterialIcons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
@@ -17,10 +16,12 @@ import NoTaskView from "@/components/NoTaskView";
 import { COLORS } from "@/constants/Colors";
 import { useTasks } from "@/hooks/useTasks";
 import TaskDashboard from "@/screens/TasksDashboard";
+import { useTaskStore } from "@/stores/useTaskStore";
 
 const TaskScreen = () => {
   const { tasks: TASKS } = useTasks();
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const setTasks = useTaskStore(state => state.setTasks);
+  const tasks = useTaskStore(state => state.tasks);
   const [loading, setLoading] = useState(false);
 
   const handleSync = () => {
@@ -78,23 +79,22 @@ const TaskScreen = () => {
             <Text className="text-gray-500 text-center font-semibold text-base">
               Import from CSV
             </Text>
-            <View className="px-4 mt-5">
-              <View className="bg-gray-50 rounded-xl px-5 py-5 flex-row items-start">
-                <AntDesign
-                  name="infocirlce"
-                  size={18}
-                  color={COLORS.gray}
-                  className="mr-2"
-                />
-                <View className="flex-1">
-                  <Text className="font-semibold text-gray-900 mb-1">
-                    Connect FocusTracker
-                  </Text>
-                  <Text className="text-gray-500 text-sm">
-                    Link your FocusTracker account to automatically sync sprint
-                    tasks and track time seamlessly across both platforms.
-                  </Text>
-                </View>
+
+            <View className="bg-gray-50 rounded-xl px-5 py-5 flex-row items-start">
+              <AntDesign
+                name="infocirlce"
+                size={18}
+                color={COLORS.gray}
+                className="mr-2"
+              />
+              <View className="flex-1">
+                <Text className="font-semibold text-gray-900 mb-1">
+                  Connect FocusTracker
+                </Text>
+                <Text className="text-gray-500 text-sm">
+                  Link your FocusTracker account to automatically sync sprint
+                  tasks and track time seamlessly across both platforms.
+                </Text>
               </View>
             </View>
           </NoTaskView>

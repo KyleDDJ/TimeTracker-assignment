@@ -1,7 +1,5 @@
-import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
-import { useLocalSearchParams } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   SafeAreaView,
   ScrollView,
@@ -10,59 +8,111 @@ import {
   View,
 } from "react-native";
 
-import ProgressBarTask from "@/components/ProgressBarTrack";
+// import ProgressBarTask from "@/components/ProgressBarTrack";
 import TaskInfoHeader from "@/components/TaskInfoHeader";
 import MiniTaskCard from "@/components/TrackTaskCard";
 import { COLORS } from "@/constants/Colors";
-import { useTrackTasks } from "@/hooks/useTrackTasks";
+import { useTaskStore } from "@/stores/useTaskStore";
 
 const TrackScreen: React.FC = () => {
-  const { tasks } = useTrackTasks();
-  const { title, sprint, subtitle } = useLocalSearchParams();
+  const {
+    activeTask,
+    tasks,
+    isPlaying,
+    elapsed,
+    togglePlay,
+    nextTask,
+    prevTask,
+  } = useTaskStore();
+
+  useEffect(() => {
+    let interval: number | undefined;
+
+    if (isPlaying && activeTask) {
+      interval = setInterval(() => {
+        useTaskStore.setState(state => ({ elapsed: state.elapsed + 1 }));
+      }, 1000);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isPlaying, activeTask]);
+
+  const formatTime = (seconds: number) => {
+    const hrs = Math.floor(seconds / 3600)
+      .toString()
+      .padStart(2, "0");
+    const mins = Math.floor((seconds % 3600) / 60)
+      .toString()
+      .padStart(2, "0");
+    const secs = (seconds % 60).toString().padStart(2, "0");
+    return `${hrs}:${mins}:${secs}`;
+  };
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <ScrollView contentContainerClassName="flex-grow px-4 pt-4 pb-24">
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingHorizontal: 16,
+          paddingTop: 16,
+          paddingBottom: 96,
+        }}
+      >
         <View className="bg-gray-100 rounded-2xl p-5 items-center mb-5">
-          <TaskInfoHeader
-            title={(title as string) || "API Integration Setup"}
-            sprint={(sprint as string) || "Sprint 2025-01"}
-            subtitle={(subtitle as string) || "Frontend Development"}
-          />
+          {activeTask ? (
+            <>
+              <TaskInfoHeader
+                title={activeTask.title}
+                sprint="Sprint 2025-01"
+                subtitle={activeTask.subtitle}
+              />
 
-          <ProgressBarTask progress={0.3} />
+              {/* <ProgressBarTask progress={0.3} /> */}
 
-          <View className="mt-4 items-center">
-            <Text className="font-bold text-3xl">02:34:15</Text>
-          </View>
-
-          <View className="flex-row justify-center items-center mt-5 mb-3">
-            <TouchableOpacity>
-              <View className="w-14 h-14 rounded-full border border-gray-400 items-center justify-center">
-                <Entypo
-                  name="controller-fast-backward"
-                  size={23}
-                  color={COLORS.gray}
-                />
+              <View className="mt-4 items-center">
+                <Text className="font-bold text-3xl">
+                  {formatTime(elapsed)}
+                </Text>
               </View>
-            </TouchableOpacity>
 
-            <TouchableOpacity>
-              <View className="w-20 h-20 rounded-full bg-black items-center justify-center mx-8">
-                <AntDesign name="pause" size={35} color={COLORS.white} />
-              </View>
-            </TouchableOpacity>
+              <View className="flex-row justify-center items-center mt-5 mb-3">
+                <TouchableOpacity onPress={prevTask} disabled={!activeTask}>
+                  <View className="w-14 h-14 rounded-full border border-gray-400 items-center justify-center">
+                    <Entypo
+                      name="controller-fast-backward"
+                      size={23}
+                      color={activeTask ? COLORS.black : COLORS.gray400}
+                    />
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={togglePlay} disabled={!activeTask}>
+                  <View className="w-20 h-20 rounded-full bg-black items-center justify-center mx-8">
+                    <Entypo
+                      name={isPlaying ? "controller-paus" : "controller-play"}
+                      size={35}
+                      color={COLORS.white}
+                    />
+                  </View>
+                </TouchableOpacity>
 
-            <TouchableOpacity>
-              <View className="w-14 h-14 rounded-full border border-gray-400 items-center justify-center">
-                <Entypo
-                  name="controller-fast-forward"
-                  size={23}
-                  color={COLORS.gray}
-                />
+                <TouchableOpacity onPress={nextTask} disabled={!activeTask}>
+                  <View className="w-14 h-14 rounded-full border border-gray-400 items-center justify-center">
+                    <Entypo
+                      name="controller-fast-forward"
+                      size={23}
+                      color={activeTask ? COLORS.black : COLORS.gray400}
+                    />
+                  </View>
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
-          </View>
+            </>
+          ) : (
+            <Text className="text-gray-500 font-semibold text-lg">
+              Select a task to start tracking
+            </Text>
+          )}
         </View>
 
         <View className="mt-1 mb-3 flex-row justify-between items-center">
@@ -70,9 +120,15 @@ const TrackScreen: React.FC = () => {
         </View>
 
         <View className="mt-2">
-          {tasks.map(task => (
-            <MiniTaskCard key={task.id} task={task} isActive={task.isActive} />
-          ))}
+          {tasks
+            .filter(t => t.id !== activeTask?.id)
+            .map(task => (
+              <MiniTaskCard
+                key={task.id}
+                task={task}
+                isActive={task.isActive}
+              />
+            ))}
         </View>
       </ScrollView>
     </SafeAreaView>

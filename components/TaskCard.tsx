@@ -107,7 +107,7 @@ const TaskCard = ({
         <View>
           {progress === "TRACKING NOW" && (
             <AntDesign
-              name="pausecircleo"
+              name="playcircleo"
               size={30}
               color={isActive ? COLORS.white : COLORS.black}
             />

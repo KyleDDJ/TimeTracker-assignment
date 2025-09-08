@@ -1,27 +1,45 @@
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { ScrollView, View } from "react-native";
 
 import SprintSummaryCard from "@/components/SprintSummaryCard";
 import StatusTabs from "@/components/StatusTabs";
 import TaskCard from "@/components/TaskCard";
 import { Task } from "@/entities/task.entities";
+import { useTaskStore } from "@/stores/useTaskStore";
 
 type TaskDashboardProps = {
-  tasks: Task[];
+  tasks?: Task[];
 };
 
-const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks }) => {
+const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
+  const storeTasks = useTaskStore(state => state.tasks);
+  const setActiveTask = useTaskStore(state => state.setActiveTask);
+  const tasks = propTasks || storeTasks;
+
   const [activeTab, setActiveTab] = useState("All");
   const tabs = ["All", "In Progress", "Completed"];
 
-  const filteredTasks = tasks.filter(task => {
-    if (activeTab === "All") return true;
-    if (activeTab === "In Progress")
-      return task.progress === "TO DO" || task.progress === "TRACKING NOW";
-    if (activeTab === "Completed") return task.progress === "COMPLETED";
-    return true;
-  });
+  const filteredTasks = useMemo(() => {
+    return tasks.filter(task => {
+      if (activeTab === "All") return true;
+      if (activeTab === "In Progress")
+        return task.progress === "TO DO" || task.progress === "TRACKING NOW";
+      if (activeTab === "Completed") return task.progress === "COMPLETED";
+      return true;
+    });
+  }, [tasks, activeTab]);
+
+  const sprintSummary = useMemo(() => {
+    const tasksAssigned = filteredTasks.length;
+    const tasksCompleted = filteredTasks.filter(
+      t => t.progress === "COMPLETED"
+    ).length;
+    const hoursLogged = filteredTasks
+      .reduce((acc, t) => acc + (Number(t.estimated) || 0), 0)
+      .toString();
+    return { tasksAssigned, tasksCompleted, hoursLogged };
+  }, [filteredTasks]);
 
   return (
     <ScrollView
@@ -32,9 +50,9 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks }) => {
         <SprintSummaryCard
           sprintName="Sprint 2025-01"
           daysLeft="8 days left"
-          tasksAssigned={12}
-          tasksCompleted={5}
-          hoursLogged="42"
+          tasksAssigned={sprintSummary.tasksAssigned}
+          tasksCompleted={sprintSummary.tasksCompleted}
+          hoursLogged={sprintSummary.hoursLogged}
         />
       </View>
 
@@ -49,18 +67,15 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks }) => {
           key={task.id}
           {...task}
           onPress={() => {
-            if (task.progress === "TRACKING NOW") {
-              router.push({
-                pathname: "/(tabs)/track",
-                params: {
-                  title: task.title,
-                  sprint: "Sprint 2025-01",
-                  subtitle: task.subtitle,
-                },
-              });
-            } else {
-              console.log("Tapped:", task.title);
-            }
+            setActiveTask(task);
+            router.push({
+              pathname: "/(tabs)/track",
+              params: {
+                title: task.title,
+                sprint: "Sprint 2025-01",
+                subtitle: task.subtitle,
+              },
+            });
           }}
         />
       ))}

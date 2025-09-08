@@ -7,7 +7,7 @@ export const TASKS: Task[] = [
     subtitle: "Frontend Development",
     estimated: "6h estimated",
     progress: "TRACKING NOW",
-    remaining: "02:34:15",
+    remaining: "High Priority",
     icon: { library: "Entypo", name: "code", size: 24, color: "white" },
     isActive: true,
     type: "analytics",

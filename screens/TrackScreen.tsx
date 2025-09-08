@@ -2,7 +2,13 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import {
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import ProgressBarTask from "@/components/ProgressBarTrack";
 import TaskInfoHeader from "@/components/TaskInfoHeader";
@@ -31,25 +37,31 @@ const TrackScreen: React.FC = () => {
           </View>
 
           <View className="flex-row justify-center items-center mt-5 mb-3">
-            <View className="w-14 h-14 rounded-full border border-gray-400 items-center justify-center">
-              <Entypo
-                name="controller-fast-backward"
-                size={23}
-                color={COLORS.gray}
-              />
-            </View>
+            <TouchableOpacity>
+              <View className="w-14 h-14 rounded-full border border-gray-400 items-center justify-center">
+                <Entypo
+                  name="controller-fast-backward"
+                  size={23}
+                  color={COLORS.gray}
+                />
+              </View>
+            </TouchableOpacity>
 
-            <View className="w-20 h-20 rounded-full bg-black items-center justify-center mx-8">
-              <AntDesign name="pause" size={35} color={COLORS.white} />
-            </View>
+            <TouchableOpacity>
+              <View className="w-20 h-20 rounded-full bg-black items-center justify-center mx-8">
+                <AntDesign name="pause" size={35} color={COLORS.white} />
+              </View>
+            </TouchableOpacity>
 
-            <View className="w-14 h-14 rounded-full border border-gray-400 items-center justify-center">
-              <Entypo
-                name="controller-fast-forward"
-                size={23}
-                color={COLORS.gray}
-              />
-            </View>
+            <TouchableOpacity>
+              <View className="w-14 h-14 rounded-full border border-gray-400 items-center justify-center">
+                <Entypo
+                  name="controller-fast-forward"
+                  size={23}
+                  color={COLORS.gray}
+                />
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
 

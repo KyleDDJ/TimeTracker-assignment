@@ -23,7 +23,7 @@ const MiniTaskCard: React.FC<MiniTaskCardProps> = ({
     >
       <View
         className={`mr-3 p-3 rounded-xl ${
-          showIconBackground ? "bg-gray-300" : ""
+          showIconBackground ? "bg-gray-300" : "bg-white"
         }`}
       >
         {getLeftIcon(task)}

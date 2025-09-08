@@ -17,7 +17,8 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks }) => {
 
   const filteredTasks = tasks.filter(task => {
     if (activeTab === "All") return true;
-    if (activeTab === "In Progress") return task.progress === "TRACKING NOW";
+    if (activeTab === "In Progress")
+      return task.progress === "TO DO" || task.progress === "TRACKING NOW";
     if (activeTab === "Completed") return task.progress === "COMPLETED";
     return true;
   });

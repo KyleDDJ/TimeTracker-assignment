@@ -1,5 +1,4 @@
-// helpers/trackTaskIcons.ts
-import { Task } from "@/entities/task.entities"; // ✅ use unified Task
+import { Task } from "@/entities/task.entities";
 import {
   Entypo,
   FontAwesome6,
@@ -21,7 +20,7 @@ export const getLeftIcon = (task: Task) => {
     case "auth":
       return <FontAwesome6 name="users" size={20} color={COLORS.white} />;
     default:
-      return <Entypo name="dot-single" size={22} color={COLORS.gray400} />; // fallback
+      return <Entypo name="dot-single" size={22} color={COLORS.gray400} />;
   }
 };
 

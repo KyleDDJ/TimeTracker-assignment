@@ -1,27 +1,12 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { useState } from "react";
+import React from "react";
 import { ScrollView, TouchableOpacity, View } from "react-native";
 
 import SprintSummaryCard from "@/components/SprintSummaryCard";
-import StatusTabs from "@/components/StatusTabs";
-import TaskCard from "@/components/TaskCard";
 import { COLORS } from "@/constants/Colors";
-import { useTasks } from "@/hooks/useTasks";
 
 const QuickTaskScreen = () => {
-  const [activeTab, setActiveTab] = useState("All");
-  const { tasks } = useTasks();
-
-  const tabs = ["All", "In Progress", "Completed"];
-
-  const filteredTasks = tasks.filter(task => {
-    if (activeTab === "All") return true;
-    if (activeTab === "In Progress") return task.progress === "TRACKING NOW";
-    if (activeTab === "Completed") return task.progress === "COMPLETED";
-    return true;
-  });
-
   return (
     <View className="flex-1 bg-white">
       <ScrollView
@@ -37,33 +22,6 @@ const QuickTaskScreen = () => {
             hoursLogged="42"
           />
         </View>
-
-        <StatusTabs
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-          tabs={tabs.map(t => ({ name: t }))}
-        />
-
-        {filteredTasks.map(task => (
-          <TaskCard
-            key={task.id}
-            {...task}
-            onPress={() => {
-              if (task.progress === "TRACKING NOW") {
-                router.push({
-                  pathname: "/(tabs)/track",
-                  params: {
-                    title: task.title,
-                    sprint: "Sprint 2025-01",
-                    subtitle: task.subtitle,
-                  },
-                });
-              } else {
-                console.log("Tapped:", task.title);
-              }
-            }}
-          />
-        ))}
       </ScrollView>
 
       <TouchableOpacity

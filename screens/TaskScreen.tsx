@@ -1,10 +1,17 @@
+import { Task } from "@/entities/task.entities";
 import { MaterialIcons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { router } from "expo-router";
-import React from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import {
+  ActivityIndicator,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import NoTaskView from "@/components/NoTaskView";
 import { COLORS } from "@/constants/Colors";
@@ -12,7 +19,26 @@ import { useTasks } from "@/hooks/useTasks";
 import TaskDashboard from "@/screens/TasksDashboard";
 
 const TaskScreen = () => {
-  const { tasks } = useTasks(); // ✅ single source of truth
+  const { tasks: TASKS } = useTasks();
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  const handleSync = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setTasks(TASKS);
+      setLoading(false);
+    }, 2000);
+  };
+
+  if (loading) {
+    return (
+      <View className="flex-1 justify-center items-center bg-white">
+        <ActivityIndicator size="large" color={COLORS.black} />
+        <Text className="mt-4 text-gray-500 text-base">Loading tasks...</Text>
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1 bg-white">
@@ -26,11 +52,7 @@ const TaskScreen = () => {
             <View className="w-full items-center mt-5 px-6">
               <TouchableOpacity
                 className="w-3/5 bg-black flex-row items-center justify-center py-5 rounded-2xl mb-4"
-                onPress={() => {
-                  // 🔹 in the real app, this should trigger syncing logic
-                  // for now, just push a sample task into useTasks context/state
-                  console.log("Sync FocusTracker Tasks");
-                }}
+                onPress={handleSync}
               >
                 <MaterialCommunityIcons
                   name="sync"
@@ -44,10 +66,7 @@ const TaskScreen = () => {
 
               <TouchableOpacity
                 className="w-11/12 border border-gray-300 bg-white flex-row items-center justify-center py-5 rounded-2xl mb-4"
-                onPress={() => {
-                  // 🔹 placeholder: create task manually
-                  console.log("Create Manual Task");
-                }}
+                onPress={() => console.log("Create Manual Task")}
               >
                 <AntDesign name="plus" size={20} color={COLORS.gray} />
                 <Text className="text-gray-700 text-base font-semibold ml-2">
@@ -80,7 +99,7 @@ const TaskScreen = () => {
             </View>
           </NoTaskView>
         ) : (
-          <TaskDashboard />
+          <TaskDashboard tasks={tasks} />
         )}
       </ScrollView>
 

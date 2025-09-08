@@ -5,12 +5,14 @@ import { ScrollView, View } from "react-native";
 import SprintSummaryCard from "@/components/SprintSummaryCard";
 import StatusTabs from "@/components/StatusTabs";
 import TaskCard from "@/components/TaskCard";
-import { useTasks } from "@/hooks/useTasks";
+import { Task } from "@/entities/task.entities";
 
-const FilledState = () => {
+type TaskDashboardProps = {
+  tasks: Task[];
+};
+
+const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks }) => {
   const [activeTab, setActiveTab] = useState("All");
-  const { tasks } = useTasks();
-
   const tabs = ["All", "In Progress", "Completed"];
 
   const filteredTasks = tasks.filter(task => {
@@ -65,4 +67,4 @@ const FilledState = () => {
   );
 };
 
-export default FilledState;
+export default TaskDashboard;

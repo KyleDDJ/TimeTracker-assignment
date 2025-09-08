@@ -55,5 +55,6 @@ export const TASKS: Task[] = [
     remaining: "3.5h logged",
     icon: { library: "FontAwesome6", name: "users", size: 20, color: "white" },
     type: "auth",
+    percentage: "9%",
   },
 ];

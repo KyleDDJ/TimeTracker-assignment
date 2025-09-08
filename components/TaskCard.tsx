@@ -11,7 +11,9 @@ import { Text, TouchableOpacity, View } from "react-native";
 
 import { COLORS } from "@/constants/Colors";
 
-const getIconComponent = (library: TaskCardProps["icon"]["library"]) => {
+type IconLibrary = NonNullable<TaskCardProps["icon"]>["library"];
+
+const getIconComponent = (library: IconLibrary) => {
   switch (library) {
     case "Entypo":
       return Entypo;
@@ -21,6 +23,8 @@ const getIconComponent = (library: TaskCardProps["icon"]["library"]) => {
       return Octicons;
     case "FontAwesome6":
       return FontAwesome6;
+    case "AntDesign":
+      return AntDesign;
     default:
       return Entypo;
   }
@@ -41,7 +45,7 @@ const TaskCard = ({
   isActive,
   onPress,
 }: TaskCardProps) => {
-  const IconComp = getIconComponent(icon.library);
+  const IconComp = icon ? getIconComponent(icon.library) : null;
 
   return (
     <TouchableOpacity
@@ -64,7 +68,7 @@ const TaskCard = ({
         </Text>
 
         <Text
-          className={`text-sm font-semiboldS ${
+          className={`text-sm font-semibold ${
             progress === "TRACKING NOW" ? "text-white" : "text-gray-500"
           }`}
         >
@@ -78,7 +82,9 @@ const TaskCard = ({
             isActive ? "bg-white/20" : "bg-gray-200"
           }`}
         >
-          <IconComp name={icon.name} size={icon.size} color={icon.color} />
+          {IconComp && (
+            <IconComp name={icon!.name} size={icon!.size} color={icon!.color} />
+          )}
         </View>
 
         <View className="flex-1">

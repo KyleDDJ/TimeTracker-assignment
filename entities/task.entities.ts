@@ -1,35 +1,45 @@
-import { ReactNode } from "react";
 import { GestureResponderEvent } from "react-native";
 
-export type MiniTaskCardProps = {
-  title?: string;
-  subtitle?: string;
-  estimated?: string;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
-  showIconBackground?: boolean;
-  rightEstimate?: string;
-  percentage?: string;
-  onPress?: (event: GestureResponderEvent) => void;
-};
-
-export type TaskCardProps = {
+/**
+ * Unified Task type (used across all tabs)
+ */
+export type Task = {
   id: number;
   title: string;
-  progress: "TO DO" | "TRACKING NOW" | "COMPLETED";
   subtitle: string;
   estimated: string;
-  remaining: string;
-  icon: {
+  progress?: "TO DO" | "TRACKING NOW" | "COMPLETED"; // for Tasks tab
+  remaining?: string; // for Tasks tab
+  icon?: {
     library: "Entypo" | "MaterialIcons" | "Octicons" | "FontAwesome6" | "AntDesign";
     name: string;
     size: number;
     color: string;
   };
-  onPress?: () => void;
-  isActive?: boolean;
+  isActive?: boolean; // for Tracking Now
+  type?: "mobile" | "analytics" | "auth"; // for Track tab (category)
+  percentage?: string; 
 };
 
+/**
+ * Props for MiniTaskCard
+ */
+export type MiniTaskCardProps = {
+  task: Task;
+  isActive?: boolean;
+  onPress?: (event: GestureResponderEvent) => void;
+};
+
+/**
+ * Props for TaskCard
+ */
+export type TaskCardProps = Task & {
+  onPress?: () => void;
+};
+
+/**
+ * Event timeline item (Analytics tab)
+ */
 export type EventItem = {
   id: number;
   title: string;

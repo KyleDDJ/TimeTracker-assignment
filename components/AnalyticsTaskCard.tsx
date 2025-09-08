@@ -1,89 +1,36 @@
 import { Octicons } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 import { COLORS } from "@/constants/Colors";
-
-type AnalyticsTask = {
-  id: number;
-  title: string;
-  subtitle: string;
-  estimated: string;
-  percentage?: string;
-  type: string;
-};
+import { Task } from "@/entities/task.entities";
 
 type Props = {
-  task: AnalyticsTask;
+  task: Task;
 };
 
 const AnalyticsTaskCard = ({ task }: Props) => {
   return (
-    <View style={styles.card}>
-      <View style={styles.leftIcon}>
+    <View className="flex-row items-center bg-white rounded-xl p-4 mb-3 border border-gray-200">
+      <View className="w-8 h-8 rounded-md items-center justify-center mr-3">
         <Octicons name="dot-fill" size={30} color={COLORS.gray400} />
       </View>
 
-      <View style={styles.content}>
-        <Text style={styles.metric}>{task.title}</Text>
-        <Text style={styles.value}>{task.subtitle}</Text>
+      <View className="flex-1">
+        <Text className="text-base font-medium text-black">{task.title}</Text>
+        <Text className="text-sm font-bold text-gray-400">{task.subtitle}</Text>
       </View>
 
-      <View style={styles.rightColumn}>
-        <Text style={styles.estimate}>{task.estimated}</Text>
+      <View className="items-end">
+        <Text className="text-sm font-semibold text-black">
+          {task.estimated}
+        </Text>
         {task.percentage && (
-          <Text style={styles.percentage}>{task.percentage}</Text>
+          <Text className="text-xs text-gray-600 mt-1">{task.percentage}</Text>
         )}
       </View>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  card: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: COLORS.white,
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: COLORS.gray200,
-  },
-  leftIcon: {
-    width: 32,
-    height: 32,
-    borderRadius: 8,
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 12,
-  },
-  content: {
-    flex: 1,
-  },
-  metric: {
-    fontSize: 16,
-    fontWeight: "500",
-    color: COLORS.black,
-  },
-  value: {
-    fontSize: 14,
-    fontWeight: "700",
-    color: COLORS.gray400,
-  },
-  rightColumn: {
-    alignItems: "flex-end",
-  },
-  estimate: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: COLORS.black,
-  },
-  percentage: {
-    fontSize: 12,
-    color: COLORS.gray600,
-    marginTop: 4,
-  },
-});
 
 export default AnalyticsTaskCard;

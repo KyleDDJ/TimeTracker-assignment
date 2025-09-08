@@ -48,11 +48,20 @@ const QuickTaskScreen = () => {
           <TaskCard
             key={task.id}
             {...task}
-            onPress={
-              task.progress === "TRACKING NOW"
-                ? () => router.push("/(tabs)/track")
-                : task.onPress
-            }
+            onPress={() => {
+              if (task.progress === "TRACKING NOW") {
+                router.push({
+                  pathname: "/(tabs)/track",
+                  params: {
+                    title: task.title,
+                    sprint: "Sprint 2025-01",
+                    subtitle: task.subtitle,
+                  },
+                });
+              } else {
+                console.log("Tapped:", task.title);
+              }
+            }}
           />
         ))}
       </ScrollView>

@@ -1,4 +1,5 @@
-import { TrackTask } from "@/constants/TrackTask";
+// helpers/trackTaskIcons.ts
+import { Task } from "@/entities/task.entities"; // ✅ use unified Task
 import {
   Entypo,
   FontAwesome6,
@@ -9,7 +10,7 @@ import React from "react";
 
 import { COLORS } from "@/constants/Colors";
 
-export const getLeftIcon = (task: TrackTask, percentage?: string) => {
+export const getLeftIcon = (task: Task) => {
   switch (task.type) {
     case "mobile":
       return (
@@ -20,11 +21,11 @@ export const getLeftIcon = (task: TrackTask, percentage?: string) => {
     case "auth":
       return <FontAwesome6 name="users" size={20} color={COLORS.white} />;
     default:
-      return null;
+      return <Entypo name="dot-single" size={22} color={COLORS.gray400} />; // fallback
   }
 };
 
-export const getRightIcon = (task: TrackTask, isActive: boolean) => {
+export const getRightIcon = (task: Task, isActive: boolean) => {
   return isActive ? (
     <Ionicons name="play-circle-sharp" size={35} color={COLORS.black} />
   ) : (

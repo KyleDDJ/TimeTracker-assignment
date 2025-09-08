@@ -1,11 +1,16 @@
-import { useState } from "react";
-
 import { ANALYTICS_ITEMS } from "@/constants/AnalyticsItems";
-import { ANALYTICS_TASKS } from "@/constants/AnalyticsTasks";
+import { TASKS } from "@/constants/Tasks";
+import { EventItem, Task } from "@/entities/task.entities";
 
 export const useAnalytics = () => {
-  const [items, setItems] = useState(ANALYTICS_ITEMS);
-  const [tasks, setTasks] = useState(ANALYTICS_TASKS);
+  const analyticsTasks: Task[] = TASKS.filter(
+    (t) => t.type === "analytics"
+  );
 
-  return { items, tasks };
+  return {
+    items: ANALYTICS_ITEMS as EventItem[],
+    tasks: analyticsTasks,
+  };
 };
+
+

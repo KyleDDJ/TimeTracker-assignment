@@ -7,13 +7,13 @@ import StatusTabs from "@/components/StatusTabs";
 import TimelineChart from "@/components/TimelineChart";
 import TrackingHeader from "@/components/TrackingHeader";
 
+import { COLORS } from "@/constants/Colors";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
-import { COLORS } from "@/constants/Colors";
 import { useAnalytics } from "@/hooks/useAnalytics";
 
 const AnalyticsScreen: React.FC = () => {
-  const [active_tab, setActiveTab] = useState("Timeline");
+  const [activeTab, setActiveTab] = useState("Timeline");
   const [date] = useState(new Date());
 
   const { items, tasks } = useAnalytics();
@@ -32,7 +32,7 @@ const AnalyticsScreen: React.FC = () => {
           />
 
           <StatusTabs
-            activeTab={active_tab}
+            activeTab={activeTab}
             setActiveTab={setActiveTab}
             tabs={[
               {
@@ -58,10 +58,11 @@ const AnalyticsScreen: React.FC = () => {
             ]}
           />
 
-          <View className="mt-1">
-            <TimelineChart items={items} EventCard={EventCard} date={date} />
-          </View>
-
+          {activeTab === "Timeline" && (
+            <View className="mt-1">
+              <TimelineChart items={items} EventCard={EventCard} date={date} />
+            </View>
+          )}
           <View className="mt-6 flex-row justify-between">
             <Text className="text-lg font-bold">Task Breakdown</Text>
           </View>

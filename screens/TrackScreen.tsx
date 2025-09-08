@@ -1,13 +1,14 @@
-import ProgressBarTask from "@/components/ProgressBarTrack";
-import TaskInfoHeader from "@/components/TaskInfoHeader";
-import MiniTaskCard from "@/components/TrackTaskCard";
-import { COLORS } from "@/constants/Colors";
-import { useTrackTasks } from "@/hooks/useTrackTasks";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Entypo from "@expo/vector-icons/Entypo";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
+
+import ProgressBarTask from "@/components/ProgressBarTrack";
+import TaskInfoHeader from "@/components/TaskInfoHeader";
+import MiniTaskCard from "@/components/TrackTaskCard";
+import { COLORS } from "@/constants/Colors";
+import { useTrackTasks } from "@/hooks/useTrackTasks";
 
 const TrackScreen: React.FC = () => {
   const { tasks } = useTrackTasks();
@@ -58,7 +59,7 @@ const TrackScreen: React.FC = () => {
 
         <View className="mt-2">
           {tasks.map(task => (
-            <MiniTaskCard key={task.id} task={task} isActive={false} />
+            <MiniTaskCard key={task.id} task={task} isActive={task.isActive} />
           ))}
         </View>
       </ScrollView>

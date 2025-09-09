@@ -114,7 +114,10 @@ const TaskScreen = () => {
           style={{ backgroundColor: COLORS.green }}
           onPress={() => {
             const newTask = useTaskStore.getState().createQuickTask();
-            useTaskStore.getState().setActiveTask(newTask);
+            useTaskStore.getState().setActiveTask({
+              ...newTask,
+              isQuickTask: true,
+            });
             router.push("/(tabs)/track");
           }}
         >

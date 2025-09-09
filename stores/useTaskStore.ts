@@ -1,3 +1,4 @@
+import { COLORS } from "@/constants/Colors";
 import { Task } from "@/entities/task.entities";
 import { create } from "zustand";
 
@@ -45,26 +46,32 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
       tasks: [task, ...state.tasks],
     })),
 
-  createQuickTask: () => {
-    const count = get().quickTaskCounter + 1;
+createQuickTask: () => {
+  const count = get().quickTaskCounter + 1;
 
-    const newTask: Task = {
-      id: Date.now(),
-      title: `Quick Task #${String(count).padStart(3, "0")}`,
-      subtitle: "Ad hoc",
-      estimated: "0h",
-      progress: "TO DO",
-      isActive: false,
-      elapsed: 0,
-    };
+  const newTask: Task = {
+    id: Date.now(),
+    title: `Quick Task #${String(count).padStart(3, "0")}`,
+    subtitle: "Ad hoc",
+    estimated: "0h",
+    progress: "TO DO",
+    isActive: false,
+    elapsed: 0,
+    icon: {
+      library: "MaterialIcons",
+      name: "bolt",
+      size: 24,
+      color: COLORS.white,
+    },
+  };
 
-    set((state) => ({
-      tasks: [newTask, ...state.tasks],
-      quickTaskCounter: count,
-    }));
+  set((state) => ({
+    tasks: [newTask, ...state.tasks],
+    quickTaskCounter: count,
+  }));
 
-    return newTask;
-  },
+  return newTask;
+},
 
   setActiveTask: (task) => {
     const currentTask = get().tasks.find((t) => t.id === task.id);

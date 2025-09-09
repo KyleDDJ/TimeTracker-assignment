@@ -75,11 +75,7 @@ const TrackScreen: React.FC = () => {
         <View className="bg-gray-100 rounded-2xl p-5 items-center mb-5">
           {activeTask ? (
             <>
-              <TaskInfoHeader
-                title={activeTask.title}
-                sprint="Sprint 2025-01"
-                subtitle={activeTask.subtitle}
-              />
+              <TaskInfoHeader task={activeTask} sprint="Sprint 2025-01" />
 
               <View className="mt-4 items-center">
                 <Text className="font-bold text-3xl">

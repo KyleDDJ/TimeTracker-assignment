@@ -1,18 +1,20 @@
 import { GestureResponderEvent } from "react-native";
 
+export type TaskIcon = {
+  library: "Entypo" | "MaterialIcons" | "Octicons" | "FontAwesome6" | "AntDesign";
+  name: string; 
+  size: number; 
+  color: string;
+};
+
 export type Task = {
   id: number;
   title: string;
   subtitle: string;
   estimated: string;
-  progress?: "TO DO" | "TRACKING NOW" | "COMPLETED";
+  progress: "TO DO" | "TRACKING NOW" | "COMPLETED";
   remaining?: string;
-  icon?: {
-    library: "Entypo" | "MaterialIcons" | "Octicons" | "FontAwesome6" | "AntDesign";
-    name: string;
-    size: number;
-    color: string;
-  };
+  icon: TaskIcon; // required now
   isActive?: boolean;
   isQuickTask?: boolean;
   type?: "mobile" | "analytics" | "auth";

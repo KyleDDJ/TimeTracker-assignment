@@ -3,7 +3,6 @@ import {
   AntDesign,
   Entypo,
   FontAwesome6,
-  MaterialIcons,
   MaterialIcons as MI,
   Octicons,
 } from "@expo/vector-icons";
@@ -112,16 +111,12 @@ const TaskCard: React.FC<TaskCardProps> = ({
             marginRight: 12,
           }}
         >
-          {isActive && isQuickTask ? (
-            <MaterialIcons name="bolt" size={24} color={COLORS.white} />
-          ) : (
-            IconComp && (
-              <IconComp
-                name={icon!.name}
-                size={icon!.size}
-                color={isActive ? COLORS.white : icon!.color}
-              />
-            )
+          {icon && IconComp && (
+            <IconComp
+              name={icon.name}
+              size={icon.size}
+              color={isActive ? COLORS.white : icon.color}
+            />
           )}
         </View>
 

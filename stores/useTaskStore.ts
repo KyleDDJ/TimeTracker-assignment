@@ -6,7 +6,10 @@ type TaskStore = {
   activeTask: Task | null;
   isPlaying: boolean;
   elapsed: number;
+  quickTaskCounter: number;
   setTasks: (tasks: Task[]) => void;
+  prependTask: (task: Task) => void;
+  createQuickTask: () => Task;
   setActiveTask: (task: Task) => void;
   togglePlay: () => void;
   resetTimer: () => void;
@@ -19,8 +22,35 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
   activeTask: null,
   isPlaying: false,
   elapsed: 0,
+  quickTaskCounter: 0,
 
   setTasks: (tasks) => set({ tasks }),
+
+  prependTask: (task) =>
+    set((state) => ({
+      tasks: [task, ...state.tasks],
+    })),
+
+  createQuickTask: () => {
+    const count = get().quickTaskCounter + 1;
+
+    const newTask: Task = {
+      id: Date.now(),
+      title: `Quick Task #${String(count).padStart(3, "0")}`,
+      subtitle: "Ad hoc",
+      estimated: "0h",
+      progress: "TO DO",
+      isActive: false,
+      elapsed: 0,
+    };
+
+    set((state) => ({
+      tasks: [newTask, ...state.tasks],
+      quickTaskCounter: count,
+    }));
+
+    return newTask;
+  },
 
   setActiveTask: (task) => {
     const currentTask = get().tasks.find((t) => t.id === task.id);

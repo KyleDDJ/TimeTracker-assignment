@@ -2,7 +2,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -17,6 +16,7 @@ import { COLORS } from "@/constants/Colors";
 import { useTasks } from "@/hooks/useTasks";
 import TaskDashboard from "@/screens/TasksDashboard";
 import { useTaskStore } from "@/stores/useTaskStore";
+import { router } from "expo-router";
 
 const TaskScreen = () => {
   const { tasks: TASKS } = useTasks();
@@ -106,16 +106,11 @@ const TaskScreen = () => {
       {tasks.length > 0 && (
         <TouchableOpacity
           className="absolute bottom-20 right-6 bg-black w-16 h-16 rounded-full items-center justify-center shadow-lg"
-          onPress={() =>
-            router.push({
-              pathname: "/(tabs)/track",
-              params: {
-                title: "Quick Task 001",
-                sprint: "Ad hoc",
-                subtitle: "Unplanned Work",
-              },
-            })
-          }
+          onPress={() => {
+            const newTask = useTaskStore.getState().createQuickTask();
+            useTaskStore.getState().setActiveTask(newTask);
+            router.push("/(tabs)/track");
+          }}
         >
           <MaterialIcons name="bolt" size={34} color={COLORS.white} />
         </TouchableOpacity>

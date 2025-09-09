@@ -5,8 +5,11 @@ import { ScrollView, TouchableOpacity, View } from "react-native";
 
 import SprintSummaryCard from "@/components/SprintSummaryCard";
 import { COLORS } from "@/constants/Colors";
+import { useTaskStore } from "@/stores/useTaskStore";
 
 const QuickTaskScreen = () => {
+  const createQuickTask = useTaskStore(state => state.createQuickTask);
+
   return (
     <View className="flex-1 bg-white">
       <ScrollView
@@ -26,16 +29,17 @@ const QuickTaskScreen = () => {
 
       <TouchableOpacity
         className="absolute bottom-20 right-6 bg-black w-16 h-16 rounded-full items-center justify-center shadow-lg"
-        onPress={() =>
+        onPress={() => {
+          const newTask = createQuickTask();
           router.push({
             pathname: "/(tabs)/track",
             params: {
-              title: "Quick Task #001",
+              title: newTask.title,
               sprint: "Ad hoc",
               subtitle: "Unplanned Work",
             },
-          })
-        }
+          });
+        }}
       >
         <MaterialIcons name="bolt" size={34} color={COLORS.white} />
       </TouchableOpacity>

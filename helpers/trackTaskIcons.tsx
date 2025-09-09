@@ -26,7 +26,7 @@ export const getLeftIcon = (task: Task) => {
 
 export const getRightIcon = (task: Task, isActive: boolean) => {
   return isActive ? (
-    <Ionicons name="play-circle" size={35} color={COLORS.black} />
+    <Ionicons name="play-circle" size={35} color={COLORS.gray400} />
   ) : (
     <Ionicons name="play-circle-outline" size={35} color={COLORS.gray400} />
   );

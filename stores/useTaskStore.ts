@@ -23,6 +23,9 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
   setTasks: (tasks) => set({ tasks }),
 
   setActiveTask: (task) => {
+    const currentTask = get().tasks.find((t) => t.id === task.id);
+    const savedElapsed = currentTask?.elapsed ?? 0;
+
     set((state) => ({
       tasks: state.tasks.map((t) =>
         t.id === task.id
@@ -33,7 +36,7 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
       ),
       activeTask: { ...task, isActive: true, progress: "TRACKING NOW" },
       isPlaying: false,
-      elapsed: 0,
+      elapsed: savedElapsed,
     }));
   },
 
@@ -50,6 +53,8 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
 
     if (nextIndex < tasks.length) {
       const next = tasks[nextIndex];
+      const savedElapsed = next.elapsed ?? 0;
+
       set((state) => ({
         tasks: state.tasks.map((t) =>
           t.id === next.id
@@ -60,7 +65,7 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
         ),
         activeTask: { ...next, isActive: true, progress: "TRACKING NOW" },
         isPlaying: false,
-        elapsed: 0,
+        elapsed: savedElapsed,
       }));
     }
   },
@@ -74,6 +79,8 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
 
     if (prevIndex >= 0) {
       const prev = tasks[prevIndex];
+      const savedElapsed = prev.elapsed ?? 0;
+
       set((state) => ({
         tasks: state.tasks.map((t) =>
           t.id === prev.id
@@ -84,7 +91,7 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
         ),
         activeTask: { ...prev, isActive: true, progress: "TRACKING NOW" },
         isPlaying: false,
-        elapsed: 0,
+        elapsed: savedElapsed,
       }));
     }
   },

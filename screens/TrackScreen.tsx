@@ -8,7 +8,6 @@ import {
   View,
 } from "react-native";
 
-// import ProgressBarTask from "@/components/ProgressBarTrack";
 import TaskInfoHeader from "@/components/TaskInfoHeader";
 import MiniTaskCard from "@/components/TrackTaskCard";
 import { COLORS } from "@/constants/Colors";
@@ -16,8 +15,8 @@ import { useTaskStore } from "@/stores/useTaskStore";
 
 const TrackScreen: React.FC = () => {
   const {
-    activeTask,
     tasks,
+    activeTask,
     isPlaying,
     elapsed,
     togglePlay,
@@ -26,17 +25,26 @@ const TrackScreen: React.FC = () => {
   } = useTaskStore();
 
   useEffect(() => {
-    let interval: number | undefined;
+    let interval: ReturnType<typeof setInterval>;
 
     if (isPlaying && activeTask) {
       interval = setInterval(() => {
-        useTaskStore.setState(state => ({ elapsed: state.elapsed + 1 }));
+        useTaskStore.setState(state => {
+          if (!state.activeTask) return state;
+
+          const newElapsed = state.elapsed + 1;
+
+          return {
+            elapsed: newElapsed,
+            tasks: state.tasks.map(t =>
+              t.id === state.activeTask!.id ? { ...t, elapsed: newElapsed } : t
+            ),
+          };
+        });
       }, 1000);
     }
 
-    return () => {
-      if (interval) clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   }, [isPlaying, activeTask]);
 
   const formatTime = (seconds: number) => {
@@ -49,6 +57,10 @@ const TrackScreen: React.FC = () => {
     const secs = (seconds % 60).toString().padStart(2, "0");
     return `${hrs}:${mins}:${secs}`;
   };
+
+  const upNextTasks = activeTask
+    ? tasks.slice(tasks.findIndex(t => t.id === activeTask.id) + 1)
+    : tasks;
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -69,8 +81,6 @@ const TrackScreen: React.FC = () => {
                 subtitle={activeTask.subtitle}
               />
 
-              {/* <ProgressBarTask progress={0.3} /> */}
-
               <View className="mt-4 items-center">
                 <Text className="font-bold text-3xl">
                   {formatTime(elapsed)}
@@ -87,6 +97,7 @@ const TrackScreen: React.FC = () => {
                     />
                   </View>
                 </TouchableOpacity>
+
                 <TouchableOpacity onPress={togglePlay} disabled={!activeTask}>
                   <View className="w-20 h-20 rounded-full bg-black items-center justify-center mx-8">
                     <Entypo
@@ -120,15 +131,16 @@ const TrackScreen: React.FC = () => {
         </View>
 
         <View className="mt-2">
-          {tasks
-            .filter(t => t.id !== activeTask?.id)
-            .map(task => (
-              <MiniTaskCard
-                key={task.id}
-                task={task}
-                isActive={task.isActive}
-              />
-            ))}
+          {upNextTasks.map(task => (
+            <MiniTaskCard
+              key={task.id}
+              task={task}
+              isActive={task.isActive}
+              onPress={() => {
+                useTaskStore.getState().setActiveTask(task);
+              }}
+            />
+          ))}
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -13,7 +13,10 @@ type LogoHeaderProps = {
 const LogoHeader = ({ iconName, title, subtitle }: LogoHeaderProps) => {
   return (
     <View className="items-center pt-10 mb-6">
-      <View className="w-20 h-20 bg-black rounded-2xl items-center justify-center mb-4">
+      <View
+        className="w-20 h-20 rounded-2xl items-center justify-center mb-4"
+        style={{ backgroundColor: COLORS.green }}
+      >
         <AntDesign name={iconName as any} size={28} color={COLORS.white} />
       </View>
       <Text className="text-2xl font-bold text-gray-900">{title}</Text>

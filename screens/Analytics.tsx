@@ -37,21 +37,21 @@ const AnalyticsScreen: React.FC = () => {
             tabs={[
               {
                 name: "Gantt",
-                icon: (
+                icon: (isActive: boolean) => (
                   <FontAwesome6
                     name="chart-gantt"
                     size={18}
-                    color={COLORS.black}
+                    color={isActive ? COLORS.white : COLORS.gray500}
                   />
                 ),
               },
               {
                 name: "Timeline",
-                icon: (
+                icon: (isActive: boolean) => (
                   <FontAwesome6
                     name="timeline"
                     size={18}
-                    color={COLORS.black}
+                    color={isActive ? COLORS.white : COLORS.gray500}
                   />
                 ),
               },

@@ -22,7 +22,7 @@ const CustomButton: React.FC<PrimaryButtonProps> = ({
       disabled={disabled || loading}
       className="rounded-xl py-3 mt-1 mx-2 flex-row justify-center"
       style={{
-        backgroundColor: disabled || loading ? COLORS.gray400 : COLORS.black,
+        backgroundColor: disabled || loading ? COLORS.gray400 : COLORS.green,
       }}
     >
       {loading ? (

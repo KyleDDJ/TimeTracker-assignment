@@ -24,7 +24,17 @@ export const useTaskStore = create<TaskStore>((set, get) => ({
   elapsed: 0,
   quickTaskCounter: 0,
 
-  setTasks: (tasks) => set({ tasks }),
+  setTasks: (tasks) =>
+    set({
+      tasks: tasks.map((t) => ({
+        ...t,
+        progress: t.progress === "COMPLETED" ? "COMPLETED" : "TO DO",
+        isActive: false,
+      })),
+      activeTask: null,
+      isPlaying: false,
+      elapsed: 0,
+  }),
 
   prependTask: (task) =>
     set((state) => ({

@@ -34,7 +34,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
           error
             ? "border-red-500"
             : is_focused
-            ? "border-black"
+            ? COLORS.darkgreen
             : "border-gray-300"
         }`}
       >
@@ -54,7 +54,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
             <AntDesign
               name={show_password ? "eyeo" : "eye"}
               size={20}
-              color={COLORS.gray}
+              color={COLORS.green}
             />
           </TouchableOpacity>
         )}

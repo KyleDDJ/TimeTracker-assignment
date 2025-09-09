@@ -1,10 +1,10 @@
 export const COLORS = {
 
+  jet: "#ff0000ff",
   black: "#000000ff",
   white: "#ffffffff",
   gray: "#808080",
   charcoal: "#111111",
-  jet: "#ff0000ff",
   neutral: "#e5e5e5",
 
   gray50: "#F9FAFB",
@@ -20,4 +20,7 @@ export const COLORS = {
 
   textLight: "#FFFFFF",
   textDark: "#000000",
+
+  green: "#2E5941",
+  darkgreen: "#1B3022",
 };

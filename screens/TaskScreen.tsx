@@ -48,29 +48,34 @@ const TaskScreen = () => {
           <NoTaskView
             title="No Tasks Yet"
             description="Sync your FocusTracker tasks to start tracking your time and managing your sprint efficiently."
-            icon={<FontAwesome5 name="tasks" size={50} color={COLORS.gray} />}
+            icon={<FontAwesome5 name="tasks" size={50} color={COLORS.white} />}
           >
             <View className="w-full items-center mt-5 px-6">
               <TouchableOpacity
-                className="w-3/5 bg-black flex-row items-center justify-center py-5 rounded-2xl mb-4"
+                className="w-3/5 flex-row items-center justify-center py-5 rounded-2xl mb-4"
                 onPress={handleSync}
+                style={{ backgroundColor: COLORS.green }}
               >
                 <MaterialCommunityIcons
                   name="sync"
                   size={20}
                   color={COLORS.white}
                 />
-                <Text className="text-white text-base font-semibold ml-2">
+                <Text
+                  className="text-base font-semibold ml-2"
+                  style={{ color: COLORS.white }}
+                >
                   Sync FocusTracker Tasks
                 </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
-                className="w-11/12 border border-gray-300 bg-white flex-row items-center justify-center py-5 rounded-2xl mb-4"
+                className="w-11/12 border border-gray-300 flex-row items-center justify-center py-5 rounded-2xl mb-4"
+                style={{ backgroundColor: COLORS.green }}
                 onPress={() => console.log("Create Manual Task")}
               >
-                <AntDesign name="plus" size={20} color={COLORS.gray} />
-                <Text className="text-gray-700 text-base font-semibold ml-2">
+                <AntDesign name="plus" size={20} color={COLORS.white} />
+                <Text className="text-white text-base font-semibold ml-2">
                   Create Manual Task
                 </Text>
               </TouchableOpacity>
@@ -80,7 +85,7 @@ const TaskScreen = () => {
               Import from CSV
             </Text>
 
-            <View className="bg-gray-50 rounded-xl px-5 py-5 flex-row items-start mx-5 my-3">
+            <View className="bg-gray-100 rounded-xl px-5 py-5 flex-row items-start mx-5 my-3">
               <AntDesign
                 name="infocirlce"
                 size={18}
@@ -105,7 +110,8 @@ const TaskScreen = () => {
 
       {tasks.length > 0 && (
         <TouchableOpacity
-          className="absolute bottom-28 right-6 bg-black w-16 h-16 rounded-full items-center justify-center shadow-lg"
+          className="absolute bottom-28 right-6 w-16 h-16 rounded-full items-center justify-center shadow-lg"
+          style={{ backgroundColor: COLORS.green }}
           onPress={() => {
             const newTask = useTaskStore.getState().createQuickTask();
             useTaskStore.getState().setActiveTask(newTask);

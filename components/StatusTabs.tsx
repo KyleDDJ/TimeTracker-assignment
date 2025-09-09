@@ -1,9 +1,10 @@
+import { COLORS } from "@/constants/Colors";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 type Tab = {
   name: string;
-  icon?: React.ReactNode;
+  icon?: (isActive: boolean) => React.ReactNode;
 };
 
 type StatusTabsProps = {
@@ -18,28 +19,40 @@ const StatusTabs: React.FC<StatusTabsProps> = ({
   tabs,
 }) => {
   return (
-    <View className="bg-gray-100 rounded-2xl p-1 mb-5">
+    <View
+      className="rounded-2xl p-1 mb-5"
+      style={{ backgroundColor: COLORS.darkgreen }}
+    >
       <View className="flex-row w-full">
-        {tabs.map(tab => (
-          <TouchableOpacity
-            key={tab.name}
-            onPress={() => setActiveTab(tab.name)}
-            className={`flex-1 py-3 items-center rounded-xl ${
-              activeTab === tab.name ? "bg-white" : "bg-gray-100"
-            }`}
-          >
-            <View className="flex-row items-center justify-center gap-2">
-              {tab.icon && <View>{tab.icon}</View>}
-              <Text
-                className={`font-semibold ${
-                  activeTab === tab.name ? "text-black" : "text-gray-600"
-                }`}
-              >
-                {tab.name}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        ))}
+        {tabs.map(tab => {
+          const isActive = activeTab === tab.name;
+          return (
+            <TouchableOpacity
+              key={tab.name}
+              onPress={() => setActiveTab(tab.name)}
+              style={{
+                flex: 1,
+                paddingVertical: 12,
+                alignItems: "center",
+                borderRadius: 12,
+                backgroundColor: isActive ? COLORS.green : COLORS.darkgreen,
+              }}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                {tab.icon && <View>{tab.icon(isActive)}</View>}
+                <Text
+                  style={{
+                    marginLeft: tab.icon ? 6 : 0,
+                    fontWeight: "600",
+                    color: isActive ? COLORS.white : COLORS.gray500,
+                  }}
+                >
+                  {tab.name}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
       </View>
     </View>
   );

@@ -2,25 +2,27 @@ import { router, Tabs } from "expo-router";
 import React from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 
+import { COLORS } from "@/constants/Colors";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+
 export default function TabLayout() {
   return (
     <Tabs
       initialRouteName="index"
       screenOptions={{
-        tabBarActiveTintColor: "black",
-        tabBarInactiveTintColor: "gray",
+        tabBarActiveTintColor: COLORS.white,
+        tabBarInactiveTintColor: COLORS.gray500,
         tabBarStyle: {
           position: "absolute",
           bottom: 20,
           marginHorizontal: 16,
           borderRadius: 20,
-          backgroundColor: "white",
+          backgroundColor: COLORS.green,
           height: 70,
           elevation: 5,
-          shadowColor: "#000",
+          shadowColor: COLORS.black,
           shadowOpacity: 0.1,
           shadowOffset: { width: 0, height: 4 },
           shadowRadius: 8,
@@ -33,10 +35,17 @@ export default function TabLayout() {
           marginTop: 5,
           fontSize: 12,
         },
+
+        // ✅ Make the navbar (header) green too
+        headerStyle: {
+          backgroundColor: COLORS.green,
+        },
+        headerTintColor: COLORS.white, // title + icons white
         headerTitle: "TimeTracker",
         headerTitleStyle: {
           fontSize: 18,
           fontWeight: "bold",
+          color: COLORS.white,
         },
         headerRight: () => (
           <View
@@ -47,7 +56,11 @@ export default function TabLayout() {
             }}
           >
             <TouchableOpacity style={{ marginRight: 15 }}>
-              <Ionicons name="notifications-outline" size={24} color="black" />
+              <Ionicons
+                name="notifications-outline"
+                size={24}
+                color={COLORS.white}
+              />
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => router.push("/(auth)/login")}>

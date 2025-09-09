@@ -19,36 +19,38 @@ const TrackingHeader: React.FC<TrackingHeaderProps> = ({
   efficiency,
   onPrevDate,
   onNextDate,
-}) => {
-  return (
-    <View className="px-1">
-      <View className="mb-1 flex-row items-center justify-between p-4 ">
-        <Text className="font-bold text-xl">Today's Tracking</Text>
-        <View className="flex-row items-center">
-          <TouchableOpacity onPress={onPrevDate}>
-            <EvilIcons name="chevron-left" size={27} color={COLORS.black} />
-          </TouchableOpacity>
-          <Text className="mx-2 pt-2">{date}</Text>
-          <TouchableOpacity onPress={onNextDate}>
-            <EvilIcons name="chevron-right" size={27} color={COLORS.black} />
-          </TouchableOpacity>
-        </View>
-      </View>
-
-      <View className="bg-gray-50 rounded-2xl px-5 py-5 items-center justify-center mb-5">
-        <View className="flex-row justify-between p-5 w-full mb-2">
-          <Text className="font-bold text-3xl">{totalTracked}</Text>
-          <Text className="font-bold text-3xl">{tasksWorked}</Text>
-          <Text className="font-bold text-3xl">{efficiency}</Text>
-        </View>
-        <View className="flex-row justify-between w-full">
-          <Text className="text-gray-600">Total Tracked</Text>
-          <Text className="text-gray-600">Tasks Worked</Text>
-          <Text className="text-gray-600">Efficiency</Text>
-        </View>
+}) => (
+  <View className="px-1">
+    <View className="mb-1 flex-row items-center justify-between p-4">
+      <Text className="font-bold text-xl">Today's Tracking</Text>
+      <View className="flex-row items-center">
+        <TouchableOpacity onPress={onPrevDate}>
+          <EvilIcons name="chevron-left" size={27} color={COLORS.black} />
+        </TouchableOpacity>
+        <Text className="mx-2 pt-2">{date}</Text>
+        <TouchableOpacity onPress={onNextDate}>
+          <EvilIcons name="chevron-right" size={27} color={COLORS.black} />
+        </TouchableOpacity>
       </View>
     </View>
-  );
-};
+
+    <View className="bg-gray-50 rounded-2xl px-5 py-5 items-center justify-center mb-5">
+      <View className="flex-row justify-between p-5 w-full mb-2">
+        {[totalTracked, tasksWorked, efficiency].map((val, i) => (
+          <Text key={i} className="font-bold text-3xl">
+            {val}
+          </Text>
+        ))}
+      </View>
+      <View className="flex-row justify-between w-full">
+        {["Total Tracked", "Tasks Worked", "Efficiency"].map((label, i) => (
+          <Text key={i} className="text-gray-600">
+            {label}
+          </Text>
+        ))}
+      </View>
+    </View>
+  </View>
+);
 
 export default TrackingHeader;

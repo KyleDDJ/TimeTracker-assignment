@@ -14,7 +14,7 @@ export type Task = {
   estimated: string;
   progress: "TO DO" | "TRACKING NOW" | "COMPLETED";
   remaining?: string;
-  icon: TaskIcon; // required now
+  icon: TaskIcon;
   isActive?: boolean;
   isQuickTask?: boolean;
   type?: "mobile" | "analytics" | "auth";

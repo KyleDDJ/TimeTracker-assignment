@@ -1,28 +1,15 @@
+import { COLORS } from "@/constants/Colors";
+import { Task } from "@/entities/task.entities";
+import { formatElapsed, parseEstimated } from "@/helpers/utils";
 import { Octicons } from "@expo/vector-icons";
 import React from "react";
 import { Text, View } from "react-native";
-
-import { COLORS } from "@/constants/Colors";
-import { Task } from "@/entities/task.entities";
 
 type Props = {
   task: Task;
 };
 
-const parseEstimated = (estimated?: string) => {
-  if (!estimated) return 0;
-  const match = estimated.match(/(\d+(\.\d+)?)\s*h/);
-  return match ? Number(match[1]) * 60 * 60 : 0;
-};
-
-const formatElapsed = (seconds?: number) => {
-  if (!seconds) return "0m 0s";
-  const m = Math.floor(seconds / 60);
-  const s = seconds % 60;
-  return `${m}m ${s}s`;
-};
-
-const AnalyticsTaskCard = ({ task }: Props) => {
+const AnalyticsTaskCard: React.FC<Props> = ({ task }) => {
   const elapsedSeconds = task.elapsed ?? 0;
   const estimatedSeconds = parseEstimated(task.estimated);
 

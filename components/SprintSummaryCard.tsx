@@ -8,6 +8,7 @@ type SprintSummaryCardProps = {
   tasksAssigned: number;
   tasksCompleted: number;
   hoursLogged: string;
+  progress: number;
 };
 
 const SprintSummaryCard: React.FC<SprintSummaryCardProps> = ({
@@ -16,6 +17,7 @@ const SprintSummaryCard: React.FC<SprintSummaryCardProps> = ({
   tasksAssigned,
   tasksCompleted,
   hoursLogged,
+  progress,
 }) => {
   return (
     <View className="bg-gray-100 rounded-2xl px-5 py-5 mb-1">
@@ -27,7 +29,7 @@ const SprintSummaryCard: React.FC<SprintSummaryCardProps> = ({
       </View>
 
       <View className="w-full mb-1">
-        <View className="flex-row  justify-between w-full">
+        <View className="flex-row justify-between w-full">
           <Text className="text-gray-800 font-semibold">{tasksAssigned}</Text>
           <Text>•</Text>
           <Text className="text-gray-800 font-semibold">{tasksCompleted}</Text>
@@ -39,8 +41,7 @@ const SprintSummaryCard: React.FC<SprintSummaryCardProps> = ({
           <Text className="text-gray-700 text-sm">completed</Text>
           <Text className="text-gray-700 text-sm">logged</Text>
         </View>
-
-        <ProgressBarSprint progress={0.6} />
+        <ProgressBarSprint progress={progress} />
       </View>
     </View>
   );

@@ -38,7 +38,10 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
     const hoursLogged = filteredTasks
       .reduce((acc, t) => acc + (Number(t.estimated) || 0), 0)
       .toString();
-    return { tasksAssigned, tasksCompleted, hoursLogged };
+
+    const progress = tasksAssigned > 0 ? tasksCompleted / tasksAssigned : 0;
+
+    return { tasksAssigned, tasksCompleted, hoursLogged, progress };
   }, [filteredTasks]);
 
   return (
@@ -53,6 +56,7 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
           tasksAssigned={sprintSummary.tasksAssigned}
           tasksCompleted={sprintSummary.tasksCompleted}
           hoursLogged={sprintSummary.hoursLogged}
+          progress={sprintSummary.progress}
         />
       </View>
 

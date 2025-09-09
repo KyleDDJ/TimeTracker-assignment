@@ -13,10 +13,19 @@ export default function TabLayout() {
         tabBarActiveTintColor: "black",
         tabBarInactiveTintColor: "gray",
         tabBarStyle: {
+          position: "absolute",
+          bottom: 20,
+          marginHorizontal: 16,
+          borderRadius: 20,
           backgroundColor: "white",
           height: 70,
-          position: "absolute",
+          elevation: 5,
+          shadowColor: "#000",
+          shadowOpacity: 0.1,
+          shadowOffset: { width: 0, height: 4 },
+          shadowRadius: 8,
         },
+
         tabBarItemStyle: {
           paddingTop: 8,
         },

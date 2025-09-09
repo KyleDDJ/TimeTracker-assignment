@@ -20,7 +20,7 @@ const AnalyticsScreen: React.FC = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <ScrollView contentContainerClassName="flex-grow pb-20 px-5 pt-3">
+      <ScrollView contentContainerClassName="flex-grow pb-28 px-5 pt-3">
         <View className="px-2">
           <TrackingHeader
             date="Jan 15, 2025"

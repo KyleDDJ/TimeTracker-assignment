@@ -43,7 +43,7 @@ const TaskScreen = () => {
 
   return (
     <View className="flex-1 bg-white">
-      <ScrollView contentContainerClassName="flex-grow py-8">
+      <ScrollView contentContainerClassName="flex-grow py-10">
         {tasks.length === 0 ? (
           <NoTaskView
             title="No Tasks Yet"
@@ -80,7 +80,7 @@ const TaskScreen = () => {
               Import from CSV
             </Text>
 
-            <View className="bg-gray-50 rounded-xl px-5 py-5 flex-row items-start">
+            <View className="bg-gray-50 rounded-xl px-5 py-5 flex-row items-start mx-5 my-3">
               <AntDesign
                 name="infocirlce"
                 size={18}
@@ -105,7 +105,7 @@ const TaskScreen = () => {
 
       {tasks.length > 0 && (
         <TouchableOpacity
-          className="absolute bottom-20 right-6 bg-black w-16 h-16 rounded-full items-center justify-center shadow-lg"
+          className="absolute bottom-28 right-6 bg-black w-16 h-16 rounded-full items-center justify-center shadow-lg"
           onPress={() => {
             const newTask = useTaskStore.getState().createQuickTask();
             useTaskStore.getState().setActiveTask(newTask);

@@ -9,7 +9,28 @@ type Props = {
   task: Task;
 };
 
+const parseEstimated = (estimated?: string) => {
+  if (!estimated) return 0;
+  const match = estimated.match(/(\d+(\.\d+)?)\s*h/);
+  return match ? Number(match[1]) * 60 * 60 : 0;
+};
+
+const formatElapsed = (seconds?: number) => {
+  if (!seconds) return "0m 0s";
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}m ${s}s`;
+};
+
 const AnalyticsTaskCard = ({ task }: Props) => {
+  const elapsedSeconds = task.elapsed ?? 0;
+  const estimatedSeconds = parseEstimated(task.estimated);
+
+  const percentage =
+    estimatedSeconds > 0
+      ? Math.min(Math.round((elapsedSeconds / estimatedSeconds) * 100), 100)
+      : 0;
+
   return (
     <View className="flex-row items-center bg-white rounded-xl p-4 mb-3 border border-gray-200">
       <View className="w-8 h-8 rounded-md items-center justify-center mr-3">
@@ -23,11 +44,9 @@ const AnalyticsTaskCard = ({ task }: Props) => {
 
       <View className="items-end">
         <Text className="text-sm font-semibold text-black">
-          {task.estimated}
+          {formatElapsed(elapsedSeconds)}
         </Text>
-        {task.percentage && (
-          <Text className="text-xs text-gray-600 mt-1">{task.percentage}</Text>
-        )}
+        <Text className="text-xs text-gray-600 mt-1">{percentage}%</Text>
       </View>
     </View>
   );

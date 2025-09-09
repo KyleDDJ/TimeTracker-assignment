@@ -11,7 +11,6 @@ export const TASKS: Task[] = [
     icon: { library: "Entypo", name: "code", size: 24, color: "white" },
     isActive: true,
     type: "analytics",
-    percentage: "29%",
   },
   {
     id: 2,
@@ -22,7 +21,6 @@ export const TASKS: Task[] = [
     remaining: "High Priority",
     icon: { library: "MaterialIcons", name: "phone-iphone", size: 24, color: "white" },
     type: "analytics",
-    percentage: "45%",
   },
   {
     id: 3,
@@ -33,7 +31,6 @@ export const TASKS: Task[] = [
     remaining: "High Priority",
     icon: { library: "MaterialIcons", name: "phone-iphone", size: 24, color: "white" },
     type: "mobile",
-    percentage: "19%",
   },
   {
     id: 4,
@@ -44,7 +41,6 @@ export const TASKS: Task[] = [
     remaining: "Low Priority",
     icon: { library: "Octicons", name: "graph", size: 24, color: "white" },
     type: "analytics",
-    percentage: "79%",
   },
   {
     id: 5,
@@ -55,6 +51,5 @@ export const TASKS: Task[] = [
     remaining: "3.5h logged",
     icon: { library: "FontAwesome6", name: "users", size: 20, color: "white" },
     type: "auth",
-    percentage: "9%",
   },
 ];

@@ -14,19 +14,20 @@ export type Task = {
     color: string;
   };
   isActive?: boolean;
+  isQuickTask?: boolean;
   type?: "mobile" | "analytics" | "auth";
   percentage?: string;
   elapsed?: number;
+};
+
+export type TaskCardProps = Task & {
+  onPress?: () => void;
 };
 
 export type MiniTaskCardProps = {
   task: Task;
   isActive?: boolean;
   onPress?: (event: GestureResponderEvent) => void;
-};
-
-export type TaskCardProps = Task & {
-  onPress?: () => void;
 };
 
 export type EventItem = {

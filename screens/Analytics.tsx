@@ -12,11 +12,14 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 import { useAnalytics } from "@/hooks/useAnalytics";
 
+import { useTaskStore } from "@/stores/useTaskStore";
+
 const AnalyticsScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState("Timeline");
   const [date] = useState(new Date());
 
-  const { items, tasks } = useAnalytics();
+  const tasks = useTaskStore(state => state.tasks);
+  const { items } = useAnalytics();
 
   return (
     <SafeAreaView className="flex-1 bg-white">
@@ -24,9 +27,19 @@ const AnalyticsScreen: React.FC = () => {
         <View className="px-2">
           <TrackingHeader
             date="Jan 15, 2025"
-            totalTracked="7h 42m"
+            totalTracked={
+              tasks.reduce((acc, t) => acc + (t.elapsed ?? 0), 0) + "m"
+            }
             tasksWorked={tasks.length}
-            efficiency="96%"
+            efficiency={
+              tasks.length > 0
+                ? Math.round(
+                    (tasks.filter(t => t.progress === "COMPLETED").length /
+                      tasks.length) *
+                      100
+                  ) + "%"
+                : "0%"
+            }
             onPrevDate={() => console.log("Previous date")}
             onNextDate={() => console.log("Next date")}
           />
@@ -63,6 +76,7 @@ const AnalyticsScreen: React.FC = () => {
               <TimelineChart items={items} EventCard={EventCard} date={date} />
             </View>
           )}
+
           <View className="mt-6 flex-row justify-between">
             <Text className="text-lg font-bold">Task Breakdown</Text>
           </View>

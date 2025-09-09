@@ -12,6 +12,12 @@ type TaskDashboardProps = {
   tasks?: Task[];
 };
 
+const formatDuration = (seconds: number) => {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}m ${s}s`;
+};
+
 const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
   const storeTasks = useTaskStore(state => state.tasks);
   const setActiveTask = useTaskStore(state => state.setActiveTask);
@@ -35,13 +41,18 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
     const tasksCompleted = filteredTasks.filter(
       t => t.progress === "COMPLETED"
     ).length;
-    const hoursLogged = filteredTasks
-      .reduce((acc, t) => acc + (Number(t.estimated) || 0), 0)
-      .toString();
-
+    const secondsLogged = filteredTasks.reduce(
+      (acc, t) => acc + (t.elapsed ?? 0),
+      0
+    );
     const progress = tasksAssigned > 0 ? tasksCompleted / tasksAssigned : 0;
 
-    return { tasksAssigned, tasksCompleted, hoursLogged, progress };
+    return {
+      tasksAssigned,
+      tasksCompleted,
+      hoursLogged: formatDuration(secondsLogged),
+      progress,
+    };
   }, [filteredTasks]);
 
   return (
@@ -70,6 +81,7 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
         <TaskCard
           key={task.id}
           {...task}
+          isActive={task.isActive}
           onPress={() => {
             setActiveTask(task);
             router.push({

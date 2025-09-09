@@ -4,6 +4,7 @@ import {
   Entypo,
   FontAwesome6,
   MaterialIcons,
+  MaterialIcons as MI,
   Octicons,
 } from "@expo/vector-icons";
 import React from "react";
@@ -18,7 +19,7 @@ const getIconComponent = (library: IconLibrary) => {
     case "Entypo":
       return Entypo;
     case "MaterialIcons":
-      return MaterialIcons;
+      return MI;
     case "Octicons":
       return Octicons;
     case "FontAwesome6":
@@ -30,12 +31,7 @@ const getIconComponent = (library: IconLibrary) => {
   }
 };
 
-const getTextStyle = (progress: TaskCardProps["progress"]) => {
-  if (progress === "COMPLETED") return "text-gray-500 line-through";
-  return "text-black";
-};
-
-const TaskCard = ({
+const TaskCard: React.FC<TaskCardProps> = ({
   title,
   subtitle,
   estimated,
@@ -43,62 +39,121 @@ const TaskCard = ({
   icon,
   progress,
   isActive,
+  isQuickTask,
   onPress,
-}: TaskCardProps) => {
+}) => {
   const IconComp = icon ? getIconComponent(icon.library) : null;
 
   return (
     <TouchableOpacity
       onPress={onPress}
-      className={`rounded-2xl p-4 mb-3 ${
-        isActive ? "bg-[#0B0B2E]" : "bg-white border border-gray-200"
-      }`}
+      style={{
+        backgroundColor: isActive ? COLORS.green : COLORS.white,
+        borderRadius: 16,
+        padding: 16,
+        marginBottom: 12,
+        borderWidth: isActive ? 0 : 1,
+        borderColor: COLORS.gray200,
+      }}
     >
-      <View className="flex-row justify-between items-center mb-2">
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginBottom: 8,
+        }}
+      >
         <Text
-          className={`text-xs font-semibold px-3 py-2 rounded-md ${
-            progress === "TRACKING NOW"
-              ? "bg-gray-700 text-white"
+          style={{
+            backgroundColor: isActive
+              ? COLORS.darkgreen
+              : progress === "TRACKING NOW"
+              ? COLORS.gray700
               : progress === "TO DO"
-              ? "bg-gray-200 text-gray-700"
-              : "bg-gray-100 text-gray-500"
-          }`}
+              ? COLORS.gray200
+              : COLORS.gray100,
+            color: isActive
+              ? COLORS.white
+              : progress === "TO DO"
+              ? COLORS.gray700
+              : progress === "TRACKING NOW"
+              ? COLORS.white
+              : COLORS.gray500,
+            fontSize: 12,
+            fontWeight: "600",
+            paddingVertical: 2,
+            paddingHorizontal: 8,
+            borderRadius: 8,
+          }}
         >
           {progress}
         </Text>
 
         <Text
-          className={`text-sm font-semibold ${
-            progress === "TRACKING NOW" ? "text-white" : "text-gray-500"
-          }`}
+          style={{
+            color: isActive ? COLORS.white : COLORS.gray500,
+            fontSize: 14,
+            fontWeight: "600",
+          }}
         >
           {remaining}
         </Text>
       </View>
 
-      <View className="flex-row items-center">
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
         <View
-          className={`w-12 h-12 rounded-lg items-center justify-center mr-3 ${
-            isActive ? "bg-white/20" : "bg-gray-200"
-          }`}
+          style={{
+            width: 48,
+            height: 48,
+            borderRadius: 12,
+            backgroundColor: isActive ? COLORS.darkgreen : COLORS.gray200,
+            justifyContent: "center",
+            alignItems: "center",
+            marginRight: 12,
+          }}
         >
-          {IconComp && (
-            <IconComp name={icon!.name} size={icon!.size} color={icon!.color} />
+          {isActive && isQuickTask ? (
+            <MaterialIcons name="bolt" size={24} color={COLORS.white} />
+          ) : (
+            IconComp && (
+              <IconComp
+                name={icon!.name}
+                size={icon!.size}
+                color={isActive ? COLORS.white : icon!.color}
+              />
+            )
           )}
         </View>
 
-        <View className="flex-1">
+        <View style={{ flex: 1 }}>
           <Text
-            className={`font-semibold text-base ${
-              isActive ? "text-white" : getTextStyle(progress)
-            }`}
+            style={{
+              color: isActive
+                ? COLORS.white
+                : progress === "COMPLETED"
+                ? COLORS.gray500
+                : COLORS.black,
+              fontSize: 16,
+              fontWeight: "600",
+              textDecorationLine:
+                !isActive && progress === "COMPLETED" ? "line-through" : "none",
+            }}
           >
             {title}
           </Text>
           <Text
-            className={`text-l font-bold ${
-              isActive ? "text-gray-300" : "text-gray-400"
-            }`}
+            style={{
+              color: isActive
+                ? COLORS.white
+                : progress === "COMPLETED"
+                ? COLORS.gray500
+                : COLORS.gray400,
+              fontSize: 14,
+              fontWeight: "500",
+              marginTop: 2,
+              textDecorationLine:
+                !isActive && progress === "COMPLETED" ? "line-through" : "none",
+            }}
           >
             {subtitle} • {estimated}
           </Text>
@@ -113,10 +168,18 @@ const TaskCard = ({
             />
           )}
           {progress === "TO DO" && (
-            <AntDesign name="playcircleo" size={30} color={COLORS.gray400} />
+            <AntDesign
+              name="playcircleo"
+              size={30}
+              color={isActive ? COLORS.white : COLORS.gray400}
+            />
           )}
           {progress === "COMPLETED" && (
-            <AntDesign name="check" size={30} color={COLORS.gray400} />
+            <AntDesign
+              name="check"
+              size={30}
+              color={isActive ? COLORS.white : COLORS.gray400}
+            />
           )}
         </View>
       </View>

@@ -18,7 +18,7 @@ type TaskStore = {
   prevTask: () => void;
 };
 
-export const useTaskStore = create<TaskStore>((set, get) => {
+export const useTaskStore = create<TaskStore & { toggleComplete: (id: number) => void }>((set, get) => {
   const updateActiveTask = (task: Task) => {
     const savedElapsed = task.elapsed ?? 0;
     set((state) => ({
@@ -38,21 +38,21 @@ export const useTaskStore = create<TaskStore>((set, get) => {
     isPlaying: false,
     elapsed: 0,
     quickTaskCounter: 0,
-    
-setTasks: (tasks) =>
-  set((state) => {
-    const newTasks = typeof tasks === "function" ? tasks(state.tasks) : tasks;
-    return {
-      tasks: newTasks.map((t) => ({
-        ...t,
-        progress: t.progress === "COMPLETED" ? "COMPLETED" : "TO DO",
-        isActive: false,
-      })),
-      activeTask: null,
-      isPlaying: false,
-      elapsed: 0,
-    };
-  }),
+
+    setTasks: (tasks) =>
+      set((state) => {
+        const newTasks = typeof tasks === "function" ? tasks(state.tasks) : tasks;
+        return {
+          tasks: newTasks.map((t) => ({
+            ...t,
+            progress: t.progress === "COMPLETED" ? "COMPLETED" : "TO DO",
+            isActive: false,
+          })),
+          activeTask: null,
+          isPlaying: false,
+          elapsed: 0,
+        };
+      }),
 
     prependTask: (task) => set((state) => ({ tasks: [task, ...state.tasks] })),
 
@@ -89,5 +89,18 @@ setTasks: (tasks) =>
       const currentIndex = tasks.findIndex((t) => t.id === activeTask.id);
       if (currentIndex - 1 >= 0) updateActiveTask(tasks[currentIndex - 1]);
     },
+
+    toggleComplete: (id: number) =>
+      set((state) => ({
+        tasks: state.tasks.map((t) =>
+          t.id === id
+            ? {
+                ...t,
+                progress: t.progress === "COMPLETED" ? "TO DO" : "COMPLETED",
+                isActive: false,
+              }
+            : t
+        ),
+      })),
   };
 });

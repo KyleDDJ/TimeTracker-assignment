@@ -34,7 +34,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
   title,
   subtitle,
   estimated,
-  remaining,
+  status: remaining,
   icon,
   progress,
   isActive,

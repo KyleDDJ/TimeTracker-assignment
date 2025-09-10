@@ -13,7 +13,7 @@ export type Task = {
   subtitle: string;
   estimated: string;
   progress: "TO DO" | "TRACKING NOW" | "COMPLETED";
-  remaining?: string;
+  status?: string;
   icon: TaskIcon;
   isActive?: boolean;
   isQuickTask?: boolean;

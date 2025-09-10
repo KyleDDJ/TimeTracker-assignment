@@ -16,7 +16,25 @@ import { useTaskStore } from "@/stores/useTaskStore";
 
 const AnalyticsScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState("Timeline");
-  const [date] = useState(new Date());
+  const [date, setDate] = useState(new Date());
+
+  const onPrevDate = () => {
+    setDate(
+      prev => new Date(prev.getFullYear(), prev.getMonth(), prev.getDate() - 1)
+    );
+  };
+
+  const onNextDate = () => {
+    setDate(
+      prev => new Date(prev.getFullYear(), prev.getMonth(), prev.getDate() + 1)
+    );
+  };
+
+  const formattedDate = date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 
   const tasks = useTaskStore(state => state.tasks);
   const { items } = useAnalytics();
@@ -31,7 +49,7 @@ const AnalyticsScreen: React.FC = () => {
       <ScrollView contentContainerClassName="flex-grow pb-28 px-5 pt-3">
         <View className="px-2">
           <TrackingHeader
-            date="Jan 15, 2025"
+            date={formattedDate}
             totalTracked={formatElapsed(totalTrackedSeconds)}
             tasksWorked={tasks.length}
             efficiency={
@@ -43,8 +61,8 @@ const AnalyticsScreen: React.FC = () => {
                   ) + "%"
                 : "0%"
             }
-            onPrevDate={() => console.log("Previous date")}
-            onNextDate={() => console.log("Next date")}
+            onPrevDate={onPrevDate}
+            onNextDate={onNextDate}
           />
 
           <StatusTabs

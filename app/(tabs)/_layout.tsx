@@ -13,7 +13,7 @@ export default function TabLayout() {
       initialRouteName="index"
       screenOptions={{
         tabBarActiveTintColor: COLORS.white,
-        tabBarInactiveTintColor: COLORS.gray500,
+        tabBarInactiveTintColor: COLORS.gray400,
         tabBarStyle: {
           position: "absolute",
           bottom: 20,
@@ -36,11 +36,10 @@ export default function TabLayout() {
           fontSize: 12,
         },
 
-        // ✅ Make the navbar (header) green too
         headerStyle: {
           backgroundColor: COLORS.green,
         },
-        headerTintColor: COLORS.white, // title + icons white
+        headerTintColor: COLORS.white,
         headerTitle: "TimeTracker",
         headerTitleStyle: {
           fontSize: 18,

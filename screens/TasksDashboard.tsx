@@ -4,7 +4,7 @@ import { ScrollView, View } from "react-native";
 
 import SprintSummaryCard from "@/components/SprintSummaryCard";
 import StatusTabs from "@/components/StatusTabs";
-import TaskCard from "@/components/TaskCard";
+import SwipeableTask from "@/components/SwipeableTask";
 import { Task } from "@/entities/task.entities";
 import { useTaskStore } from "@/stores/useTaskStore";
 
@@ -78,10 +78,9 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
       />
 
       {filteredTasks.map(task => (
-        <TaskCard
+        <SwipeableTask
           key={task.id}
-          {...task}
-          isActive={task.isActive}
+          task={task}
           onPress={() => {
             setActiveTask(task);
             router.push({

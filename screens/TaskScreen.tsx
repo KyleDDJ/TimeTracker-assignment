@@ -35,7 +35,7 @@ const TaskScreen = () => {
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center bg-white">
-        <ActivityIndicator size="large" color={COLORS.black} />
+        <ActivityIndicator size="large" color={COLORS.green} />
         <Text className="mt-4 text-gray-500 text-base">Loading tasks...</Text>
       </View>
     );

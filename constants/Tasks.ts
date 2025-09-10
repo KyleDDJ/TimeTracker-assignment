@@ -48,7 +48,7 @@ export const TASKS: Task[] = [
     subtitle: "Backend",
     estimated: "4h estimated",
     progress: "COMPLETED",
-    remaining: "3.5h logged",
+    remaining: "Low Priority",
     icon: { library: "FontAwesome6", name: "users", size: 20, color: "white" },
     type: "auth",
   },

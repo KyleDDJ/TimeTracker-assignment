@@ -38,16 +38,21 @@ export const useTaskStore = create<TaskStore>((set, get) => {
     isPlaying: false,
     elapsed: 0,
     quickTaskCounter: 0,
-
-    setTasks: (tasks) => set((state) => {
-      const newTasks = typeof tasks === "function" ? tasks(state.tasks) : tasks;
-      return {
-        tasks: newTasks.map((t) => ({ ...t, progress: t.progress === "COMPLETED" ? "COMPLETED" : "TO DO", isActive: false })),
-        activeTask: null,
-        isPlaying: false,
-        elapsed: 0,
-      };
-    }),
+    
+setTasks: (tasks) =>
+  set((state) => {
+    const newTasks = typeof tasks === "function" ? tasks(state.tasks) : tasks;
+    return {
+      tasks: newTasks.map((t) => ({
+        ...t,
+        progress: t.progress === "COMPLETED" ? "COMPLETED" : "TO DO",
+        isActive: false,
+      })),
+      activeTask: null,
+      isPlaying: false,
+      elapsed: 0,
+    };
+  }),
 
     prependTask: (task) => set((state) => ({ tasks: [task, ...state.tasks] })),
 

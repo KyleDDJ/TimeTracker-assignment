@@ -5,12 +5,8 @@ import { ScrollView, View } from "react-native";
 import SprintSummaryCard from "@/components/SprintSummaryCard";
 import StatusTabs from "@/components/StatusTabs";
 import SwipeableTask from "@/components/SwipeableTask";
-import { Task } from "@/entities/task.entities";
+import { TaskDashboardProps } from "@/entities/task.entities";
 import { useTaskStore } from "@/stores/useTaskStore";
-
-type TaskDashboardProps = {
-  tasks?: Task[];
-};
 
 const formatDuration = (seconds: number) => {
   const m = Math.floor(seconds / 60);

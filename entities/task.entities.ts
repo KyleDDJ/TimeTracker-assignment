@@ -38,3 +38,7 @@ export type EventItem = {
   startDate: Date;
   endDate: Date;
 };
+
+export type TaskDashboardProps = {
+  tasks?: Task[];
+};

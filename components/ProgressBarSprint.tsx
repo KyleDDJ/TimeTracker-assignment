@@ -11,7 +11,7 @@ const ProgressBarSprint: React.FC<ProgressBarSprintProps> = ({ progress }) => {
     <ProgressBar
       progress={progress}
       width={335}
-      color={COLORS.black}
+      color={COLORS.green}
       unfilledColor={COLORS.gray300}
       style={{ marginTop: 8 }}
     />

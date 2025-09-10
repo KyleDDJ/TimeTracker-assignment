@@ -38,7 +38,6 @@ const TaskCard: React.FC<TaskCardProps> = ({
   icon,
   progress,
   isActive,
-  isQuickTask,
   onPress,
 }) => {
   const IconComp = icon ? getIconComponent(icon.library) : null;

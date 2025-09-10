@@ -1,3 +1,4 @@
+import { COLORS } from "@/constants/Colors";
 import { EventItem } from "@/entities/task.entities";
 import {
   formatDuration,
@@ -24,7 +25,7 @@ const EventCard: React.FC<EventCardProps> = ({ style = {}, item }) => {
   const blockHeight = (durationMinutes / 60) * 60;
   const bgColor = getEventColor(item.title, isBreak);
   const borderStyle = getEventBorderStyle(isBreak);
-  const textColor = isBreak ? "#000" : "#fff";
+  const textColor = isBreak ? COLORS.black : COLORS.white;
 
   return (
     <View

@@ -13,14 +13,14 @@ const SocialButton = ({ iconName, text, onPress }: SocialButtonProps) => {
   return (
     <TouchableHighlight
       onPress={onPress}
-      underlayColor={COLORS.green}
+      underlayColor={COLORS.gray400}
       className="border border-gray-300 rounded-xl py-3 px-4 mb-5 mx-2"
     >
       <View className="flex-row items-center justify-center">
-        <AntDesign name={iconName as any} size={22} color={COLORS.black} />
+        <AntDesign name={iconName as any} size={22} color={COLORS.green} />
         <Text
           className="ml-3 font-bold text-base"
-          style={{ color: COLORS.black }}
+          style={{ color: COLORS.green }}
         >
           {text}
         </Text>

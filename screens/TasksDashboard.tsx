@@ -9,11 +9,12 @@ import { TaskDashboardProps } from "@/entities/task.entities";
 import { useTaskStore } from "@/stores/useTaskStore";
 
 const formatDuration = (seconds: number) => {
-  const m = Math.floor(seconds / 60);
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
   const s = seconds % 60;
-  return `${m}m ${s}s`;
-};
 
+  return `${h}h ${m}m ${s}s`;
+};
 const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
   const storeTasks = useTaskStore(state => state.tasks);
   const setActiveTask = useTaskStore(state => state.setActiveTask);
@@ -46,7 +47,7 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
     return {
       tasksAssigned,
       tasksCompleted,
-      hoursLogged: formatDuration(secondsLogged),
+      hoursLogged: formatDuration(secondsLogged), // now always shows h m s
       progress,
     };
   }, [filteredTasks]);

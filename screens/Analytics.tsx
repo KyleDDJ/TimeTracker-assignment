@@ -10,8 +10,8 @@ import TrackingHeader from "@/components/TrackingHeader";
 import { COLORS } from "@/constants/Colors";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
+import { formatElapsed } from "@/helpers/utils";
 import { useAnalytics } from "@/hooks/useAnalytics";
-
 import { useTaskStore } from "@/stores/useTaskStore";
 
 const AnalyticsScreen: React.FC = () => {
@@ -21,15 +21,18 @@ const AnalyticsScreen: React.FC = () => {
   const tasks = useTaskStore(state => state.tasks);
   const { items } = useAnalytics();
 
+  const totalTrackedSeconds = tasks.reduce(
+    (acc, t) => acc + (t.elapsed ?? 0),
+    0
+  );
+
   return (
     <SafeAreaView className="flex-1 bg-white">
       <ScrollView contentContainerClassName="flex-grow pb-28 px-5 pt-3">
         <View className="px-2">
           <TrackingHeader
             date="Jan 15, 2025"
-            totalTracked={
-              tasks.reduce((acc, t) => acc + (t.elapsed ?? 0), 0) + "m"
-            }
+            totalTracked={formatElapsed(totalTrackedSeconds)}
             tasksWorked={tasks.length}
             efficiency={
               tasks.length > 0

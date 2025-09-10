@@ -81,7 +81,7 @@ const TaskScreen = () => {
               </TouchableOpacity>
             </View>
 
-            <Text className="text-gray-500 text-center font-semibold text-base">
+            <Text className="text-gray-700 text-center font-semibold text-base">
               Import from CSV
             </Text>
 
@@ -89,7 +89,7 @@ const TaskScreen = () => {
               <AntDesign
                 name="infocirlce"
                 size={18}
-                color={COLORS.gray}
+                color={COLORS.green}
                 className="mr-2"
               />
               <View className="flex-1">

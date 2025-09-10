@@ -47,7 +47,7 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
     return {
       tasksAssigned,
       tasksCompleted,
-      hoursLogged: formatDuration(secondsLogged), // now always shows h m s
+      hoursLogged: formatDuration(secondsLogged),
       progress,
     };
   }, [filteredTasks]);

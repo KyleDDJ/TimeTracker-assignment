@@ -13,10 +13,12 @@ const AnalyticsTaskCard: React.FC<Props> = ({ task }) => {
   const elapsedSeconds = task.elapsed ?? 0;
   const estimatedSeconds = parseEstimated(task.estimated);
 
-  const percentage =
+  let percentage =
     estimatedSeconds > 0
       ? Math.min(Math.round((elapsedSeconds / estimatedSeconds) * 100), 100)
       : 0;
+
+  if (task.progress === "COMPLETED") percentage = 100;
 
   return (
     <View className="flex-row items-center bg-white rounded-xl p-4 mb-3 border border-gray-200">

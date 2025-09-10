@@ -11,10 +11,15 @@ export const formatElapsed = (seconds?: number) => {
 
 export const parseEstimated = (estimated?: string) => {
   if (!estimated) return 0;
-  const match = estimated.match(/(\d+(\.\d+)?)\s*h/);
-  return match ? Number(match[1]) * 3600 : 0;
-};
 
+  const hoursMatch = estimated.match(/(\d+(\.\d+)?)\s*h/);
+  if (hoursMatch) return Number(hoursMatch[1]) * 3600;
+
+  const minutesMatch = estimated.match(/(\d+)\s*m/);
+  if (minutesMatch) return Number(minutesMatch[1]) * 60;
+
+  return 0;
+};
 export const getDurationMinutes = (startDate: Date, endDate: Date) =>
   moment(endDate).diff(moment(startDate), "minutes");
 

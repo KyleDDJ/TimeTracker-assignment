@@ -75,7 +75,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="track"
         options={{
-          title: "Track",
+          title: "Tracks",
           headerShown: true,
           tabBarIcon: ({ focused, color }) => (
             <Ionicons name="play" size={focused ? 28 : 24} color={color} />
@@ -85,7 +85,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Task",
+          title: "Tasks",
           headerShown: true,
           tabBarIcon: ({ focused, color }) => (
             <MaterialCommunityIcons

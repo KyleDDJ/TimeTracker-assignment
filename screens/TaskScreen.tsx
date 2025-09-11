@@ -36,7 +36,7 @@ const TaskScreen = () => {
   }
 
   return (
-    <View className="flex-1 bg-white py-10">
+    <View className="flex-1 bg-white">
       {tasks.length === 0 ? (
         <NoTaskView
           title="No Tasks Yet"

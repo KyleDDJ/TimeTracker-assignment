@@ -71,7 +71,6 @@ const TrackScreen: React.FC = () => {
         }}
         ListHeaderComponent={
           <View>
-            {/* Active Task Header */}
             <View className="bg-gray-100 rounded-2xl p-5 items-center mb-5">
               {activeTask ? (
                 <>
@@ -121,7 +120,6 @@ const TrackScreen: React.FC = () => {
               )}
             </View>
 
-            {/* Up Next Label */}
             <View className="mt-1 mb-3 flex-row justify-between items-center">
               <Text className="text-lg font-bold">Up Next</Text>
             </View>

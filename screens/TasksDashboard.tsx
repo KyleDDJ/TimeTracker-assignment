@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import React, { useMemo, useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, SafeAreaView, View } from "react-native";
 
 import SprintSummaryCard from "@/components/SprintSummaryCard";
 import StatusTabs from "@/components/StatusTabs";
@@ -53,51 +53,52 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
   }, [filteredTasks]);
 
   return (
-    <FlatList
-      data={filteredTasks}
-      keyExtractor={item => item.id.toString()}
-      contentContainerStyle={{
-        paddingBottom: 50,
-        paddingHorizontal: 16,
-        marginTop: 20,
-      }}
-      ListHeaderComponent={
-        <>
-          <View className="bg-gray-100 items-center justify-center rounded-2xl mb-6">
-            <SprintSummaryCard
-              sprintName="Sprint 2025-01"
-              daysLeft="8 days left"
-              tasksAssigned={sprintSummary.tasksAssigned}
-              tasksCompleted={sprintSummary.tasksCompleted}
-              hoursLogged={sprintSummary.hoursLogged}
-              progress={sprintSummary.progress}
+    <SafeAreaView className="flex-1 bg-white">
+      <FlatList
+        data={filteredTasks}
+        keyExtractor={item => item.id.toString()}
+        contentContainerStyle={{
+          paddingBottom: 16,
+          paddingHorizontal: 16,
+          marginTop: 16,
+        }}
+        ListHeaderComponent={
+          <>
+            <View className="bg-gray-100 items-center justify-center rounded-2xl mb-6">
+              <SprintSummaryCard
+                sprintName="Sprint 2025-01"
+                daysLeft="8 days left"
+                tasksAssigned={sprintSummary.tasksAssigned}
+                tasksCompleted={sprintSummary.tasksCompleted}
+                hoursLogged={sprintSummary.hoursLogged}
+                progress={sprintSummary.progress}
+              />
+            </View>
+            <StatusTabs
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              tabs={tabs.map(t => ({ name: t }))}
             />
-          </View>
-
-          <StatusTabs
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            tabs={tabs.map(t => ({ name: t }))}
+          </>
+        }
+        renderItem={({ item: task }) => (
+          <SwipeableTask
+            task={task}
+            onPress={() => {
+              setActiveTask(task);
+              router.push({
+                pathname: "/(tabs)/track",
+                params: {
+                  title: task.title,
+                  sprint: "Sprint 2025-01",
+                  subtitle: task.subtitle,
+                },
+              });
+            }}
           />
-        </>
-      }
-      renderItem={({ item: task }) => (
-        <SwipeableTask
-          task={task}
-          onPress={() => {
-            setActiveTask(task);
-            router.push({
-              pathname: "/(tabs)/track",
-              params: {
-                title: task.title,
-                sprint: "Sprint 2025-01",
-                subtitle: task.subtitle,
-              },
-            });
-          }}
-        />
-      )}
-    />
+        )}
+      />
+    </SafeAreaView>
   );
 };
 

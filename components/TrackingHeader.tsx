@@ -37,14 +37,18 @@ const TrackingHeader: React.FC<TrackingHeaderProps> = ({
     <View className="bg-gray-50 rounded-2xl px-5 py-5 items-center justify-center mb-5">
       <View className="flex-row justify-between p-5 w-full mb-2">
         {[totalTracked, tasksWorked, efficiency].map((val, i) => (
-          <Text key={i} className="font-bold text-3xl">
+          <Text
+            key={i}
+            className="font-bold text-3xl"
+            style={{ color: COLORS.green }}
+          >
             {val}
           </Text>
         ))}
       </View>
       <View className="flex-row justify-between w-full">
         {["Total Tracked", "Tasks Worked", "Efficiency"].map((label, i) => (
-          <Text key={i} className="text-gray-600">
+          <Text key={i} style={{ color: COLORS.green }}>
             {label}
           </Text>
         ))}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView, ScrollView, Text, View } from "react-native";
+import { FlatList, SafeAreaView, ScrollView, Text, View } from "react-native";
 
 import AnalyticsTaskCard from "@/components/AnalyticsTaskCard";
 import EventCard from "@/components/EventCard";
@@ -46,7 +46,7 @@ const AnalyticsScreen: React.FC = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <ScrollView contentContainerClassName="flex-grow pb-28 px-5 pt-3">
+      <ScrollView contentContainerClassName="pb-28 px-5 pt-3">
         <View className="px-2">
           <TrackingHeader
             date={formattedDate}
@@ -102,11 +102,14 @@ const AnalyticsScreen: React.FC = () => {
             <Text className="text-lg font-bold">Task Breakdown</Text>
           </View>
 
-          <View className="mt-5 space-y-1">
-            {tasks.map(task => (
-              <AnalyticsTaskCard key={task.id} task={task} />
-            ))}
-          </View>
+          <FlatList
+            data={tasks}
+            keyExtractor={(task, index) => String(task.id ?? index)}
+            renderItem={({ item }) => <AnalyticsTaskCard task={item} />}
+            contentContainerStyle={{ marginTop: 20 }}
+            ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
+            scrollEnabled={false}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

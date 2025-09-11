@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import React, { useMemo, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { FlatList, View } from "react-native";
 
 import SprintSummaryCard from "@/components/SprintSummaryCard";
 import StatusTabs from "@/components/StatusTabs";
@@ -12,9 +12,9 @@ const formatDuration = (seconds: number) => {
   const h = Math.floor(seconds / 3600);
   const m = Math.floor((seconds % 3600) / 60);
   const s = seconds % 60;
-
   return `${h}h ${m}m ${s}s`;
 };
+
 const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
   const storeTasks = useTaskStore(state => state.tasks);
   const setActiveTask = useTaskStore(state => state.setActiveTask);
@@ -53,30 +53,36 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
   }, [filteredTasks]);
 
   return (
-    <ScrollView
-      contentContainerStyle={{ paddingBottom: 50 }}
-      className="px-4 mt-5"
-    >
-      <View className="bg-gray-100 items-center justify-center rounded-2xl mb-6">
-        <SprintSummaryCard
-          sprintName="Sprint 2025-01"
-          daysLeft="8 days left"
-          tasksAssigned={sprintSummary.tasksAssigned}
-          tasksCompleted={sprintSummary.tasksCompleted}
-          hoursLogged={sprintSummary.hoursLogged}
-          progress={sprintSummary.progress}
-        />
-      </View>
+    <FlatList
+      data={filteredTasks}
+      keyExtractor={item => item.id.toString()}
+      contentContainerStyle={{
+        paddingBottom: 50,
+        paddingHorizontal: 16,
+        marginTop: 20,
+      }}
+      ListHeaderComponent={
+        <>
+          <View className="bg-gray-100 items-center justify-center rounded-2xl mb-6">
+            <SprintSummaryCard
+              sprintName="Sprint 2025-01"
+              daysLeft="8 days left"
+              tasksAssigned={sprintSummary.tasksAssigned}
+              tasksCompleted={sprintSummary.tasksCompleted}
+              hoursLogged={sprintSummary.hoursLogged}
+              progress={sprintSummary.progress}
+            />
+          </View>
 
-      <StatusTabs
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        tabs={tabs.map(t => ({ name: t }))}
-      />
-
-      {filteredTasks.map(task => (
+          <StatusTabs
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            tabs={tabs.map(t => ({ name: t }))}
+          />
+        </>
+      }
+      renderItem={({ item: task }) => (
         <SwipeableTask
-          key={task.id}
           task={task}
           onPress={() => {
             setActiveTask(task);
@@ -90,8 +96,8 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
             });
           }}
         />
-      ))}
-    </ScrollView>
+      )}
+    />
   );
 };
 

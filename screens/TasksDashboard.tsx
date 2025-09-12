@@ -58,7 +58,7 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
         data={filteredTasks}
         keyExtractor={item => item.id.toString()}
         contentContainerStyle={{
-          paddingBottom: 16,
+          paddingBottom: 155,
           paddingHorizontal: 16,
           marginTop: 16,
         }}

@@ -16,20 +16,56 @@ type TaskStore = {
   resetTimer: () => void;
   nextTask: () => void;
   prevTask: () => void;
+  toggleComplete: (id: number) => void;
 };
 
-export const useTaskStore = create<TaskStore & { toggleComplete: (id: number) => void }>((set, get) => {
+export const useTaskStore = create<TaskStore>((set, get) => {
+  let timerInterval: ReturnType<typeof setInterval> | null = null;
+
+  const stopTimer = () => {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+  };
+
+  const startTimer = (taskId: number) => {
+    stopTimer();
+
+    timerInterval = setInterval(() => {
+      set((state) => {
+        const updatedTasks = state.tasks.map((t) =>
+          t.id === taskId ? { ...t, elapsed: (t.elapsed ?? 0) + 1 } : t
+        );
+
+        const activeTask = updatedTasks.find((t) => t.id === taskId);
+
+        return {
+          tasks: updatedTasks,
+          activeTask: activeTask ?? state.activeTask,
+          elapsed: activeTask?.elapsed ?? 0,
+        };
+      });
+    }, 1000);
+  };
+
   const updateActiveTask = (task: Task) => {
-    const savedElapsed = task.elapsed ?? 0;
+    stopTimer();
+
     set((state) => ({
-      tasks: state.tasks.map((t) => {
-        if (t.id === task.id) return { ...t, isActive: true, progress: "TRACKING NOW" };
-        return t.progress !== "COMPLETED" ? { ...t, isActive: false, progress: "TO DO" } : t;
-      }),
-      activeTask: { ...task, isActive: true, progress: "TRACKING NOW" },
-      isPlaying: false,
-      elapsed: savedElapsed,
+      tasks: state.tasks.map((t) =>
+        t.id === task.id
+          ? { ...t, isActive: true, progress: "TRACKING NOW" }
+          : t.progress !== "COMPLETED"
+          ? { ...t, isActive: false, progress: "TO DO" }
+          : t
+      ),
+      activeTask: { ...task, isActive: true, progress: "TRACKING NOW", elapsed: task.elapsed ?? 0 },
+      isPlaying: true,
+      elapsed: task.elapsed ?? 0,
     }));
+
+    startTimer(task.id); 
   };
 
   return {
@@ -41,7 +77,9 @@ export const useTaskStore = create<TaskStore & { toggleComplete: (id: number) =>
 
     setTasks: (tasks) =>
       set((state) => {
-        const newTasks = typeof tasks === "function" ? tasks(state.tasks) : tasks;
+        const newTasks =
+          typeof tasks === "function" ? tasks(state.tasks) : tasks;
+
         return {
           tasks: newTasks.map((t) => ({
             ...t,
@@ -73,32 +111,51 @@ export const useTaskStore = create<TaskStore & { toggleComplete: (id: number) =>
     },
 
     setActiveTask: updateActiveTask,
-    togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying })),
-    resetTimer: () => set({ elapsed: 0, isPlaying: false }),
+
+    togglePlay: () => {
+      const { isPlaying, activeTask } = get();
+      if (!activeTask) return;
+
+      if (isPlaying) {
+        stopTimer();
+      } else {
+        startTimer(activeTask.id);
+      }
+
+      set({ isPlaying: !isPlaying });
+    },
+
+    resetTimer: () => {
+      stopTimer();
+      set((state) => ({
+        elapsed: 0,
+        isPlaying: false,
+        tasks: state.tasks.map((t) =>
+          t.id === state.activeTask?.id ? { ...t, elapsed: 0 } : t
+        ),
+        activeTask: state.activeTask ? { ...state.activeTask, elapsed: 0 } : null,
+      }));
+    },
 
     nextTask: () => {
       const { tasks, activeTask } = get();
       if (!activeTask) return;
-      const currentIndex = tasks.findIndex((t) => t.id === activeTask.id);
-      if (currentIndex + 1 < tasks.length) updateActiveTask(tasks[currentIndex + 1]);
+      const idx = tasks.findIndex((t) => t.id === activeTask.id);
+      if (idx + 1 < tasks.length) updateActiveTask(tasks[idx + 1]);
     },
 
     prevTask: () => {
       const { tasks, activeTask } = get();
       if (!activeTask) return;
-      const currentIndex = tasks.findIndex((t) => t.id === activeTask.id);
-      if (currentIndex - 1 >= 0) updateActiveTask(tasks[currentIndex - 1]);
+      const idx = tasks.findIndex((t) => t.id === activeTask.id);
+      if (idx - 1 >= 0) updateActiveTask(tasks[idx - 1]);
     },
 
     toggleComplete: (id: number) =>
       set((state) => ({
         tasks: state.tasks.map((t) =>
           t.id === id
-            ? {
-                ...t,
-                progress: t.progress === "COMPLETED" ? "TO DO" : "COMPLETED",
-                isActive: false,
-              }
+            ? { ...t, progress: t.progress === "COMPLETED" ? "TO DO" : "COMPLETED", isActive: false }
             : t
         ),
       })),

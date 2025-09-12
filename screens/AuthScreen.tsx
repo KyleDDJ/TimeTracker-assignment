@@ -1,146 +1,188 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import React, { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import {
   Alert,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
+import { z as Zod } from "zod";
 
 import CheckBox from "@/components/CheckBox";
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
 import Divider from "@/components/Divider";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import FooterLink from "@/components/FooterLink";
 import LogoHeader from "@/components/LogoHeader";
 import ScreenHeader from "@/components/ScreenHeader";
 import SocialButton from "@/components/SocialButton";
 
-const AuthScreen = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [remember_me, setRememberMe] = useState(false);
+/*
+ * DOCU: AuthScreen Component
+ * Handles user login including email/password input, social login options,
+ * validation, loading state, and error handling.
+ *
+ * State:
+ * @state email - User email
+ * @state password - User password
+ * @state remember_me - Persist login choice
+ * @state errors - Validation errors for inputs
+ * @state loading - API/loading state
+ *
+ */
+const LoginSchema = Zod.object({
+  email: Zod.string().min(1, "Email is required").email("Enter a valid email"),
+  password: Zod.string().min(6, "Password must be at least 6 characters"),
+});
 
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
-    {}
-  );
+type LoginFormData = Zod.infer<typeof LoginSchema>;
+
+const AuthScreen: React.FC = () => {
+  const [rememberMe, setRememberMe] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const validate = () => {
-    let valid = true;
-    let newErrors: { email?: string; password?: string } = {};
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+    reset,
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(LoginSchema),
+    mode: "onChange",
+    defaultValues: { email: "", password: "" },
+  });
 
-    if (!email) {
-      newErrors.email = "Email is required";
-      valid = false;
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = "Enter a valid email";
-      valid = false;
-    }
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      setLoading(true);
 
-    if (!password) {
-      newErrors.password = "Password is required";
-      valid = false;
-    } else if (password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-      valid = false;
-    }
-
-    setErrors(newErrors);
-    return valid;
-  };
-
-  const handleLogin = () => {
-    if (!validate()) return;
-
-    setLoading(true);
-    setErrors({});
-
-    setTimeout(() => {
+      setTimeout(() => {
+        setLoading(false);
+        Alert.alert("Login Success", `Welcome ${data.email}!`);
+        reset({ email: rememberMe ? data.email : "", password: "" });
+        router.push("/");
+      }, 1500);
+    } catch (error) {
       setLoading(false);
-      Alert.alert("Login Success", `Welcome ${email}!`);
-      router.push("/");
-    }, 1500);
+      Alert.alert(
+        "Login Error",
+        error instanceof Error ? error.message : "Login failed"
+      );
+    }
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
-      >
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
-          className="px-6 py-8"
+    <ErrorBoundary>
+      <SafeAreaView className="flex-1 bg-white">
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <LogoHeader
-            iconName="clockcircle"
-            title="TimeTracker"
-            subtitle="Track your sprint tasks efficiently"
-          />
+          <TouchableWithoutFeedback
+            onPress={Keyboard.dismiss}
+            accessible={false}
+          >
+            <ScrollView
+              contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+              keyboardShouldPersistTaps="handled"
+              className="px-6 py-8"
+            >
+              <LogoHeader
+                icon_name="clockcircle"
+                title="TimeTracker"
+                subtitle="Track your sprint tasks efficiently"
+              />
+              <ScreenHeader
+                title="Welcome back"
+                subtitle="Sign in to continue tracking your tasks"
+              />
 
-          <ScreenHeader
-            title="Welcome back"
-            subtitle="Sign in to continue tracking your tasks"
-          />
+              <SocialButton
+                icon_name="google"
+                text="Continue with Google"
+                on_press={() => console.log("Google login")}
+              />
 
-          <SocialButton
-            iconName="google"
-            text="Continue with Google"
-            onPress={() => console.log("Google login")}
-          />
+              <Divider text="or" />
 
-          <Divider text="or" />
+              <Controller
+                control={control}
+                name="email"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <CustomInput
+                    label="Email"
+                    placeholder="Enter your email"
+                    value={value}
+                    on_change_text={onChange}
+                    onBlur={onBlur}
+                    keyboard_type="email-address"
+                    error={errors.email?.message}
+                    accessibility_label="Email input"
+                  />
+                )}
+              />
 
-          <CustomInput
-            label="Email"
-            placeholder="Enter your email"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-            error={errors.email}
-          />
-          <CustomInput
-            label="Password"
-            placeholder="Enter your password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-            error={errors.password}
-          />
+              <Controller
+                control={control}
+                name="password"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <CustomInput
+                    label="Password"
+                    placeholder="Enter your password"
+                    value={value}
+                    on_change_text={onChange}
+                    onBlur={onBlur}
+                    secure_text_entry
+                    error={errors.password?.message}
+                    accessibility_label="Password input"
+                  />
+                )}
+              />
 
-          <View className="flex-row items-center justify-between mt-4 mb-6 mx-6">
-            <CheckBox
-              label="Remember me"
-              checked={remember_me}
-              onToggle={() => setRememberMe(!remember_me)}
-            />
-            <TouchableOpacity>
-              <Text className="text-gray-600 font-semibold underline">
-                Forgot password?
-              </Text>
-            </TouchableOpacity>
-          </View>
+              <View className="flex-row items-center justify-between mt-4 mb-6 mx-6">
+                <CheckBox
+                  label="Remember me"
+                  checked={rememberMe}
+                  on_toggle={() => setRememberMe(!rememberMe)}
+                />
+                <TouchableOpacity
+                  accessible
+                  accessibilityLabel="Forgot password"
+                  onPress={() => console.log("Forgot password pressed")}
+                >
+                  <Text className="text-gray-600 font-semibold underline">
+                    Forgot password?
+                  </Text>
+                </TouchableOpacity>
+              </View>
 
-          <CustomButton
-            title="Sign In"
-            onPress={handleLogin}
-            loading={loading}
-            disabled={loading}
-          />
+              <CustomButton
+                title="Sign In"
+                on_press={handleSubmit(onSubmit)}
+                disabled={!isValid || loading}
+                loading={loading}
+                accessibility_label="Sign in to account"
+              />
 
-          <FooterLink
-            text="Don’t have an account?"
-            linkText="Sign up"
-            onPress={() => console.log("Navigate to Sign Up")}
-          />
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+              <FooterLink
+                text="Don’t have an account?"
+                linkText="Sign up"
+                onPress={() => console.log("Navigate to Sign Up")}
+              />
+            </ScrollView>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+      </SafeAreaView>
+    </ErrorBoundary>
   );
 };
 

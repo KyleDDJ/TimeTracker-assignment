@@ -1,21 +1,31 @@
+import { COLORS } from "@/constants/Colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
-import { COLORS } from "@/constants/Colors";
-
-type CheckboxProps = {
+/**
+ * DOCU: Checkbox Component
+ * Custom checkbox with label and toggle support.
+ *
+ * @param label - Checkbox label
+ * @param checked - Checkbox state
+ * @param on_toggle - Toggle callback
+ *
+ */
+export interface CheckboxProps {
   label: string;
   checked: boolean;
-  onToggle: () => void;
-};
+  on_toggle: () => void;
+}
 
-const Checkbox = ({ label, checked, onToggle }: CheckboxProps) => {
+const Checkbox: React.FC<CheckboxProps> = ({ label, checked, on_toggle }) => {
   return (
     <TouchableOpacity
       className="flex-row items-center"
-      onPress={onToggle}
+      onPress={on_toggle}
       activeOpacity={0.8}
+      accessible
+      accessibilityLabel={`Checkbox: ${label}`}
     >
       <View
         className={`w-5 h-5 rounded border ${
@@ -29,4 +39,4 @@ const Checkbox = ({ label, checked, onToggle }: CheckboxProps) => {
   );
 };
 
-export default Checkbox;
+export default React.memo(Checkbox);

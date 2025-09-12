@@ -1,30 +1,45 @@
+import { COLORS } from "@/constants/Colors";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import React, { useState } from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 
-import { COLORS } from "@/constants/Colors";
-
-interface CustomInputProps {
+/**
+ * DOCU: CustomInput Component
+ * Styled text input supporting labels, secure text entry, and error display.
+ *
+ * @param label - Input label
+ * @param placeholder - Placeholder text
+ * @param value - Input value
+ * @param on_change_text - Callback on text change
+ * @param secure_text_entry - Show/hide text
+ * @param keyboard_type - Keyboard type
+ * @param error - Error message to display
+ *
+ */
+export interface CustomInputProps {
   label?: string;
   placeholder?: string;
   value: string;
-  onChangeText: (text: string) => void;
-  secureTextEntry?: boolean;
-  keyboardType?: "default" | "email-address" | "numeric";
+  onBlur?: () => void;
+  on_change_text: (text: string) => void;
+  secure_text_entry?: boolean;
+  keyboard_type?: "default" | "email-address" | "numeric";
   error?: string;
+  accessibility_label?: string;
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
   label,
   placeholder = "Enter text",
   value,
-  onChangeText,
-  secureTextEntry = false,
-  keyboardType = "default",
+  on_change_text,
+  secure_text_entry = false,
+  keyboard_type = "default",
   error,
+  accessibility_label,
 }) => {
-  const [is_focused, setIsFocused] = useState(false);
-  const [show_password, setShowPassword] = useState(secureTextEntry);
+  const [is_focused, set_is_focused] = useState(false);
+  const [show_password, set_show_password] = useState(secure_text_entry);
 
   return (
     <View className="mb-4 mx-2">
@@ -34,7 +49,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
           error
             ? "border-red-500"
             : is_focused
-            ? COLORS.darkgreen
+            ? "border-black"
             : "border-gray-300"
         }`}
       >
@@ -42,15 +57,23 @@ const CustomInput: React.FC<CustomInputProps> = ({
           style={{ flex: 1, paddingVertical: 12, fontSize: 16 }}
           placeholder={placeholder}
           value={value}
-          onChangeText={onChangeText}
-          keyboardType={keyboardType}
+          onChangeText={on_change_text}
+          keyboardType={keyboard_type}
           secureTextEntry={show_password}
           autoCapitalize="none"
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onFocus={() => set_is_focused(true)}
+          onBlur={() => set_is_focused(false)}
+          accessible
+          accessibilityLabel={accessibility_label || label}
         />
-        {secureTextEntry && (
-          <TouchableOpacity onPress={() => setShowPassword(!show_password)}>
+        {secure_text_entry && (
+          <TouchableOpacity
+            onPress={() => set_show_password(!show_password)}
+            accessible
+            accessibilityLabel={
+              show_password ? "Hide password" : "Show password"
+            }
+          >
             <AntDesign
               name={show_password ? "eyeo" : "eye"}
               size={20}
@@ -64,4 +87,4 @@ const CustomInput: React.FC<CustomInputProps> = ({
   );
 };
 
-export default CustomInput;
+export default React.memo(CustomInput);

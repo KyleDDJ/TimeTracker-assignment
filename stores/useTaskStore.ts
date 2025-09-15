@@ -31,19 +31,18 @@ export const useTaskStore = create<TaskStore>((set, get) => {
 
   const startTimer = (taskId: number) => {
     stopTimer();
-
     timerInterval = setInterval(() => {
-      set((state) => {
-        const updatedTasks = state.tasks.map((t) =>
-          t.id === taskId ? { ...t, elapsed: (t.elapsed ?? 0) + 1 } : t
-        );
-
-        const activeTask = updatedTasks.find((t) => t.id === taskId);
-
+      set(state => {
+        if (!state.activeTask) return state;
+        const updatedElapsed = state.elapsed + 1;
         return {
-          tasks: updatedTasks,
-          activeTask: activeTask ?? state.activeTask,
-          elapsed: activeTask?.elapsed ?? 0,
+          elapsed: updatedElapsed,
+          tasks: state.tasks.map(t =>
+            t.id === state.activeTask!.id ? { ...t, elapsed: updatedElapsed } : t
+          ),
+          activeTask: state.activeTask
+            ? { ...state.activeTask, elapsed: updatedElapsed }
+            : null,
         };
       });
     }, 1000);
@@ -51,9 +50,8 @@ export const useTaskStore = create<TaskStore>((set, get) => {
 
   const updateActiveTask = (task: Task) => {
     stopTimer();
-
-    set((state) => ({
-      tasks: state.tasks.map((t) =>
+    set(state => ({
+      tasks: state.tasks.map(t =>
         t.id === task.id
           ? { ...t, isActive: true, progress: "TRACKING NOW" }
           : t.progress !== "COMPLETED"
@@ -64,8 +62,7 @@ export const useTaskStore = create<TaskStore>((set, get) => {
       isPlaying: true,
       elapsed: task.elapsed ?? 0,
     }));
-
-    startTimer(task.id); 
+    startTimer(task.id);
   };
 
   return {
@@ -75,13 +72,11 @@ export const useTaskStore = create<TaskStore>((set, get) => {
     elapsed: 0,
     quickTaskCounter: 0,
 
-    setTasks: (tasks) =>
-      set((state) => {
-        const newTasks =
-          typeof tasks === "function" ? tasks(state.tasks) : tasks;
-
+    setTasks: tasks =>
+      set(state => {
+        const newTasks = typeof tasks === "function" ? tasks(state.tasks) : tasks;
         return {
-          tasks: newTasks.map((t) => ({
+          tasks: newTasks.map(t => ({
             ...t,
             progress: t.progress === "COMPLETED" ? "COMPLETED" : "TO DO",
             isActive: false,
@@ -92,7 +87,7 @@ export const useTaskStore = create<TaskStore>((set, get) => {
         };
       }),
 
-    prependTask: (task) => set((state) => ({ tasks: [task, ...state.tasks] })),
+    prependTask: task => set(state => ({ tasks: [task, ...state.tasks] })),
 
     createQuickTask: () => {
       const count = get().quickTaskCounter + 1;
@@ -106,7 +101,7 @@ export const useTaskStore = create<TaskStore>((set, get) => {
         elapsed: 0,
         icon: { library: "MaterialIcons", name: "bolt", size: 24, color: COLORS.white },
       };
-      set((state) => ({ tasks: [newTask, ...state.tasks], quickTaskCounter: count }));
+      set(state => ({ tasks: [newTask, ...state.tasks], quickTaskCounter: count }));
       return newTask;
     },
 
@@ -115,22 +110,17 @@ export const useTaskStore = create<TaskStore>((set, get) => {
     togglePlay: () => {
       const { isPlaying, activeTask } = get();
       if (!activeTask) return;
-
-      if (isPlaying) {
-        stopTimer();
-      } else {
-        startTimer(activeTask.id);
-      }
-
+      if (isPlaying) stopTimer();
+      else startTimer(activeTask.id);
       set({ isPlaying: !isPlaying });
     },
 
     resetTimer: () => {
       stopTimer();
-      set((state) => ({
+      set(state => ({
         elapsed: 0,
         isPlaying: false,
-        tasks: state.tasks.map((t) =>
+        tasks: state.tasks.map(t =>
           t.id === state.activeTask?.id ? { ...t, elapsed: 0 } : t
         ),
         activeTask: state.activeTask ? { ...state.activeTask, elapsed: 0 } : null,
@@ -140,20 +130,20 @@ export const useTaskStore = create<TaskStore>((set, get) => {
     nextTask: () => {
       const { tasks, activeTask } = get();
       if (!activeTask) return;
-      const idx = tasks.findIndex((t) => t.id === activeTask.id);
+      const idx = tasks.findIndex(t => t.id === activeTask.id);
       if (idx + 1 < tasks.length) updateActiveTask(tasks[idx + 1]);
     },
 
     prevTask: () => {
       const { tasks, activeTask } = get();
       if (!activeTask) return;
-      const idx = tasks.findIndex((t) => t.id === activeTask.id);
+      const idx = tasks.findIndex(t => t.id === activeTask.id);
       if (idx - 1 >= 0) updateActiveTask(tasks[idx - 1]);
     },
 
-    toggleComplete: (id: number) =>
-      set((state) => ({
-        tasks: state.tasks.map((t) =>
+    toggleComplete: id =>
+      set(state => ({
+        tasks: state.tasks.map(t =>
           t.id === id
             ? { ...t, progress: t.progress === "COMPLETED" ? "TO DO" : "COMPLETED", isActive: false }
             : t

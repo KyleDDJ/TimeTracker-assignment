@@ -1,5 +1,5 @@
 import Entypo from "@expo/vector-icons/Entypo";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   FlatList,
   SafeAreaView,
@@ -13,6 +13,7 @@ import TaskInfoHeader from "@/components/TaskInfoHeader";
 import MiniTaskCard from "@/components/TrackTaskCard";
 import { COLORS } from "@/constants/Colors";
 import { useTaskStore } from "@/stores/useTaskStore";
+import { AntDesign } from "@expo/vector-icons";
 
 const TrackScreen: React.FC = () => {
   const {
@@ -23,26 +24,8 @@ const TrackScreen: React.FC = () => {
     togglePlay,
     nextTask,
     prevTask,
+    setActiveTask,
   } = useTaskStore();
-
-  useEffect(() => {
-    let interval: ReturnType<typeof setInterval>;
-    if (isPlaying && activeTask) {
-      interval = setInterval(() => {
-        useTaskStore.setState(state => {
-          if (!state.activeTask) return state;
-          const newElapsed = state.elapsed + 1;
-          return {
-            elapsed: newElapsed,
-            tasks: state.tasks.map(t =>
-              t.id === state.activeTask!.id ? { ...t, elapsed: newElapsed } : t
-            ),
-          };
-        });
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying, activeTask]);
 
   const formatTime = (seconds: number) => {
     const hrs = Math.floor(seconds / 3600)
@@ -95,10 +78,8 @@ const TrackScreen: React.FC = () => {
                       disabled={!activeTask}
                     >
                       <View className="w-20 h-20 rounded-full bg-black items-center justify-center mx-8">
-                        <Entypo
-                          name={
-                            isPlaying ? "controller-paus" : "controller-play"
-                          }
+                        <AntDesign
+                          name={isPlaying ? "pause" : "caretright"}
                           size={35}
                           color={COLORS.white}
                         />
@@ -131,10 +112,8 @@ const TrackScreen: React.FC = () => {
         renderItem={({ item }) => (
           <MiniTaskCard
             task={item}
-            isActive={item.isActive}
-            onPress={() => {
-              useTaskStore.getState().setActiveTask(item);
-            }}
+            isActive={activeTask?.id === item.id}
+            onPress={() => setActiveTask(item)}
           />
         )}
       />

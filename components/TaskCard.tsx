@@ -1,4 +1,6 @@
+import { COLORS } from "@/constants/Colors";
 import { TaskCardProps } from "@/entities/task.entities";
+import { useTaskStore } from "@/stores/useTaskStore";
 import {
   AntDesign,
   Entypo,
@@ -8,8 +10,6 @@ import {
 } from "@expo/vector-icons";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-
-import { COLORS } from "@/constants/Colors";
 
 type IconLibrary = NonNullable<TaskCardProps["icon"]>["library"];
 
@@ -41,6 +41,20 @@ const TaskCard: React.FC<TaskCardProps> = ({
   onPress,
 }) => {
   const IconComp = icon ? getIconComponent(icon.library) : null;
+  const { setActiveTask, togglePlay } = useTaskStore();
+
+  const handlePlayPress = () => {
+    setActiveTask({
+      id: 0,
+      title,
+      subtitle,
+      estimated,
+      progress,
+      icon,
+      isActive,
+    });
+    togglePlay();
+  };
 
   return (
     <TouchableOpacity
@@ -153,29 +167,17 @@ const TaskCard: React.FC<TaskCardProps> = ({
           </Text>
         </View>
 
-        <View>
-          {progress === "TRACKING NOW" && (
-            <AntDesign
-              name="playcircleo"
-              size={30}
-              color={isActive ? COLORS.white : COLORS.black}
-            />
-          )}
-          {progress === "TO DO" && (
-            <AntDesign
-              name="playcircleo"
-              size={30}
-              color={isActive ? COLORS.white : COLORS.gray400}
-            />
-          )}
-          {progress === "COMPLETED" && (
-            <AntDesign
-              name="check"
-              size={30}
-              color={isActive ? COLORS.white : COLORS.gray400}
-            />
-          )}
-        </View>
+        <TouchableOpacity onPress={handlePlayPress}>
+          <AntDesign
+            name={
+              isActive && progress === "TRACKING NOW"
+                ? "pausecircleo"
+                : "playcircleo"
+            }
+            size={30}
+            color={isActive ? COLORS.white : COLORS.gray400}
+          />
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );

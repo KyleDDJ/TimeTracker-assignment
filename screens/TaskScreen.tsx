@@ -2,11 +2,13 @@ import { MaterialIcons } from "@expo/vector-icons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import React, { useState } from "react";
+import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import React, { useCallback, useRef, useState } from "react";
 import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
 import NoTaskView from "@/components/NoTaskView";
 import { COLORS } from "@/constants/Colors";
+import { Task } from "@/entities/task.entities";
 import { useTasks } from "@/hooks/useTasks";
 import TaskDashboard from "@/screens/TasksDashboard";
 import { useTaskStore } from "@/stores/useTaskStore";
@@ -18,6 +20,9 @@ const TaskScreen = () => {
   const tasks = useTaskStore(state => state.tasks);
   const [loading, setLoading] = useState(false);
 
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
+
   const handleSync = () => {
     setLoading(true);
     setTimeout(() => {
@@ -25,6 +30,24 @@ const TaskScreen = () => {
       setLoading(false);
     }, 2000);
   };
+
+  const handleDeleteRequest = useCallback((task: Task) => {
+    setTaskToDelete(task);
+    bottomSheetModalRef.current?.present();
+  }, []);
+
+  const handleDeleteConfirm = useCallback(() => {
+    if (taskToDelete) {
+      setTasks(prev => prev.filter(t => t.id !== taskToDelete.id));
+      setTaskToDelete(null);
+    }
+    bottomSheetModalRef.current?.dismiss();
+  }, [taskToDelete, setTasks]);
+
+  const handleDeleteCancel = useCallback(() => {
+    setTaskToDelete(null);
+    bottomSheetModalRef.current?.dismiss();
+  }, []);
 
   if (loading) {
     return (
@@ -97,7 +120,7 @@ const TaskScreen = () => {
           </View>
         </NoTaskView>
       ) : (
-        <TaskDashboard tasks={tasks} />
+        <TaskDashboard tasks={tasks} onDeleteRequest={handleDeleteRequest} />
       )}
 
       {tasks.length > 0 && (
@@ -116,6 +139,50 @@ const TaskScreen = () => {
           <MaterialIcons name="bolt" size={34} color={COLORS.white} />
         </TouchableOpacity>
       )}
+
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={0}
+        snapPoints={["30%"]}
+        enablePanDownToClose
+        backgroundStyle={{ backgroundColor: COLORS.white }}
+      >
+        <BottomSheetView className="flex-1 px-6 py-4">
+          <View className="items-center mb-6">
+            <View
+              className="w-16 h-16 rounded-full items-center justify-center mb-4"
+              style={{ backgroundColor: COLORS.lightred }}
+            >
+              <MaterialIcons name="delete" size={32} color={COLORS.jet} />
+            </View>
+            <Text className="text-lg font-semibold text-gray-900 text-center mb-2">
+              Delete Task
+            </Text>
+            <Text className="text-gray-600 text-center">
+              Are you sure you want to delete "{taskToDelete?.title}"? This
+              action cannot be undone.
+            </Text>
+          </View>
+
+          <View className="flex-row gap-3">
+            <TouchableOpacity
+              className="flex-1 py-3 rounded-xl border border-gray-300"
+              onPress={handleDeleteCancel}
+            >
+              <Text className="text-center text-gray-700 font-medium">
+                Continue tracking
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              className="flex-1 py-3 rounded-xl"
+              style={{ backgroundColor: COLORS.jet }}
+              onPress={handleDeleteConfirm}
+            >
+              <Text className="text-center text-white font-medium">Delete</Text>
+            </TouchableOpacity>
+          </View>
+        </BottomSheetView>
+      </BottomSheetModal>
     </View>
   );
 };

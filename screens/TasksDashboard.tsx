@@ -5,7 +5,7 @@ import { FlatList, SafeAreaView, View } from "react-native";
 import SprintSummaryCard from "@/components/SprintSummaryCard";
 import StatusTabs from "@/components/StatusTabs";
 import SwipeableTask from "@/components/SwipeableTask";
-import { TaskDashboardProps } from "@/entities/task.entities";
+import { Task, TaskDashboardProps } from "@/entities/task.entities";
 import { useTaskStore } from "@/stores/useTaskStore";
 
 const formatDuration = (seconds: number) => {
@@ -15,7 +15,14 @@ const formatDuration = (seconds: number) => {
   return `${h}h ${m}m ${s}s`;
 };
 
-const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
+interface TaskDashboardPropsWithDelete extends TaskDashboardProps {
+  onDeleteRequest?: (task: Task) => void;
+}
+
+const TaskDashboard: React.FC<TaskDashboardPropsWithDelete> = ({
+  tasks: propTasks,
+  onDeleteRequest,
+}) => {
   const storeTasks = useTaskStore(state => state.tasks);
   const setActiveTask = useTaskStore(state => state.setActiveTask);
   const tasks = propTasks || storeTasks;
@@ -84,6 +91,7 @@ const TaskDashboard: React.FC<TaskDashboardProps> = ({ tasks: propTasks }) => {
         renderItem={({ item: task }) => (
           <SwipeableTask
             task={task}
+            onDeleteRequest={onDeleteRequest}
             onPress={() => {
               setActiveTask(task);
               router.push({

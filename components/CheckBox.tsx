@@ -28,9 +28,14 @@ const Checkbox: React.FC<CheckboxProps> = ({ label, checked, on_toggle }) => {
       accessibilityLabel={`Checkbox: ${label}`}
     >
       <View
-        className={`w-5 h-5 rounded border ${
-          checked ? "bg-black border-black" : "border-gray-400"
-        } items-center justify-center mr-2`}
+        className={`w-5 h-5 rounded border items-center justify-center mr-2 ${
+          checked ? "bg-green-500 border-green-500" : "border-gray-400"
+        }`}
+        style={
+          checked
+            ? { backgroundColor: COLORS.green, borderColor: COLORS.green }
+            : {}
+        }
       >
         {checked && <AntDesign name="check" size={14} color={COLORS.white} />}
       </View>
@@ -39,4 +44,4 @@ const Checkbox: React.FC<CheckboxProps> = ({ label, checked, on_toggle }) => {
   );
 };
 
-export default React.memo(Checkbox);
+export default Checkbox;

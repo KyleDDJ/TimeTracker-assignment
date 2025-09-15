@@ -47,4 +47,4 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   </TouchableOpacity>
 );
 
-export default React.memo(CustomButton);
+export default CustomButton;

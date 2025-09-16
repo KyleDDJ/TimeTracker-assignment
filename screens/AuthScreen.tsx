@@ -19,31 +19,43 @@ import CheckBox from "@/components/CheckBox";
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
 import Divider from "@/components/Divider";
-// import { ErrorBoundary } from "@/components/ErrorBoundary";
 import FooterLink from "@/components/FooterLink";
 import LogoHeader from "@/components/LogoHeader";
 import ScreenHeader from "@/components/ScreenHeader";
 import SocialButton from "@/components/SocialButton";
 
-/*
- * DOCU: AuthScreen Component
- * Handles user login including email/password input, social login options,
- * validation, loading state, and error handling.
- *
- * State:
- * @state email - User email
- * @state password - User password
- * @state remember_me - Persist login choice
- * @state errors - Validation errors for inputs
- * @state loading - API/loading state
- *
- */
+import { useTaskStore } from "@/stores/useTaskStore";
 import { LoginFormData, LoginSchema } from "@/validation/login.schema";
 
+/**
+ * Authentication screen component for login functionality.
+ *
+ * Triggered: App navigation to Auth screen
+ *
+ * Features:
+ *  - Email/password login with validation via Zod schema
+ *  - Social login (Google) placeholder
+ *  - Remember me checkbox functionality
+ *  - Forgot password placeholder
+ *  - Refresh app button to clear tasks and reload root screen
+ *
+ * @component
+ */
 const AuthScreen: React.FC = () => {
+  /** State for "Remember me" checkbox */
   const [rememberMe, setRememberMe] = useState(false);
+
+  /** Loading state for login request */
   const [loading, setLoading] = useState(false);
 
+  /**
+   * React Hook Form controller
+   * @property {object} control - Controls form inputs
+   * @property {Function} handleSubmit - Handles form submission
+   * @property {object} errors - Form validation errors
+   * @property {boolean} isValid - Boolean indicating if form is valid
+   * @property {Function} reset - Resets form values
+   */
   const {
     control,
     handleSubmit,
@@ -55,6 +67,11 @@ const AuthScreen: React.FC = () => {
     defaultValues: { email: "", password: "" },
   });
 
+  /**
+   * Handles form submission for login
+   * @param {LoginFormData} data - Form input data (email, password)
+   * @returns {Promise<void>}
+   */
   const onSubmit = async (data: LoginFormData) => {
     try {
       setLoading(true);
@@ -62,7 +79,11 @@ const AuthScreen: React.FC = () => {
       setTimeout(() => {
         setLoading(false);
         Alert.alert("Login Success", `Welcome ${data.email}!`);
+
+        // Reset password, retain email if "Remember me" is checked
         reset({ email: rememberMe ? data.email : "", password: "" });
+
+        // Navigate to home/root screen
         router.push("/");
       }, 1500);
     } catch (error) {
@@ -72,6 +93,15 @@ const AuthScreen: React.FC = () => {
         error instanceof Error ? error.message : "Login failed"
       );
     }
+  };
+
+  /**
+   * Refreshes the app by clearing tasks and replacing the current route
+   */
+  const handleRefreshApp = () => {
+    useTaskStore.getState().setTasks([]);
+    router.replace("/");
+    Alert.alert("App Refreshed", "Tasks have been reloaded!");
   };
 
   return (
@@ -86,16 +116,20 @@ const AuthScreen: React.FC = () => {
             keyboardShouldPersistTaps="handled"
             className="px-6 py-8"
           >
+            {/* Header Logo and App Title */}
             <LogoHeader
               icon_name="clockcircle"
               title="TimeTracker"
               subtitle="Track your sprint tasks efficiently"
             />
+
+            {/* Screen Header */}
             <ScreenHeader
               title="Welcome back"
               subtitle="Sign in to continue tracking your tasks"
             />
 
+            {/* Social login button */}
             <SocialButton
               icon_name="google"
               text="Continue with Google"
@@ -104,6 +138,7 @@ const AuthScreen: React.FC = () => {
 
             <Divider text="or" />
 
+            {/* Email input field */}
             <Controller
               control={control}
               name="email"
@@ -121,6 +156,7 @@ const AuthScreen: React.FC = () => {
               )}
             />
 
+            {/* Password input field */}
             <Controller
               control={control}
               name="password"
@@ -138,6 +174,7 @@ const AuthScreen: React.FC = () => {
               )}
             />
 
+            {/* Remember Me & Forgot Password */}
             <View className="flex-row items-center justify-between mt-4 mb-6 mx-6">
               <CheckBox
                 label="Remember me"
@@ -155,6 +192,7 @@ const AuthScreen: React.FC = () => {
               </TouchableOpacity>
             </View>
 
+            {/* Sign In Button */}
             <CustomButton
               title="Sign In"
               on_press={handleSubmit(onSubmit)}
@@ -163,11 +201,21 @@ const AuthScreen: React.FC = () => {
               accessibility_label="Sign in to account"
             />
 
+            {/* Footer link to Sign Up */}
             <FooterLink
               text="Don’t have an account?"
               linkText="Sign up"
               onPress={() => router.push("/register")}
             />
+
+            {/* Refresh App Button */}
+            <View style={{ marginTop: 20 }}>
+              <CustomButton
+                title="Refresh App"
+                on_press={handleRefreshApp}
+                accessibility_label="Refresh the app"
+              />
+            </View>
           </ScrollView>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>

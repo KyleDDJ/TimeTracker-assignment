@@ -14,15 +14,42 @@ import TaskDashboard from "@/screens/TasksDashboard";
 import { useTaskStore } from "@/stores/useTaskStore";
 import { router } from "expo-router";
 
-const TaskScreen = () => {
+/**
+ * TaskScreen component for displaying and managing user tasks.
+ *
+ * Triggered: App navigation to Task screen
+ *
+ * Features:
+ *  - Display tasks using TaskDashboard or NoTaskView if empty
+ *  - Sync tasks from FocusTracker
+ *  - Create manual tasks
+ *  - Quick task creation button for instant tracking
+ *  - Delete task confirmation via BottomSheetModal
+ *
+ * @component
+ */
+const TaskScreen: React.FC = () => {
+  /** Tasks fetched from custom hook (simulates backend API) */
   const { tasks: TASKS } = useTasks();
+
+  /** State setter for tasks in the global store */
   const setTasks = useTaskStore(state => state.setTasks);
+
+  /** Current tasks in the global store */
   const tasks = useTaskStore(state => state.tasks);
+
+  /** Loading state for sync operations */
   const [loading, setLoading] = useState(false);
 
+  /** Reference for BottomSheetModal for delete confirmation */
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  /** Task selected for deletion */
   const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
 
+  /**
+   * Simulates task synchronization from FocusTracker
+   */
   const handleSync = () => {
     setLoading(true);
     setTimeout(() => {
@@ -31,11 +58,18 @@ const TaskScreen = () => {
     }, 2000);
   };
 
+  /**
+   * Triggered when user requests to delete a task
+   * @param {Task} task - Task selected for deletion
+   */
   const handleDeleteRequest = useCallback((task: Task) => {
     setTaskToDelete(task);
     bottomSheetModalRef.current?.present();
   }, []);
 
+  /**
+   * Confirms deletion of the selected task
+   */
   const handleDeleteConfirm = useCallback(() => {
     if (taskToDelete) {
       setTasks(prev => prev.filter(t => t.id !== taskToDelete.id));
@@ -44,11 +78,15 @@ const TaskScreen = () => {
     bottomSheetModalRef.current?.dismiss();
   }, [taskToDelete, setTasks]);
 
+  /**
+   * Cancels the delete action
+   */
   const handleDeleteCancel = useCallback(() => {
     setTaskToDelete(null);
     bottomSheetModalRef.current?.dismiss();
   }, []);
 
+  /** Show loading indicator while syncing */
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center bg-white">
@@ -61,11 +99,13 @@ const TaskScreen = () => {
   return (
     <View className="flex-1 bg-white">
       {tasks.length === 0 ? (
+        /** View displayed when no tasks exist */
         <NoTaskView
           title="No Tasks Yet"
           description="Sync your FocusTracker tasks to start tracking your time and managing your sprint efficiently."
           icon={<FontAwesome5 name="tasks" size={50} color={COLORS.white} />}
         >
+          {/* Sync and manual task buttons */}
           <View className="w-full items-center mt-5 px-6">
             <TouchableOpacity
               className="w-3/5 flex-row items-center justify-center py-5 rounded-2xl mb-4"
@@ -97,6 +137,7 @@ const TaskScreen = () => {
             </TouchableOpacity>
           </View>
 
+          {/* CSV import section */}
           <Text className="text-gray-700 text-center font-semibold text-base">
             Import from CSV
           </Text>
@@ -120,19 +161,20 @@ const TaskScreen = () => {
           </View>
         </NoTaskView>
       ) : (
+        /** Main dashboard when tasks exist */
         <TaskDashboard tasks={tasks} onDeleteRequest={handleDeleteRequest} />
       )}
 
+      {/* Quick Task FAB */}
       {tasks.length > 0 && (
         <TouchableOpacity
           className="absolute bottom-28 right-6 w-16 h-16 rounded-full items-center justify-center shadow-lg"
           style={{ backgroundColor: COLORS.green }}
           onPress={() => {
             const newTask = useTaskStore.getState().createQuickTask();
-            useTaskStore.getState().setActiveTask({
-              ...newTask,
-              isQuickTask: true,
-            });
+            useTaskStore
+              .getState()
+              .setActiveTask({ ...newTask, isQuickTask: true });
             router.push("/(tabs)/track");
           }}
         >
@@ -140,6 +182,7 @@ const TaskScreen = () => {
         </TouchableOpacity>
       )}
 
+      {/* BottomSheet for task deletion */}
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={0}

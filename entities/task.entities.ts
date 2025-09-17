@@ -17,7 +17,7 @@ export type Task = {
   icon: TaskIcon;
   isActive?: boolean;
   isQuickTask?: boolean;
-  type?: "mobile" | "analytics" | "auth";
+  type?: "mobile" | "analytics" | "auth" | "break";
   percentage?: string;
   elapsed?: number;
   startedAt?: Date;  

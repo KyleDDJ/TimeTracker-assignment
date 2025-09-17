@@ -3,8 +3,16 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
+import { BlurView } from "expo-blur";
 import React, { useCallback, useRef, useState } from "react";
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 
 import NoTaskView from "@/components/NoTaskView";
 import { COLORS } from "@/constants/Colors";
@@ -40,14 +48,13 @@ const TaskScreen: React.FC = () => {
 
   /** Loading state for sync operations */
   const [loading, setLoading] = useState(false);
-
-  /** Reference for BottomSheetModal for delete confirmation */
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-
   /** Task selected for deletion */
   const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
-
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const breakSheetRef = useRef<BottomSheetModal>(null);
 
   /**
    * Simulates task synchronization from FocusTracker
@@ -79,7 +86,6 @@ const TaskScreen: React.FC = () => {
     }
     bottomSheetModalRef.current?.dismiss();
   }, [taskToDelete, setTasks]);
-
   /**
    * Cancels the delete action
    */
@@ -88,7 +94,39 @@ const TaskScreen: React.FC = () => {
     bottomSheetModalRef.current?.dismiss();
   }, []);
 
-  /** Show loading indicator while syncing */
+  const handleRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setTasks(TASKS);
+      setRefreshing(false);
+    }, 2000);
+  };
+
+  const handleBreak = (minutes: number) => {
+    const breakTask: Task = {
+      id: Date.now(),
+      title: `Break - ${minutes} min`,
+      subtitle: "Take a short pause",
+      estimated: `${minutes}m`,
+      progress: "TO DO",
+      isActive: false,
+      isQuickTask: true,
+      type: "break",
+      elapsed: 0,
+      icon: {
+        library: "MaterialIcons",
+        name: "free-breakfast",
+        size: 24,
+        color: COLORS.white,
+      },
+    };
+
+    useTaskStore.getState().prependTask(breakTask);
+    useTaskStore.getState().setActiveTask(breakTask);
+    breakSheetRef.current?.dismiss();
+    router.push("/(tabs)/track");
+  };
+
   if (loading) {
     return (
       <View className="flex-1 justify-center items-center bg-white">
@@ -98,24 +136,14 @@ const TaskScreen: React.FC = () => {
     );
   }
 
-  const handleRefresh = () => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setTasks(TASKS); // reload tasks
-      setRefreshing(false);
-    }, 2000);
-  };
-
   return (
     <View className="flex-1 bg-white">
       {tasks.length === 0 ? (
-        /** View displayed when no tasks exist */
         <NoTaskView
           title="No Tasks Yet"
           description="Sync your FocusTracker tasks to start tracking your time and managing your sprint efficiently."
           icon={<FontAwesome5 name="tasks" size={50} color={COLORS.white} />}
         >
-          {/* Sync and manual task buttons */}
           <View className="w-full items-center mt-5 px-6">
             <TouchableOpacity
               className="w-3/5 flex-row items-center justify-center py-5 rounded-2xl mb-4"
@@ -147,11 +175,9 @@ const TaskScreen: React.FC = () => {
             </TouchableOpacity>
           </View>
 
-          {/* CSV import section */}
           <Text className="text-gray-700 text-center font-semibold text-base">
             Import from CSV
           </Text>
-
           <View className="bg-gray-100 rounded-xl px-5 py-5 flex-row items-start mx-5 my-3">
             <AntDesign
               name="infocirlce"
@@ -171,7 +197,6 @@ const TaskScreen: React.FC = () => {
           </View>
         </NoTaskView>
       ) : (
-        /** Main dashboard when tasks exist */
         <TaskDashboard
           tasks={tasks}
           onDeleteRequest={handleDeleteRequest}
@@ -197,13 +222,78 @@ const TaskScreen: React.FC = () => {
         </TouchableOpacity>
       )}
 
-      {/* BottomSheet for task deletion */}
+      {/* Break FAB */}
+      {tasks.length > 0 && (
+        <TouchableOpacity
+          className="absolute bottom-28 left-6 w-16 h-16 rounded-full items-center justify-center shadow-lg"
+          style={{ backgroundColor: COLORS.green }}
+          onPress={() => breakSheetRef.current?.present()}
+        >
+          <MaterialCommunityIcons
+            name="coffee"
+            size={34}
+            color={COLORS.white}
+          />
+        </TouchableOpacity>
+      )}
+
+      {/* Break BottomSheet */}
+      <BottomSheetModal
+        ref={breakSheetRef}
+        index={0}
+        snapPoints={["35%"]}
+        enablePanDownToClose
+        backgroundStyle={{ backgroundColor: COLORS.darkgreen }}
+      >
+        <BottomSheetView className="flex-1 px-6 py-4">
+          <Text className="text-lg text-white font-semibold mb-4 text-center">
+            Start your Break
+          </Text>
+
+          <View className="flex-row gap-3 mb-4">
+            {[5, 10, 15].map(min => (
+              <TouchableOpacity
+                key={min}
+                className="flex-1 py-3 rounded-xl items-center justify-center"
+                style={{ backgroundColor: COLORS.white }}
+                onPress={() => handleBreak(min)}
+              >
+                <Text className="font-semibold">{min} min</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+
+          <TouchableOpacity
+            className="w-full py-5 rounded-xl items-center justify-center"
+            style={{ backgroundColor: COLORS.white }}
+            onPress={() => handleBreak(60)}
+          >
+            <Text className="font-semibold">Lunch Break - 1h</Text>
+          </TouchableOpacity>
+        </BottomSheetView>
+      </BottomSheetModal>
+
+      {/* Blur overlay */}
+      {isSheetOpen && (
+        <TouchableWithoutFeedback
+          onPress={() => bottomSheetModalRef.current?.dismiss()}
+        >
+          <BlurView
+            intensity={100}
+            tint="dark"
+            style={[StyleSheet.absoluteFillObject, { zIndex: 100 }]}
+          />
+        </TouchableWithoutFeedback>
+      )}
+
+      {/* Task delete BottomSheet */}
       <BottomSheetModal
         ref={bottomSheetModalRef}
         index={0}
         snapPoints={["30%"]}
         enablePanDownToClose
         backgroundStyle={{ backgroundColor: COLORS.white }}
+        onChange={index => setIsSheetOpen(index >= 0)}
       >
         <BottomSheetView className="flex-1 px-6 py-4">
           <View className="items-center mb-6">
@@ -211,14 +301,17 @@ const TaskScreen: React.FC = () => {
               className="w-16 h-16 rounded-full items-center justify-center mb-4"
               style={{ backgroundColor: COLORS.lightred }}
             >
-              <MaterialIcons name="delete" size={32} color={COLORS.jet} />
+              <MaterialCommunityIcons
+                name="delete-alert"
+                size={32}
+                color={COLORS.jet}
+              />
             </View>
             <Text className="text-lg font-semibold text-gray-900 text-center mb-2">
               Delete Task
             </Text>
             <Text className="text-gray-600 text-center">
-              Are you sure you want to delete "{taskToDelete?.title}"? This
-              action cannot be undone.
+              Are you sure you want to delete "{taskToDelete?.title}"?
             </Text>
           </View>
 

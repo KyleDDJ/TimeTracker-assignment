@@ -58,7 +58,7 @@ const EventCard: React.FC<EventCardProps> = ({ style = {}, item }) => {
       </Text>
 
       {item.elapsed !== undefined && (
-        <Text className="text-white text-[10px]">
+        <Text className="text-gray-400 text-[10px]">
           {Math.floor(item.elapsed / 3600)}h{" "}
           {Math.floor((item.elapsed % 3600) / 60)}m {item.elapsed % 60}s
         </Text>

@@ -40,7 +40,7 @@ export type EventItem = {
   startDate: Date;
   endDate: Date;
   progress?: "TO DO" | "TRACKING NOW" | "COMPLETED";
-  elapsed?: number;
+  elapsed?: number;  
 };
 
 export type TaskDashboardProps = {

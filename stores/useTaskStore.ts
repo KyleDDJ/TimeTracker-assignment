@@ -34,7 +34,7 @@ export const useTaskStore = create<TaskStore>((set, get) => {
     timerInterval = setInterval(() => {
       set(state => {
         if (!state.activeTask) return state;
-        const updatedElapsed = state.elapsed + 1000;
+        const updatedElapsed = state.elapsed + 1;
         return {
           elapsed: updatedElapsed,
           tasks: state.tasks.map(t =>

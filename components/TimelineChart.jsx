@@ -18,6 +18,7 @@ const TimelineChart = ({ items, EventCard, date }) => {
         is12Hour={true}
         hourHeight={90}
         columnHorizontalPadding={10}
+        totalColumns={1} 
       />
     </View>
   );

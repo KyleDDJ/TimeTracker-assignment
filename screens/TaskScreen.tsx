@@ -47,6 +47,8 @@ const TaskScreen: React.FC = () => {
   /** Task selected for deletion */
   const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
 
+  const [refreshing, setRefreshing] = useState(false);
+
   /**
    * Simulates task synchronization from FocusTracker
    */
@@ -95,6 +97,14 @@ const TaskScreen: React.FC = () => {
       </View>
     );
   }
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    setTimeout(() => {
+      setTasks(TASKS); // reload tasks
+      setRefreshing(false);
+    }, 2000);
+  };
 
   return (
     <View className="flex-1 bg-white">
@@ -162,7 +172,12 @@ const TaskScreen: React.FC = () => {
         </NoTaskView>
       ) : (
         /** Main dashboard when tasks exist */
-        <TaskDashboard tasks={tasks} onDeleteRequest={handleDeleteRequest} />
+        <TaskDashboard
+          tasks={tasks}
+          onDeleteRequest={handleDeleteRequest}
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+        />
       )}
 
       {/* Quick Task FAB */}

@@ -1,10 +1,11 @@
 import { router } from "expo-router";
 import React, { useMemo, useState } from "react";
-import { FlatList, SafeAreaView, View } from "react-native";
+import { FlatList, RefreshControl, SafeAreaView, View } from "react-native";
 
 import SprintSummaryCard from "@/components/SprintSummaryCard";
 import StatusTabs from "@/components/StatusTabs";
 import SwipeableTask from "@/components/SwipeableTask";
+import { COLORS } from "@/constants/Colors";
 import { Task, TaskDashboardProps } from "@/entities/task.entities";
 import { useTaskStore } from "@/stores/useTaskStore";
 
@@ -17,11 +18,14 @@ const formatDuration = (seconds: number) => {
 
 interface TaskDashboardPropsWithDelete extends TaskDashboardProps {
   onDeleteRequest?: (task: Task) => void;
+  refreshing?: boolean;
+  onRefresh?: () => void;
 }
-
 const TaskDashboard: React.FC<TaskDashboardPropsWithDelete> = ({
   tasks: propTasks,
   onDeleteRequest,
+  refreshing,
+  onRefresh,
 }) => {
   const storeTasks = useTaskStore(state => state.tasks);
   const setActiveTask = useTaskStore(state => state.setActiveTask);
@@ -64,6 +68,14 @@ const TaskDashboard: React.FC<TaskDashboardPropsWithDelete> = ({
       <FlatList
         data={filteredTasks}
         keyExtractor={item => item.id.toString()}
+        refreshControl={
+          <RefreshControl
+            refreshing={!!refreshing}
+            onRefresh={onRefresh}
+            colors={[COLORS.green]}
+            tintColor={COLORS.green}
+          />
+        }
         contentContainerStyle={{
           paddingBottom: 155,
           paddingHorizontal: 16,

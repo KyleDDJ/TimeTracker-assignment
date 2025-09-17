@@ -13,6 +13,7 @@ import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { formatElapsed } from "@/helpers/utils";
 import { useTaskStore } from "@/stores/useTaskStore";
 
+import NoAnalyticTask from "@/components/NoAnalyticView";
 import { mapTasksToEvents } from "@/helpers/taskToEvent";
 
 const AnalyticsScreen: React.FC = () => {
@@ -95,11 +96,18 @@ const AnalyticsScreen: React.FC = () => {
 
           {activeTab === "Timeline" && (
             <View className="mt-1">
-              <TimelineChart
-                items={taskEvents}
-                EventCard={EventCard}
-                date={date}
-              />
+              {taskEvents.length > 0 ? (
+                <TimelineChart
+                  items={taskEvents}
+                  EventCard={EventCard}
+                  date={date}
+                />
+              ) : (
+                <NoAnalyticTask
+                  message="No data to track yet"
+                  subMessage="Start tracking tasks to see your timeline analytics."
+                />
+              )}
             </View>
           )}
 
@@ -114,6 +122,12 @@ const AnalyticsScreen: React.FC = () => {
             contentContainerStyle={{ marginTop: 20 }}
             ItemSeparatorComponent={() => <View style={{ height: 8 }} />}
             scrollEnabled={false}
+            ListEmptyComponent={
+              <NoAnalyticTask
+                subMessage="Your tracked tasks will appear here."
+                showIcon={false}
+              />
+            }
           />
         </View>
       </ScrollView>

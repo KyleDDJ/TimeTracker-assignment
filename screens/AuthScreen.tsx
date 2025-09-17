@@ -24,7 +24,6 @@ import LogoHeader from "@/components/LogoHeader";
 import ScreenHeader from "@/components/ScreenHeader";
 import SocialButton from "@/components/SocialButton";
 
-import { useTaskStore } from "@/stores/useTaskStore";
 import { LoginFormData, LoginSchema } from "@/validation/login.schema";
 
 /**
@@ -94,16 +93,6 @@ const AuthScreen: React.FC = () => {
       );
     }
   };
-
-  /**
-   * Refreshes the app by clearing tasks and replacing the current route
-   */
-  const handleRefreshApp = () => {
-    useTaskStore.getState().setTasks([]);
-    router.replace("/");
-    Alert.alert("App Refreshed", "Tasks have been reloaded!");
-  };
-
   return (
     <SafeAreaView className="flex-1 bg-white">
       <KeyboardAvoidingView
@@ -207,15 +196,6 @@ const AuthScreen: React.FC = () => {
               linkText="Sign up"
               onPress={() => router.push("/register")}
             />
-
-            {/* Refresh App Button */}
-            <View style={{ marginTop: 20 }}>
-              <CustomButton
-                title="Refresh App"
-                on_press={handleRefreshApp}
-                accessibility_label="Refresh the app"
-              />
-            </View>
           </ScrollView>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>

@@ -8,15 +8,15 @@ const TimelineChart = ({ items, EventCard, date }) => {
   };
 
   return (
-    <View style={{ height: 580 }}>
+    <View style={{ height: 925 }}>
       <Timetable
         items={items}
         renderItem={renderEventCard}
         date={date}
-        fromHour={9}
-        toHour={18}
+        fromHour={8}
+        toHour={19}
         is12Hour={true}
-        hourHeight={60}
+        hourHeight={90}
         columnHorizontalPadding={10}
       />
     </View>

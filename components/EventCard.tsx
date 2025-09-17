@@ -1,11 +1,5 @@
 import { COLORS } from "@/constants/Colors";
 import { EventItem } from "@/entities/task.entities";
-import {
-  formatDuration,
-  getDurationMinutes,
-  getEventBorderStyle,
-  getEventColor,
-} from "@/helpers/utils";
 import React from "react";
 import { Text, View, ViewStyle } from "react-native";
 
@@ -15,17 +9,23 @@ interface EventCardProps {
 }
 
 const EventCard: React.FC<EventCardProps> = ({ style = {}, item }) => {
-  if (!item) return null;
+  const isActive = item.progress === "TRACKING NOW";
+  const isCompleted = item.progress === "COMPLETED";
 
-  const startDate = new Date(item.startDate);
-  const endDate = new Date(item.endDate);
+  const bgColor = isActive
+    ? COLORS.green
+    : isCompleted
+    ? COLORS.darkgreen
+    : COLORS.jet;
 
-  const durationMinutes = getDurationMinutes(startDate, endDate);
-  const isBreak = item.title?.toLowerCase().includes("break");
-  const blockHeight = (durationMinutes / 60) * 60;
-  const bgColor = getEventColor(item.title, isBreak);
-  const borderStyle = getEventBorderStyle(isBreak);
-  const textColor = isBreak ? COLORS.black : COLORS.white;
+  const elapsedMinutes = (item.elapsed ?? 0) / 60;
+
+  const minuteToPx = 2;
+  const cardHeight = Math.max(elapsedMinutes * minuteToPx, 60);
+
+  const adjustedEndDate = new Date(
+    item.startDate.getTime() + (item.elapsed ?? 0) * 1000
+  );
 
   return (
     <View
@@ -33,35 +33,36 @@ const EventCard: React.FC<EventCardProps> = ({ style = {}, item }) => {
         style,
         {
           backgroundColor: bgColor,
-          padding: 6,
-          height: blockHeight,
-          justifyContent: "flex-start",
-          alignItems: "flex-start",
+          height: cardHeight,
+          minHeight: 50,
+          paddingVertical: 6,
+          paddingHorizontal: 6,
         },
-        borderStyle as ViewStyle,
       ]}
+      className="justify-start items-start rounded"
     >
-      <Text style={{ color: textColor, fontWeight: "bold", fontSize: 12 }}>
-        {item.title}
+      <Text className="text-white font-bold text-xs">{item.title}</Text>
+
+      <Text className="text-white text-[10px]">
+        {item.startDate.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        })}
+        {" - "}
+        {(isActive ? adjustedEndDate : item.endDate).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        })}
       </Text>
 
-      {!isBreak && (
-        <Text style={{ color: textColor, fontSize: 10 }}>
-          {startDate.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}{" "}
-          -{" "}
-          {endDate.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          })}
+      {item.elapsed !== undefined && (
+        <Text className="text-white text-[10px]">
+          {Math.floor(item.elapsed / 3600)}h{" "}
+          {Math.floor((item.elapsed % 3600) / 60)}m {item.elapsed % 60}s
         </Text>
       )}
-
-      <Text style={{ color: textColor, fontSize: 10 }}>
-        {formatDuration(durationMinutes, isBreak)}
-      </Text>
     </View>
   );
 };

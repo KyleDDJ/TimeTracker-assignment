@@ -11,8 +11,9 @@ import { COLORS } from "@/constants/Colors";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 
 import { formatElapsed } from "@/helpers/utils";
-import { useAnalytics } from "@/hooks/useAnalytics";
 import { useTaskStore } from "@/stores/useTaskStore";
+
+import { mapTasksToEvents } from "@/helpers/taskToEvent";
 
 const AnalyticsScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState("Timeline");
@@ -37,7 +38,7 @@ const AnalyticsScreen: React.FC = () => {
   });
 
   const tasks = useTaskStore(state => state.tasks);
-  const { items } = useAnalytics();
+  const taskEvents = mapTasksToEvents(tasks);
 
   const totalTrackedSeconds = tasks.reduce(
     (acc, t) => acc + (t.elapsed ?? 0),
@@ -94,7 +95,11 @@ const AnalyticsScreen: React.FC = () => {
 
           {activeTab === "Timeline" && (
             <View className="mt-1">
-              <TimelineChart items={items} EventCard={EventCard} date={date} />
+              <TimelineChart
+                items={taskEvents}
+                EventCard={EventCard}
+                date={date}
+              />
             </View>
           )}
 

@@ -34,11 +34,13 @@ export const useTaskStore = create<TaskStore>((set, get) => {
     timerInterval = setInterval(() => {
       set(state => {
         if (!state.activeTask) return state;
-        const updatedElapsed = state.elapsed + 1;
+        const updatedElapsed = state.elapsed + 1000;
         return {
           elapsed: updatedElapsed,
           tasks: state.tasks.map(t =>
-            t.id === state.activeTask!.id ? { ...t, elapsed: updatedElapsed } : t
+            t.id === state.activeTask!.id
+              ? { ...t, elapsed: updatedElapsed }
+              : t
           ),
           activeTask: state.activeTask
             ? { ...state.activeTask, elapsed: updatedElapsed }
@@ -50,18 +52,32 @@ export const useTaskStore = create<TaskStore>((set, get) => {
 
   const updateActiveTask = (task: Task) => {
     stopTimer();
+    const now = new Date();
+
     set(state => ({
       tasks: state.tasks.map(t =>
         t.id === task.id
-          ? { ...t, isActive: true, progress: "TRACKING NOW" }
+          ? {
+              ...t,
+              isActive: true,
+              progress: "TRACKING NOW",
+              startedAt: t.startedAt ?? now, 
+            }
           : t.progress !== "COMPLETED"
           ? { ...t, isActive: false, progress: "TO DO" }
           : t
       ),
-      activeTask: { ...task, isActive: true, progress: "TRACKING NOW", elapsed: task.elapsed ?? 0 },
+      activeTask: {
+        ...task,
+        isActive: true,
+        progress: "TRACKING NOW",
+        elapsed: task.elapsed ?? 0,
+        startedAt: task.startedAt ?? now,
+      },
       isPlaying: true,
       elapsed: task.elapsed ?? 0,
     }));
+
     startTimer(task.id);
   };
 
@@ -74,7 +90,8 @@ export const useTaskStore = create<TaskStore>((set, get) => {
 
     setTasks: tasks =>
       set(state => {
-        const newTasks = typeof tasks === "function" ? tasks(state.tasks) : tasks;
+        const newTasks =
+          typeof tasks === "function" ? tasks(state.tasks) : tasks;
         return {
           tasks: newTasks.map(t => ({
             ...t,
@@ -99,9 +116,17 @@ export const useTaskStore = create<TaskStore>((set, get) => {
         progress: "TO DO",
         isActive: false,
         elapsed: 0,
-        icon: { library: "MaterialIcons", name: "bolt", size: 24, color: COLORS.white },
+        icon: {
+          library: "MaterialIcons",
+          name: "bolt",
+          size: 24,
+          color: COLORS.white,
+        },
       };
-      set(state => ({ tasks: [newTask, ...state.tasks], quickTaskCounter: count }));
+      set(state => ({
+        tasks: [newTask, ...state.tasks],
+        quickTaskCounter: count,
+      }));
       return newTask;
     },
 
@@ -123,7 +148,9 @@ export const useTaskStore = create<TaskStore>((set, get) => {
         tasks: state.tasks.map(t =>
           t.id === state.activeTask?.id ? { ...t, elapsed: 0 } : t
         ),
-        activeTask: state.activeTask ? { ...state.activeTask, elapsed: 0 } : null,
+        activeTask: state.activeTask
+          ? { ...state.activeTask, elapsed: 0 }
+          : null,
       }));
     },
 
@@ -141,13 +168,45 @@ export const useTaskStore = create<TaskStore>((set, get) => {
       if (idx - 1 >= 0) updateActiveTask(tasks[idx - 1]);
     },
 
-    toggleComplete: id =>
-      set(state => ({
-        tasks: state.tasks.map(t =>
-          t.id === id
-            ? { ...t, progress: t.progress === "COMPLETED" ? "TO DO" : "COMPLETED", isActive: false }
-            : t
-        ),
-      })),
+toggleComplete: id =>
+  set(state => {
+    const now = new Date();
+    return {
+      tasks: state.tasks.map(t => {
+        if (t.id !== id) return t;
+
+        if (t.progress === "COMPLETED") {
+          return { ...t, progress: "TO DO", isActive: false, completedAt: undefined };
+        }
+
+        const frozenElapsed = t.startedAt
+          ? Math.floor((now.getTime() - new Date(t.startedAt).getTime()) / 1000)
+          : t.elapsed ?? 0;
+
+        return {
+          ...t,
+          progress: "COMPLETED",
+          isActive: false,
+          completedAt: now,
+          elapsed: frozenElapsed,
+        };
+      }),
+      activeTask:
+        state.activeTask?.id === id
+          ? {
+              ...state.activeTask,
+              progress: "COMPLETED",
+              isActive: false,
+              completedAt: now,
+              elapsed: state.activeTask.startedAt
+                ? Math.floor(
+                    (now.getTime() - new Date(state.activeTask.startedAt).getTime()) / 1000
+                  )
+                : state.activeTask.elapsed ?? 0,
+            }
+          : state.activeTask,
+    };
+  }),
+
   };
 });

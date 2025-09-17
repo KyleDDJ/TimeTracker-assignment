@@ -23,7 +23,7 @@ const AnalyticsTaskCard: React.FC<Props> = ({ task }) => {
   return (
     <View className="flex-row items-center bg-white rounded-xl p-4 mb-3 border border-gray-200">
       <View className="w-8 h-8 rounded-md items-center justify-center mr-3">
-        <Octicons name="dot-fill" size={30} color={COLORS.gray400} />
+        <Octicons name="dot-fill" size={30} color={COLORS.green} />
       </View>
 
       <View className="flex-1">

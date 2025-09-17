@@ -5,7 +5,7 @@ export const TASKS: Task[] = [
     id: 1,
     title: "API Integration Setup",
     subtitle: "Frontend Development",
-    estimated: "1m estimated",
+    estimated: "4h estimated",
     progress: "TRACKING NOW",
     status: "High Priority",
     icon: { library: "Entypo", name: "code", size: 24, color: "white" },

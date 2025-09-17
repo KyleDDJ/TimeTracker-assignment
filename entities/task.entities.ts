@@ -20,6 +20,8 @@ export type Task = {
   type?: "mobile" | "analytics" | "auth";
   percentage?: string;
   elapsed?: number;
+  startedAt?: Date;  
+  completedAt?: Date;   
 };
 
 export type TaskCardProps = Task & {
@@ -37,6 +39,8 @@ export type EventItem = {
   title: string;
   startDate: Date;
   endDate: Date;
+  progress?: "TO DO" | "TRACKING NOW" | "COMPLETED";
+  elapsed?: number;
 };
 
 export type TaskDashboardProps = {

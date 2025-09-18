@@ -47,6 +47,7 @@ const AuthScreen: React.FC = () => {
   /** Loading state for login request */
   const [loading, setLoading] = useState(false);
 
+  const [showPassword, setShowPassword] = useState(false);
   /**
    * React Hook Form controller
    * @property {object} control - Controls form inputs
@@ -77,7 +78,7 @@ const AuthScreen: React.FC = () => {
 
       setTimeout(() => {
         setLoading(false);
-        Alert.alert("Login Success", `Welcome ${data.email}!`);
+        // Alert.alert("Login Success", `Welcome ${data.email}!`);
 
         // Reset password, retain email if "Remember me" is checked
         reset({ email: rememberMe ? data.email : "", password: "" });
@@ -156,7 +157,7 @@ const AuthScreen: React.FC = () => {
                   value={value}
                   on_change_text={onChange}
                   onBlur={onBlur}
-                  secure_text_entry
+                  secure_text_entry={!showPassword}
                   error={errors.password?.message}
                   accessibility_label="Password input"
                 />

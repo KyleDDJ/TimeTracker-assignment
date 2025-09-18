@@ -71,7 +71,7 @@ const SwipeableTask: React.FC<SwipeableTaskProps> = ({
 
   // left background = complete OR undo
   const leftBackgroundStyle = useAnimatedStyle(() => {
-    const showAction = translateX.value < -30;
+    const showAction = translateX.value < -20;
     return {
       opacity: showAction ? 1 : 0,
     };

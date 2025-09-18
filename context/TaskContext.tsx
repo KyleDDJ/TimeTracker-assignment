@@ -1,4 +1,4 @@
-import { TASKS } from "@/constants/Tasks"; // initial data
+import { TASKS } from "@/constants/Tasks";
 import { Task } from "@/entities/task.entities";
 import React, { createContext, useContext, useState } from "react";
 

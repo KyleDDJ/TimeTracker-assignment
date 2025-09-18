@@ -2,38 +2,49 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
-import { BlurView } from "expo-blur";
 import React, { useCallback, useRef, useState } from "react";
-import {
-  ActivityIndicator,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native";
 
 import BreakSheet from "@/components/BreakSheet";
+import ManualTaskModal from "@/components/ManualTaskModal";
 import NoTaskView from "@/components/NoTaskView";
 import QuickTaskButton from "@/components/QuickTaskButton";
 import { COLORS } from "@/constants/Colors";
 import { Task } from "@/entities/task.entities";
 import { useTasks } from "@/hooks/useTasks";
-import TaskDashboard from "@/screens/TasksDashboard";
+import TasksDashboard from "@/screens/TasksDashboard";
 import { useTaskStore } from "@/stores/useTaskStore";
-// import ManualTaskModal from "@/components/ManualTaskModal"; // (soon)
 
 /**
- * TaskScreen component for displaying and managing user tasks.
+ * TaskScreen component for displaying, syncing, and managing user tasks.
  *
- * Triggered: App navigation to Task screen
+ * Triggered: App navigation to the Task screen
  *
  * Features:
- *  - Display tasks using TaskDashboard or NoTaskView if empty
- *  - Sync tasks from FocusTracker
- *  - Create manual tasks
- *  - Quick task creation button for instant tracking
- *  - Delete task confirmation via BottomSheetModal
+ *  - Display tasks using TasksDashboard, or show NoTaskView if empty
+ *  - Sync tasks from FocusTracker (simulated with useTasks hook)
+ *  - Create manual tasks (stubbed for future feature)
+ *  - Quick task creation via FAB options
+ *  - Start breaks using a dedicated BreakSheet
+ *  - Delete task confirmation with BottomSheetModal and blur overlay
+ *  - Pull-to-refresh support for task list
+ *
+ * State & Refs:
+ *  - `loading`: Boolean, handles sync operation loader
+ *  - `taskToDelete`: Task | null, holds the currently selected task for deletion
+ *  - `isSheetOpen`: Boolean, manages delete confirmation blur overlay
+ *  - `refreshing`: Boolean, controls pull-to-refresh state
+ *  - `deleteSheetRef`, `breakSheetRef`, `fabSheetRef`: BottomSheet refs for modals
+ *
+ * Flow:
+ *  1. User lands on TaskScreen
+ *     - If no tasks: Show NoTaskView with sync + manual creation options
+ *     - If tasks exist: Render TaskDashboard
+ *  2. User can:
+ *     - Sync tasks from FocusTracker
+ *     - Create manual tasks
+ *     - Use FAB to: (a) Create quick task, (b) Take a break, (c) Add manual task
+ *     - Swiping right delete → confirm via BottomSheet with blur overlay
  *
  * @component
  */
@@ -52,15 +63,15 @@ const TaskScreen: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   /** Task selected for deletion */
-  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [task_to_delete, setTaskToDelete] = useState<Task | null>(null);
   const [refreshing, setRefreshing] = useState(false);
 
   /** Refs */
   const deleteSheetRef = useRef<BottomSheetModal>(null);
   const breakSheetRef = useRef<BottomSheetModal>(null);
   const fabSheetRef = useRef<BottomSheetModal>(null);
-  // const manualSheetRef = useRef<BottomSheetModal>(null);
+
+  const [showManualModal, setShowManualModal] = useState(false);
 
   /** Sync tasks */
   const handleSync = () => {
@@ -78,12 +89,12 @@ const TaskScreen: React.FC = () => {
   }, []);
 
   const handleDeleteConfirm = useCallback(() => {
-    if (taskToDelete) {
-      setTasks(prev => prev.filter(t => t.id !== taskToDelete.id));
+    if (task_to_delete) {
+      setTasks(prev => prev.filter(t => t.id !== task_to_delete.id));
       setTaskToDelete(null);
     }
     deleteSheetRef.current?.dismiss();
-  }, [taskToDelete, setTasks]);
+  }, [task_to_delete, setTasks]);
 
   const handleDeleteCancel = useCallback(() => {
     setTaskToDelete(null);
@@ -136,8 +147,8 @@ const TaskScreen: React.FC = () => {
               className="w-11/12 flex-row items-center justify-center py-5 rounded-2xl mb-4"
               style={{ backgroundColor: COLORS.green }}
               onPress={() => {
-                // manualSheetRef.current?.present();
-                console.log("Create Manual Task");
+                fabSheetRef.current?.dismiss();
+                setShowManualModal(true);
               }}
             >
               <AntDesign name="plus" size={20} color={COLORS.white} />
@@ -154,7 +165,7 @@ const TaskScreen: React.FC = () => {
               name="infocirlce"
               size={18}
               color={COLORS.green}
-              className="mr-2"
+              className="mr-3"
             />
             <View className="flex-1">
               <Text className="font-semibold text-gray-900 mb-1">
@@ -168,7 +179,7 @@ const TaskScreen: React.FC = () => {
           </View>
         </NoTaskView>
       ) : (
-        <TaskDashboard
+        <TasksDashboard
           tasks={tasks}
           onDeleteRequest={handleDeleteRequest}
           refreshing={refreshing}
@@ -176,18 +187,16 @@ const TaskScreen: React.FC = () => {
         />
       )}
 
-      {/* FAB Options */}
       {tasks.length > 0 && (
         <TouchableOpacity
           className="absolute bottom-28 right-6 w-16 h-16 rounded-full items-center justify-center shadow-lg"
-          style={{ backgroundColor: COLORS.green }}
+          style={{ backgroundColor: COLORS.darkgreen }}
           onPress={() => fabSheetRef.current?.present()}
         >
           <AntDesign name="plus" size={34} color={COLORS.white} />
         </TouchableOpacity>
       )}
 
-      {/* FAB Options*/}
       <BottomSheetModal
         ref={fabSheetRef}
         index={0}
@@ -200,10 +209,8 @@ const TaskScreen: React.FC = () => {
             What do you want to do?
           </Text>
 
-          {/* Quicktask */}
           <QuickTaskButton onDone={() => fabSheetRef.current?.dismiss()} />
 
-          {/* Break */}
           <TouchableOpacity
             className="w-full flex-row items-center py-4 rounded-xl px-4 mb-3"
             style={{ backgroundColor: COLORS.green }}
@@ -220,14 +227,12 @@ const TaskScreen: React.FC = () => {
             <Text className="ml-3 text-white font-semibold">Take a Break</Text>
           </TouchableOpacity>
 
-          {/* Manual Task Creation (just logging text for now)*/}
           <TouchableOpacity
             className="w-full flex-row items-center py-4 rounded-xl px-4"
             style={{ backgroundColor: COLORS.green }}
             onPress={() => {
               fabSheetRef.current?.dismiss();
-              // manualSheetRef.current?.present();
-              console.log("Manual Task flow");
+              setShowManualModal(true);
             }}
           >
             <AntDesign name="plus" size={24} color={COLORS.white} />
@@ -236,7 +241,11 @@ const TaskScreen: React.FC = () => {
         </BottomSheetView>
       </BottomSheetModal>
 
-      {/* Break Options */}
+      <ManualTaskModal
+        visible={showManualModal}
+        onClose={() => setShowManualModal(false)}
+      />
+
       <BottomSheetModal
         ref={breakSheetRef}
         index={0}
@@ -247,27 +256,13 @@ const TaskScreen: React.FC = () => {
         <BreakSheet onClose={() => breakSheetRef.current?.dismiss()} />
       </BottomSheetModal>
 
-      {/* Blur overlay for delete confirm */}
-      {isSheetOpen && (
-        <TouchableWithoutFeedback
-          onPress={() => deleteSheetRef.current?.dismiss()}
-        >
-          <BlurView
-            intensity={100}
-            tint="dark"
-            style={[StyleSheet.absoluteFillObject, { zIndex: 100 }]}
-          />
-        </TouchableWithoutFeedback>
-      )}
-
-      {/* Delete Task BottomSheet */}
       <BottomSheetModal
         ref={deleteSheetRef}
         index={0}
         snapPoints={["30%"]}
         enablePanDownToClose
         backgroundStyle={{ backgroundColor: COLORS.white }}
-        onChange={index => setIsSheetOpen(index >= 0)}
+        onChange={index => index >= 0}
       >
         <BottomSheetView className="flex-1 px-6 py-4">
           <View className="items-center mb-6">
@@ -285,7 +280,7 @@ const TaskScreen: React.FC = () => {
               Delete Task
             </Text>
             <Text className="text-gray-600 text-center">
-              Are you sure you want to delete "{taskToDelete?.title}"?
+              Are you sure you want to delete "{task_to_delete?.title}"?
             </Text>
           </View>
 

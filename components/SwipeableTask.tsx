@@ -34,6 +34,7 @@ const SwipeableTask: React.FC<SwipeableTaskProps> = ({
     setTasks(prev =>
       prev.map(t => {
         if (t.id === task.id) {
+          // toggle between COMPLETED and TO DO
           const newProgress =
             t.progress === "COMPLETED" ? "TO DO" : "COMPLETED";
           return { ...t, progress: newProgress, isActive: false };
@@ -68,58 +69,50 @@ const SwipeableTask: React.FC<SwipeableTaskProps> = ({
     transform: [{ translateX: translateX.value }],
   }));
 
+  // left background = complete OR undo
   const leftBackgroundStyle = useAnimatedStyle(() => {
-    const showCheck = translateX.value < -50 && task.progress !== "COMPLETED";
+    const showAction = translateX.value < -30;
     return {
-      opacity: showCheck ? 1 : 0,
+      opacity: showAction ? 1 : 0,
     };
   });
 
+  // right background = delete
   const rightBackgroundStyle = useAnimatedStyle(() => {
-    const showDelete = translateX.value > 50;
+    const showDelete = translateX.value > 20;
     return {
       opacity: showDelete ? 1 : 0,
-    };
-  });
-
-  const checkIconStyle = useAnimatedStyle(() => {
-    const showCheck = translateX.value < -50 && task.progress !== "COMPLETED";
-    return {
-      opacity: showCheck ? 1 : 0,
-      transform: [{ scale: showCheck ? 1 : 0.5 }],
-    };
-  });
-
-  const deleteIconStyle = useAnimatedStyle(() => {
-    const showDelete = translateX.value > 50;
-    return {
-      opacity: showDelete ? 1 : 0,
-      transform: [{ scale: showDelete ? 1 : 0.5 }],
     };
   });
 
   return (
     <View className="overflow-hidden rounded-2xl mb-2">
       <Animated.View
-        className="absolute top-1 bottom-4 left-2 right-2 rounded-xl flex-row items-center justify-end pr-4 bg-green-600"
-        style={leftBackgroundStyle}
+        className="absolute top-1 bottom-4 left-2 right-2 rounded-xl flex-row items-center justify-end pr-4"
+        style={[
+          leftBackgroundStyle,
+          {
+            backgroundColor:
+              task.progress === "COMPLETED" ? COLORS.orange : COLORS.green,
+          },
+        ]}
       >
-        <Animated.View style={checkIconStyle}>
+        {task.progress === "COMPLETED" ? (
+          <Ionicons name="arrow-undo" size={45} color={COLORS.white} />
+        ) : (
           <Ionicons
             name="checkmark-done-sharp"
             size={45}
             color={COLORS.white}
           />
-        </Animated.View>
+        )}
       </Animated.View>
 
       <Animated.View
         className="absolute top-1 bottom-4 left-2 right-2 rounded-xl flex-row items-center justify-start pl-4 bg-red-600"
         style={rightBackgroundStyle}
       >
-        <Animated.View style={deleteIconStyle}>
-          <MaterialIcons name="delete" size={45} color={COLORS.white} />
-        </Animated.View>
+        <MaterialIcons name="delete" size={45} color={COLORS.white} />
       </Animated.View>
 
       <GestureDetector gesture={panGesture}>

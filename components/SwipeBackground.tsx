@@ -6,17 +6,24 @@ import { View } from "react-native";
 type SwipeBackgroundProps = {
   showCheck?: boolean;
   showDelete?: boolean;
+  showUndo?: boolean;
   direction?: "left" | "right";
 };
 
 const SwipeBackground: React.FC<SwipeBackgroundProps> = ({
   showCheck = false,
   showDelete = false,
+  showUndo = false,
   direction = "right",
 }) => {
-  if (!showCheck && !showDelete) return null;
+  if (!showCheck && !showDelete && !showUndo) return null;
 
-  const backgroundColor = showDelete ? COLORS.jet : COLORS.darkgreen;
+  const backgroundColor = showDelete
+    ? COLORS.jet
+    : showUndo
+    ? COLORS.orange
+    : COLORS.darkgreen;
+
   const justifyContent = direction === "left" ? "justify-start" : "justify-end";
   const marginStyle =
     direction === "left" ? { marginLeft: 16 } : { marginRight: 16 };
@@ -37,6 +44,14 @@ const SwipeBackground: React.FC<SwipeBackgroundProps> = ({
       {showDelete && (
         <MaterialIcons
           name="delete"
+          size={45}
+          color={COLORS.white}
+          style={marginStyle}
+        />
+      )}
+      {showUndo && (
+        <Ionicons
+          name="arrow-undo"
           size={45}
           color={COLORS.white}
           style={marginStyle}

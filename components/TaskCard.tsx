@@ -171,8 +171,8 @@ const TaskCard: React.FC<TaskCardProps> = ({
           <AntDesign
             name={
               isActive && progress === "TRACKING NOW"
-                ? "pausecircleo"
-                : "playcircleo"
+                ? "pause-circle"
+                : "play-circle"
             }
             size={30}
             color={isActive ? COLORS.white : COLORS.gray400}

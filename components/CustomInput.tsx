@@ -75,7 +75,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
             }
           >
             <AntDesign
-              name={show_password ? "eyeo" : "eye"}
+              name={show_password ? "eye-invisible" : "eye"}
               size={20}
               color={COLORS.green}
             />

@@ -1,19 +1,13 @@
-import Entypo from "@expo/vector-icons/Entypo";
-import React from "react";
-import {
-  FlatList,
-  SafeAreaView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
-
 import NoTrackView from "@/components/NoTrackView";
 import TaskInfoHeader from "@/components/TaskInfoHeader";
 import MiniTaskCard from "@/components/TrackTaskCard";
 import { COLORS } from "@/constants/Colors";
 import { useTaskStore } from "@/stores/useTaskStore";
 import { AntDesign } from "@expo/vector-icons";
+import Entypo from "@expo/vector-icons/Entypo";
+import React from "react";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 /**
  * TrackScreen component for tracking the currently active task and managing upcoming tasks.
@@ -103,7 +97,7 @@ const TrackScreen: React.FC = () => {
                     >
                       <View className="w-20 h-20 rounded-full bg-black items-center justify-center mx-8">
                         <AntDesign
-                          name={isPlaying ? "pause" : "caretright"}
+                          name={isPlaying ? "pause" : "caret-right"}
                           size={35}
                           color={COLORS.white}
                         />

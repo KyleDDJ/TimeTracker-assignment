@@ -15,6 +15,13 @@
  * - On success: Navigates to login screen
  * - Social signup: Placeholder for Google authentication
  */
+import CustomButton from "@/components/CustomButton";
+import CustomInput from "@/components/CustomInput";
+import Divider from "@/components/Divider";
+import FooterLink from "@/components/FooterLink";
+import LogoHeader from "@/components/LogoHeader";
+import ScreenHeader from "@/components/ScreenHeader";
+import SocialButton from "@/components/SocialButton";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -24,18 +31,10 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   ScrollView,
   TouchableWithoutFeedback,
 } from "react-native";
-
-import CustomButton from "@/components/CustomButton";
-import CustomInput from "@/components/CustomInput";
-import Divider from "@/components/Divider";
-import FooterLink from "@/components/FooterLink";
-import LogoHeader from "@/components/LogoHeader";
-import ScreenHeader from "@/components/ScreenHeader";
-import SocialButton from "@/components/SocialButton";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { RegisterFormData, RegisterSchema } from "@/validation/register.schema";
 
@@ -85,7 +84,7 @@ const RegisterScreen: React.FC = () => {
             className="px-6 py-8"
           >
             <LogoHeader
-              icon_name="adduser"
+              icon_name="user-add"
               title="Create Account"
               subtitle="Sign up to start tracking your tasks"
             />

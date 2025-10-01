@@ -1,3 +1,11 @@
+import CheckBox from "@/components/CheckBox";
+import CustomButton from "@/components/CustomButton";
+import CustomInput from "@/components/CustomInput";
+import Divider from "@/components/Divider";
+import FooterLink from "@/components/FooterLink";
+import LogoHeader from "@/components/LogoHeader";
+import ScreenHeader from "@/components/ScreenHeader";
+import SocialButton from "@/components/SocialButton";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import React, { useState } from "react";
@@ -7,22 +15,13 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-
-import CheckBox from "@/components/CheckBox";
-import CustomButton from "@/components/CustomButton";
-import CustomInput from "@/components/CustomInput";
-import Divider from "@/components/Divider";
-import FooterLink from "@/components/FooterLink";
-import LogoHeader from "@/components/LogoHeader";
-import ScreenHeader from "@/components/ScreenHeader";
-import SocialButton from "@/components/SocialButton";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { LoginFormData, LoginSchema } from "@/validation/login.schema";
 
@@ -108,7 +107,7 @@ const AuthScreen: React.FC = () => {
           >
             {/* Header Logo and App Title */}
             <LogoHeader
-              icon_name="clockcircle"
+              icon_name="clock-circle"
               title="TimeTracker"
               subtitle="Track your sprint tasks efficiently"
             />

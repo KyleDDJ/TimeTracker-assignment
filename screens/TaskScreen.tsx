@@ -1,4 +1,5 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Entypo from "@expo/vector-icons/Entypo";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
@@ -161,8 +162,8 @@ const TaskScreen: React.FC = () => {
             Import from CSV
           </Text>
           <View className="bg-gray-100 rounded-xl px-5 py-5 flex-row items-start mx-5 my-3">
-            <AntDesign
-              name="infocirlce"
+            <Entypo
+              name="info-with-circle"
               size={18}
               color={COLORS.green}
               className="mr-3"
